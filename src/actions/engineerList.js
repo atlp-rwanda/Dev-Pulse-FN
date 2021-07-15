@@ -20,7 +20,7 @@ export const myEngineers = () => (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  axios.get('https://dev-rating-manager-staging.herokuapp.com/api/v1/users', config)
+  axios.get(`${process.env.API_URL}/api/v1/users`, config)
     .then((res) => {
       const engineers = editUsers(res.data.data);
       dispatch({
@@ -67,7 +67,7 @@ export const saveEngineers = (engineers) => (dispatch) => {
     },
   };
   const body = { engineers: engineerIds };
-  axios.patch('http://dev-rating-manager-staging.herokuapp.com/api/v1/group', body, config)
+  axios.patch(`${process.env.API_URL}/api/v1/group`, body, config)
     .then((res) => {
       console.log(res);
       console.log(res.data);

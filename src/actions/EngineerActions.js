@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FETCH_ENGINEER, FETCH_RATING } from './actionType';
 
-const baseUrl = 'http://dev-rating-manager-staging.herokuapp.com';
+const baseUrl = process.env.API_URL;
 
 export const fetchEngineer = (id) => (dispatch) => {
   const token = localStorage.getItem('pulseToken');
@@ -13,7 +13,7 @@ export const fetchEngineer = (id) => (dispatch) => {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://dev-rating-manager-staging.herokuapp.com',
+      'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
     dispatch({
@@ -33,7 +33,7 @@ export const fetchRating = (id) => (dispatch) => {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://dev-rating-manager-staging.herokuapp.com',
+      'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
     dispatch({

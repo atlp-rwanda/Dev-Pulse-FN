@@ -76,7 +76,7 @@ export class AuthPage extends Component {
 PULSE
                 </h1>
               </div>
-              <a className="btn-login" href="http://dev-rating-manager-staging.herokuapp.com/api/v1/users/auth/google">
+              <a className="btn-login" href="http://localhost:3000/api/v1/users/auth/google">
                 <span className="icon" />
                 <span className="login-txt">Sign in to get started</span>
               </a>

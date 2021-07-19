@@ -20,7 +20,17 @@ export class EngineerList extends Component {
   componentDidMount() {
     const { myEngineers, getUsers, users } = this.props;
     myEngineers();
-    if (users.length === 0) getUsers();
+    console.log("My users", users)
+
+
+
+
+
+    
+    if (users.length === 0) {
+      console.log("getting users=====>")
+      getUsers();
+    }
   }
 
   handleRedirect = () => {
@@ -50,6 +60,8 @@ export class EngineerList extends Component {
 
   handleSaving = (users) => {
     const { saveEngineers } = this.props;
+    console.log(" saving ......", users)
+
     saveEngineers(users);
   }
 
@@ -68,62 +80,66 @@ export class EngineerList extends Component {
     }
   };
 
- handleDropdownClick = async () => {
-   this.setState({ localUsers: [] });
- }
+  handleDropdownClick = async () => {
+    this.setState({ localUsers: [] });
+  }
 
- render() {
-   const { engineers } = this.props;
-   const { localUsers } = this.state;
-   if (engineers.isLoggedOut === true) {
-     this.handleRedirect();
-   }
-   return (
-     <>
-       <div className="container">
-         <main>
-           <div className="main-wrapper">
-             <div className="top">
-               <h2>Edit My Developers</h2>
-             </div>
-             <div className="relative-div">
-               <input onChange={this.search} type="text" placeholder="Search for developer to add to your list" />
-               <SearchDropDown hideList={this.handleDropdownClick} users={localUsers} />
-             </div>
-             <h4>My List</h4>
-             <div className="mylist">
-               {engineers.engineers.map((eng) => (
-                 <Engineer
-                   key={eng.id}
-                   onDelete={this.handleDelete}
-                   value="-"
-                   engineer={eng}
-                 />
-               ))}
-             </div>
-             <div className="mylist" />
-             <h4>Developers Removed</h4>
-             <div className="mylist">
-               {engineers.removed.map((eng) => (
-                 <Engineer
-                   key={eng.id}
-                   onDelete={this.handleReplacing}
-                   value="+"
-                   engineer={eng}
-                   btnClass="btn-delete"
-                   mainClass="engineer-delete"
-                 />
-               ))}
-             </div>
-             <div>
-               <Link onClick={() => { this.handleSaving(engineers.engineers); }} className="btn">Save My List</Link>
-             </div>
-           </div>
-         </main>
-       </div>
-     </>
-   );
- }
+  render() {
+    const { engineers } = this.props;
+    console.log("Engineers", engineers)
+
+    const { localUsers } = this.state;
+    console.log("local user", localUsers)
+
+    if (engineers.isLoggedOut === true) {
+      this.handleRedirect();
+    }
+    return (
+      <>
+        <div className="container">
+          <main>
+            <div className="main-wrapper">
+              <div className="top">
+                <h2>Edit My Developers</h2>
+              </div>
+              <div className="relative-div">
+                <input onChange={this.search} type="text" placeholder="Search for developer to add to your list" />
+                <SearchDropDown hideList={this.handleDropdownClick} users={localUsers} />
+              </div>
+              <h4>My List</h4>
+              <div className="mylist">
+                {engineers.engineers.map((eng) => (
+                  <Engineer
+                    key={eng.id}
+                    onDelete={this.handleDelete}
+                    value="-"
+                    engineer={eng}
+                  />
+                ))}
+              </div>
+              <div className="mylist" />
+              <h4>Developers Removed</h4>
+              <div className="mylist">
+                {engineers.removed.map((eng) => (
+                  <Engineer
+                    key={eng.id}
+                    onDelete={this.handleReplacing}
+                    value="+"
+                    engineer={eng}
+                    btnClass="btn-delete"
+                    mainClass="engineer-delete"
+                  />
+                ))}
+              </div>
+              <div>
+                <Link onClick={() => { this.handleSaving(engineers.engineers); }} className="btn">Save My List</Link>
+              </div>
+            </div>
+          </main>
+        </div>
+      </>
+    );
+  }
 }
 
 EngineerList.propTypes = {
@@ -136,10 +152,13 @@ EngineerList.propTypes = {
   users: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({ engineersReducer }) => ({
-  engineers: engineersReducer,
-  users: engineersReducer.users,
-});
+const mapStateToProps = ({engineersReducer}) => {
+  console.log("engineers state", engineersReducer)
+  return {
+    engineers: engineersReducer,
+    users: engineersReducer.users,
+  }
+}
 
 const mapDispatchToprops = {
   myEngineers,

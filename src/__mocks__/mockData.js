@@ -1,5 +1,5 @@
 export const newRating = {
-  user: null,
+  trainee: null,
   quality: { rate: null, feedback: '' },
   quantity: { rate: null, feedback: '' },
   initiative: { rate: null, feedback: '' },

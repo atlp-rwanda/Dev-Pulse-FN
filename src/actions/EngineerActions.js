@@ -1,7 +1,8 @@
+
 import axios from 'axios';
 import { FETCH_ENGINEER, FETCH_RATING } from './actionType';
 
-const baseUrl = 'http://dev-rating-manager-staging.herokuapp.com';
+const baseUrl = process.env.API_URL;
 
 export const fetchEngineer = (id) => (dispatch) => {
   const token = localStorage.getItem('pulseToken');
@@ -13,9 +14,11 @@ export const fetchEngineer = (id) => (dispatch) => {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://dev-rating-manager-staging.herokuapp.com',
+      'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
+    console.log("fetching enginener done", response)
+
     dispatch({
       type: FETCH_ENGINEER,
       payload: response.data.data,
@@ -24,6 +27,9 @@ export const fetchEngineer = (id) => (dispatch) => {
 };
 
 export const fetchRating = (id) => (dispatch) => {
+
+
+  
   const token = localStorage.getItem('pulseToken');
   axios.get(`${baseUrl}/api/v1/ratings/${id}`, { // change the url
     method: 'GET',
@@ -33,10 +39,13 @@ export const fetchRating = (id) => (dispatch) => {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://dev-rating-manager-staging.herokuapp.com',
+      'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
+    console.log("fetching rating done", response)
+
     dispatch({
+
       type: FETCH_RATING,
       payload: response.data.data,
     });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://dev-rating-manager-staging.herokuapp.com';
+const baseUrl = process.env.API_URL;
 
 export default function getUsersApi(token) {
   return axios.get(`${baseUrl}/api/v1/users/all`, { // change the url

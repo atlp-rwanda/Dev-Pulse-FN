@@ -18,7 +18,11 @@ class SingleEngineer extends React.Component {
     const { match } = this.props;
     const { id } = match.params;
     const { fetchEngineer, fetchRating } = this.props;
+
     fetchEngineer(id);
+
+
+    console.log("fetchRatings: component")
     fetchRating(id);
   }
 
@@ -215,8 +219,12 @@ SingleEngineer.propTypes = {
   fetchRating: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ engineer }) => ({
+const mapStateToProps = ({ engineer }) => {
+
+  console.log("engineer<><><><>", engineer)
+  return {
   engineer,
-});
+}
+}
 
 export default connect(mapStateToProps, { fetchEngineer, fetchRating })(SingleEngineer);

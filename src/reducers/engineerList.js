@@ -13,10 +13,15 @@ export default (state = initialState, action) => {
   let removed = [];
   let engineers = [];
   switch (type) {
-    case GET_USERS:
+    case GET_USERS:{
+      console.log("all users from reducer, ", payload)
       return { ...state, users: payload };
-    case MY_ENGINEERS:
+    }
+    case MY_ENGINEERS:{
+      console.log("my engineer from reducer, ", payload)
+
       return { ...state, engineers: payload, removed };
+    }
     case REMOVE_ENGINEERS:
       engineers = state.engineers.filter((eng) => eng.id !== payload.id);
       removed = state.removed.concat([payload]);

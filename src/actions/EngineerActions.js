@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { FETCH_ENGINEER, FETCH_RATING } from './actionType';
 
@@ -16,6 +17,8 @@ export const fetchEngineer = (id) => (dispatch) => {
       'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
+    console.log("fetching enginener done", response)
+
     dispatch({
       type: FETCH_ENGINEER,
       payload: response.data.data,
@@ -24,6 +27,9 @@ export const fetchEngineer = (id) => (dispatch) => {
 };
 
 export const fetchRating = (id) => (dispatch) => {
+
+
+  
   const token = localStorage.getItem('pulseToken');
   axios.get(`${baseUrl}/api/v1/ratings/${id}`, { // change the url
     method: 'GET',
@@ -36,7 +42,10 @@ export const fetchRating = (id) => (dispatch) => {
       'Access-Control-Allow-Origin': `${process.env.API_URL}`,
     },
   }).then((response) => {
+    console.log("fetching rating done", response)
+
     dispatch({
+
       type: FETCH_RATING,
       payload: response.data.data,
     });

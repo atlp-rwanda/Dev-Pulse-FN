@@ -1,4 +1,4 @@
-/* eslint-disable react/forbid-prop-types */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,7 +7,7 @@ import { addEngineer } from '../../actions/engineerList';
 class SearchDropDown extends Component {
   handleClick = ({ target }) => {
     const { addEngineer, hideList } = this.props;
-    const engineer = { name: target.textContent, id: target.attributes.userid.value };
+    const engineer = { email: target.textContent, id: target.attributes.userid.value };
     addEngineer(engineer);
     hideList();
   }
@@ -16,7 +16,7 @@ class SearchDropDown extends Component {
     const { users } = this.props;
     return (
       <div className="drop-down">
-        {users.map((user) => <label onClick={this.handleClick} className="drop-down-user" userid={user.id} key={user.id}>{user.name}</label>)}
+        {users.map((user) => <label onClick={this.handleClick} className="drop-down-user" userid={user.id} key={user.id}>{user.name} {' '} {user.email}</label>)}
       </div>
     );
   }

@@ -10,7 +10,9 @@ import {
   REDIRECT_USER,
 } from './actionType';
 
-const editUsers = (users) => users.map((eng) => ({ id: eng.id, name: `${eng.firstName} ${eng.lastName}` }));
+
+
+const editUsers = (users) => users.map((eng) => ({ id: eng.id, name: `${eng.firstName} ${eng.lastName}`, email: eng.email }));
 
 export const myEngineers = () => (dispatch) => {
   console.log("In  myEngineers ===>")
@@ -56,7 +58,7 @@ export const replaceEngineer = (user) => (dispatch) => {
 
 export const saveEngineers = (engineers) => (dispatch) => {
   const token = localStorage.getItem('pulseToken');
-console.log( "Going to save Engineers", engineers)
+  console.log("Going to save Engineers", engineers)
   dispatch({
     type: SAVE_ENGINEERS,
     payload: engineers,

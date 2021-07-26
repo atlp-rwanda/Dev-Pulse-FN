@@ -18,10 +18,10 @@ const Engineer = ({
   mainClass,
 }) => (
 
-  <div className={mainClasses(mainClass)}>
+  <div className={mainClasses(mainClass)} style={{ width: 400 }}>
     <button onClick={() => onDelete(engineer)} className={btnClasses(btnClass)} type="button">{value}</button>
     <p>
-      {engineer.name}
+      {engineer.email} {' '}
     </p>
   </div>
 );

@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TableContent from './tableContent';
 import { getEngineers } from '../actions/getEngineers';
+import {
+  myEngineers,
+} from '../actions/engineerList';
+
 
 class Table extends Component {
   componentDidMount() {
-    this.props.getEngineers();
+    this.props.getRatings(); 
+    this.props.getMyEngineers();
   }
 
   render() {
@@ -20,13 +25,24 @@ class Table extends Component {
       'Proffesionalism',
       'Rating',
     ];
+
+
+    const { engineers } = this.props;
+    const { myEngineerslist } = this.props;
+
+    /**
+     * Filter all rated engineers to remain with only your Team
+     */
+    const ratableEngineers = engineers.filter( el => {
+      return myEngineerslist.some( f => {
+        return f.id === el.user.id
+      });
+    });
+
     const items = [];
-
-    const { engineers } = this.props.engineers;
-
     try {
-      engineers.map((engineer) => {
-        console.log("enginerrrrrrr++++++++++", engineer.user)
+      ratableEngineers.map((engineer) => {
+       
         const engineerRatings = {};
         engineerRatings.id = engineer.user.id
         engineerRatings.name = `${engineer.user.firstName} ${engineer.user.lastName}`,
@@ -38,8 +54,6 @@ class Table extends Component {
           engineerRatings.communication = engineer.communication,
           engineerRatings.integration = engineer.integration,
         ];
-        console.log("engineerRatings "  ,engineerRatings)
-
         items.push(engineerRatings);
       },);
     } catch (ex) {
@@ -62,9 +76,12 @@ class Table extends Component {
   }
 }
 
-const mapStateToProps = ({ getRatings }) => ({
-  engineers: getRatings,
+const mapStateToProps = ({ getRatings ,engineersReducer}) => ({
+
+  engineers: getRatings.engineers,
+  myEngineerslist: engineersReducer.engineers,
+
 });
 
 export { Table as EngineerTable };
-export default connect(mapStateToProps, { getEngineers })(Table);
+export default connect(mapStateToProps, { getRatings:getEngineers, getMyEngineers: myEngineers   })(Table);

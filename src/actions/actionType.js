@@ -18,3 +18,22 @@ export const REDIRECT_USER = 'REDIRECT_USER';
 export const RATE_ENGINEER_SUCCESS = 'RATE_ENGINEER_SUCCESS';
 export const UPDATE_RATING_SUCCESS = 'UPDATE_RATING_SUCCESS';
 export const FETCH_RATING = 'FETCH_RATING';
+
+
+// constants used to flash message by felix
+
+export const SAVE_ENGINEERS_REQUEST = ' SAVE_ENGINEERS_REQUEST';
+export const SAVE_ENGINEERS_SUCCESS = 'SAVE_ENGINEERS_SUCCESS';
+export const SAVE_ENGINEERS_FAILURE = 'SAVE_ENGINEERS_FAILURE';
+
+// constants to delete a trainee from the list by felix
+export const REMOVE_ENGINEERS_REQUEST = 'REMOVE_ENGINEERS_REQUEST';
+export const REMOVE_ENGINEERS_SUCCESS = 'REMOVE_ENGINEERS_SUCCESS';
+export const REMOVE_ENGINEERS_FAILURE = 'REMOVE_ENGINEERS_FAILURE';
+
+
+//constants for alert dialog by felix
+export const SUCCESS = 'ALERT_SUCCESS';
+export const ERROR = 'ALERT_ERROR';
+export const CLEAR = 'ALERT_CLEAR';
+

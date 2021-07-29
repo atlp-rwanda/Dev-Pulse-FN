@@ -79,7 +79,7 @@ export const saveEngineers = (engineers) => (dispatch) => {
 
   axios.post(`${process.env.API_URL}/api/v1/group`, body, config)
     .then((res) => {
-      //console.log(res.data);
+      console.log(res.data);
       /*** display message when success */
       dispatch(alertMessageActions.success('Engineers saved successfully'))
     })

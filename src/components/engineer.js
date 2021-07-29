@@ -25,7 +25,7 @@ const Engineer = ({
   <div className={mainClasses(mainClass)} style={{ width: 400 }}>
     <button onClick={() => onDelete(engineer)} className={btnClasses(btnClass)} type="button">{value}</button>
     <p onClick={() => handleNameClicked(engineer.id)} className="tooltip">
-      {engineer.email} {' '}
+      {engineer.name} {' '} {engineer.email}{' '}
       <span class="tooltiptext">Click for rating the Trainee</span>
     </p>
   </div>

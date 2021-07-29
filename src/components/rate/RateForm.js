@@ -18,7 +18,7 @@ const RateForm = ({ onRate, rating, onChange, engineer }) => {
       </div>
       <div className="flex-parent">
         {rateSpec.map(rate => (
-          <CategoryElement key={rate} category={rate} onChange={onChange}/>
+          <CategoryElement key={rate} category={rate} onChange={onChange} />
         ))}
       </div>
       <div>

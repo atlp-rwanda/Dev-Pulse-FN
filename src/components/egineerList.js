@@ -1,13 +1,16 @@
 /* eslint-disable react/forbid-prop-types */
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../styles/listTrainee.css';
 import SearchDropDown from './shared/SearchDropDown';
 import Engineer from './engineer';
 import {
   myEngineers, deleteEngineer, replaceEngineer, saveEngineers, getUsers,
 } from '../actions/engineerList';
+
 
 export class EngineerList extends Component {
   constructor(props) {
@@ -23,10 +26,6 @@ export class EngineerList extends Component {
     console.log("My users", users)
 
 
-
-
-
-    
     if (users.length === 0) {
       console.log("getting users=====>")
       getUsers();
@@ -38,19 +37,21 @@ export class EngineerList extends Component {
     history.push('/login');
   }
 
-  handleRedirect = () => {
+  handleRedirectToRatingDetails = (userId) => {
     const { history } = this.props;
-    history.push('/login');
-  }
-
-  handleRedirect = () => {
-    const { history } = this.props;
-    history.push('/login');
+    history.push(`/ratings/rate/${userId}`);
   }
 
   handleDelete = (user) => {
     const { deleteEngineer } = this.props;
-    deleteEngineer(user);
+
+    deleteEngineer(user)
+
+
+  }
+  handleClickedName = (user) => {
+    const { deleteEngineer } = this.props;
+    this.handleRedirectToRatingDetails(user)
   }
 
   handleReplacing = (user) => {
@@ -62,7 +63,8 @@ export class EngineerList extends Component {
     const { saveEngineers } = this.props;
     console.log(" saving ......", users)
 
-    saveEngineers(users);
+    saveEngineers(users)
+
   }
 
   search = (e) => {
@@ -85,7 +87,8 @@ export class EngineerList extends Component {
   }
 
   render() {
-    const { engineers } = this.props;
+    const { engineers, alertMessage } = this.props;
+
     console.log("Engineers", engineers)
 
     const { localUsers } = this.state;
@@ -100,6 +103,7 @@ export class EngineerList extends Component {
           <main>
             <div className="main-wrapper">
               <div className="top">
+
                 <h2>Edit My Developers</h2>
               </div>
               <div className="relative-div">
@@ -107,11 +111,34 @@ export class EngineerList extends Component {
                 <SearchDropDown hideList={this.handleDropdownClick} users={localUsers} />
               </div>
               <h4>My List</h4>
+
+              {alertMessage.type == 'alert-success' ? (
+                <div class="alert success">
+                  <input type="checkbox" id="alert2" />
+                  <label class="close" title="close" for="alert2">
+                    <i class="icon-remove"></i>
+                  </label>
+                  <p class="inner">
+                    {alertMessage.message}.
+                  </p>
+                </div>
+              ) : alertMessage.type == 'alert-danger' ? (
+                <div class="alert error">
+                  <input type="checkbox" id="alert1" />
+                  <label class="close" title="close" for="alert1">
+                    <i class="icon-remove"></i>
+                  </label>
+                  <p class="inner">
+                    <strong>Warning!</strong> {alertMessage.message}
+                  </p>
+                </div>
+              ) : <></>}
               <div className="mylist">
                 {engineers.engineers.map((eng) => (
                   <Engineer
                     key={eng.id}
                     onDelete={this.handleDelete}
+                    handleNameClicked={this.handleClickedName}
                     value="-"
                     engineer={eng}
                   />
@@ -150,13 +177,15 @@ EngineerList.propTypes = {
   saveEngineers: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
+
 };
 
-const mapStateToProps = ({engineersReducer}) => {
+const mapStateToProps = ({ engineersReducer, alertMessage }) => {
   console.log("engineers state", engineersReducer)
   return {
     engineers: engineersReducer,
     users: engineersReducer.users,
+    alertMessage: alertMessage,
   }
 }
 
@@ -166,6 +195,7 @@ const mapDispatchToprops = {
   replaceEngineer,
   saveEngineers,
   getUsers,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToprops)(EngineerList);

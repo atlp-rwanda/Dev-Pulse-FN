@@ -6,6 +6,8 @@ import EngineerReducer from './EngineerReducer';
 import fetchProfileReducer from './fetchProfileReducer';
 import ratingReducer from './ratingReducer';
 import createLFReducer from './createLFReducer';
+import { alertMessageReducer } from './alertMessageReducer';
+
 
 export default combineReducers({
   auth: authReducer,
@@ -15,4 +17,5 @@ export default combineReducers({
   ratings: ratingReducer,  // to me merged with getRatingsReducer
   createLF: createLFReducer,
   profile: fetchProfileReducer,
+  alertMessage: alertMessageReducer,//flashing message
 });

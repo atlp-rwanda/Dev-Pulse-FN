@@ -68,7 +68,8 @@ class ManageRatingsPage extends React.Component {
     if (myEngineerslist[0] && !this.state.email) { // from my list
       engineer = getEngineerById(myEngineerslist, engineerId);
       console.log("engineer====<><><> from my engineers", engineer)
-      this.setState({ name: engineer.firstName, email: engineer.email });
+      const fullname = `${engineer.firstName} ${''} ${lastName}`
+      this.setState({ name: fullname, email: engineer.email });
 
     }
 

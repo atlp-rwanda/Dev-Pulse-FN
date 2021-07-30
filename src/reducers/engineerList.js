@@ -24,6 +24,8 @@ export default (state = initialState, action) => {
       return { ...state, users: payload };
     }
     case MY_ENGINEERS: {
+      // console.log("my engineer from reducer, ", payload)
+
       return { ...state, engineers: payload, removed };
     }
 

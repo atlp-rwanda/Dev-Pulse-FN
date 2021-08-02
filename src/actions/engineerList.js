@@ -1,28 +1,32 @@
-import axios from 'axios';
-import getUsersApi from '../api/usersApi';
+import axios from "axios";
+import getUsersApi from "../api/usersApi";
 import {
-  MY_ENGINEERS, REMOVE_ENGINEERS, REPLACE_ENGINEERS, SAVE_ENGINEERS, GET_USERS,
-  ADD_ENGINEER, REDIRECT_USER,
-  SAVE_ENGINEERS_REQUEST, SAVE_ENGINEERS_SUCCESS, SAVE_ENGINEERS_FAILURE,
-  REMOVE_ENGINEERS_REQUEST, REMOVE_ENGINEERS_SUCCESS, REMOVE_ENGINEERS_FAILURE
-} from './actionType';
+  MY_ENGINEERS,
+  REMOVE_ENGINEERS,
+  REPLACE_ENGINEERS,
+  SAVE_ENGINEERS,
+  GET_USERS,
+  ADD_ENGINEER,
+  REDIRECT_USER,
+} from "./actionType";
 
-import { alertMessageActions } from '../actions/alertMessageAction'
-
-
-
-const editUsers = (users) => users.map((eng) => ({ id: eng.id, name: `${eng.firstName} ${eng.lastName}`, email: eng.email }));
+const editUsers = (users) =>
+  users.map((eng) => ({
+    id: eng.id,
+    name: `${eng.firstName} ${eng.lastName}`,
+  }));
 
 export const myEngineers = () => (dispatch) => {
-  console.log("In  myEngineers ===>")
-  const token = localStorage.getItem('pulseToken');
+  console.log("In  myEngineers ===>");
+  const token = localStorage.getItem("pulseToken");
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
-  axios.get(`${process.env.API_URL}/api/v1/users`, config)
+  axios
+    .get(`${process.env.API_URL}/api/v1/users`, config)
     .then((res) => {
       const engineers = editUsers(res.data.data);
       dispatch({
@@ -31,8 +35,8 @@ export const myEngineers = () => (dispatch) => {
       });
     })
     .catch((error) => {
-      console.log("Error==>", error.response);
-      if (error.response.status === 401) {
+      console.log("Error==>", error);
+      if (error.status === 401) {
         dispatch({
           type: REDIRECT_USER,
           payload: { isLoggedOut: true },

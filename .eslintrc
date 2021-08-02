@@ -12,7 +12,7 @@
       }
     },
     "plugins": [
-      "react"
+      "react","node:recommended"
   ],
     "globals": {
       "Atomics": "readonly",

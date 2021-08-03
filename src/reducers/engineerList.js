@@ -6,12 +6,14 @@ import {
   GET_USERS,
   ADD_ENGINEER,
   REDIRECT_USER,
+
 } from "../actions/actionType";
 
 const initialState = {
   engineers: [],
   removed: [],
   users: [],
+  flashMessage: '',
   isLoggedOut: false,
 };
 
@@ -19,6 +21,7 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
   let removed = [];
   let engineers = [];
+  const message = '';
 
   switch (type) {
     case GET_USERS: {
@@ -40,7 +43,7 @@ export default (state = initialState, action) => {
       return { ...state, engineers, removed };
 
     case SAVE_ENGINEERS:
-      return { ...state, engineers: payload, removed };
+      return { ...state, engineers: payload, removed, message: action.flashMessage };
 
     case ADD_ENGINEER:
       return state.engineers.some(

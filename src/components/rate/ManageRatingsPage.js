@@ -43,7 +43,7 @@ class ManageRatingsPage extends React.Component {
 
 		const engineerId = this.props.rating.trainee;
 		let engineer = getEngineerById(allEngineers, engineerId);
-		console.log("Engineer here from the existing ratings =====>", engineer);
+		//console.log("Engineer here from the existing ratings =====>", engineer);
 		//console.log("enginner", engineer)
 		if (engineer && false)
 			this.state.name = `${engineer.trainee.firstName} ${engineer.trainee.lastName}`;
@@ -54,7 +54,7 @@ class ManageRatingsPage extends React.Component {
 
 		if (myEngineerslist[0] && !this.state.name) {
 			// from my list
-			console.log("list of eng", myEngineerslist[0]);
+			//console.log("list of eng", myEngineerslist[0]);
 			engineer = getEngineerById(myEngineerslist, engineerId);
 			console.log("engineer====<><><> from my engineers", engineer);
 			this.setState({ name: engineer.name });
@@ -152,8 +152,8 @@ const getEngineerById = (engineers, id) => {
 	const engineer_ = engineers.find(
 		(engineer) => engineer.trainee === id || engineer.id === id
 	);
-	console.log("engineers", engineers);
-	console.log("choosen engineer", engineer_);
+	//console.log("engineers", engineers);
+	//console.log("choosen engineer", engineer_);
 
 	return engineer_;
 };

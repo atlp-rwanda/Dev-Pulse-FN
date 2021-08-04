@@ -8,6 +8,7 @@ import Engineer from './engineer';
 import {
   myEngineers, deleteEngineer, replaceEngineer, saveEngineers, getUsers,
 } from '../actions/engineerList';
+import '../styles/myEngineers.css';
 
 export class EngineerList extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export class EngineerList extends Component {
 
 
 
-    
+
     if (users.length === 0) {
       console.log("getting users=====>")
       getUsers();
@@ -84,6 +85,15 @@ export class EngineerList extends Component {
     this.setState({ localUsers: [] });
   }
 
+  /** redirect to user's rating when you click on trainee  */
+  handleRedirectToRatingDetails = (userId) => {
+    const { history } = this.props;
+    history.push(`/ratings/rate/${userId}`);
+  }
+  handleClickedName = (userid) => {
+    this.handleRedirectToRatingDetails(userid)
+  }
+
   render() {
     const { engineers } = this.props;
     console.log("Engineers", engineers)
@@ -107,11 +117,24 @@ export class EngineerList extends Component {
                 <SearchDropDown hideList={this.handleDropdownClick} users={localUsers} />
               </div>
               <h4>My List</h4>
+              {engineers.message && (
+                <div class="alert success">
+                  <input type="checkbox" id="alert2" />
+                  <label class="close" title="close" for="alert2">
+                    <i class="icon-remove"></i>
+                  </label>
+                  <p class="inner">
+                    {engineers.message}.
+                  </p>
+                </div>
+              )}
+
               <div className="mylist">
                 {engineers.engineers.map((eng) => (
                   <Engineer
                     key={eng.id}
                     onDelete={this.handleDelete}
+                    handleNameClicked={this.handleClickedName}
                     value="-"
                     engineer={eng}
                   />
@@ -152,7 +175,7 @@ EngineerList.propTypes = {
   users: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({engineersReducer}) => {
+const mapStateToProps = ({ engineersReducer }) => {
   console.log("engineers state", engineersReducer)
   return {
     engineers: engineersReducer,

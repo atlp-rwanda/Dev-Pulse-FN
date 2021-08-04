@@ -15,4 +15,5 @@ export default combineReducers({
   ratings: ratingReducer,  // to me merged with getRatingsReducer
   createLF: createLFReducer,
   profile: fetchProfileReducer,
+
 });

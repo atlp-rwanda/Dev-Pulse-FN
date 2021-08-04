@@ -13,15 +13,16 @@ function mainClasses(mainClass) {
 const Engineer = ({
   value,
   onDelete,
+  handleNameClicked,
   engineer,
   btnClass,
   mainClass,
 }) => (
 
-  <div className={mainClasses(mainClass)}>
+  <div className={mainClasses(mainClass)} style={{ width: 400 }}>
     <button onClick={() => onDelete(engineer)} className={btnClasses(btnClass)} type="button">{value}</button>
-    <p>
-      {engineer.name}
+    <p onClick={() => handleNameClicked(engineer.id)}>
+      {engineer.name} {' '}{engineer.email}
     </p>
   </div>
 );

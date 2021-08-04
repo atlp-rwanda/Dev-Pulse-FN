@@ -8,12 +8,14 @@ import {
 	GET_USERS,
 	ADD_ENGINEER,
 	REDIRECT_USER,
+
 } from "./actionType";
 
 const editUsers = (users) =>
 	users.map((eng) => ({
 		id: eng.id,
 		name: `${eng.firstName} ${eng.lastName}`,
+		email: eng.email,
 	}));
 
 export const myEngineers = () => (dispatch) => {
@@ -65,7 +67,9 @@ export const saveEngineers = (engineers) => (dispatch) => {
 	dispatch({
 		type: SAVE_ENGINEERS,
 		payload: engineers,
+		flashMessage: 'Successfully saved',
 	});
+
 	const engineerIds = engineers.map((eng) => eng.id);
 	const config = {
 		headers: {
@@ -78,18 +82,21 @@ export const saveEngineers = (engineers) => (dispatch) => {
 	axios
 		.post(`${process.env.API_URL}/api/v1/group`, body, config)
 		.then((res) => {
-			console.log(res);
 			console.log(res.data);
+			//dispatch(alertMessageActions.success('Successfully saved!'))
+
 		})
 		.catch((error) => {
-			console.log("Errorrrrrrr=>");
-			console.log(error.response.status);
+			//console.log("Errorrrrrrr=>");
+			//console.log(error.response.status);
 			if (error.response.status === 401) {
 				dispatch({
 					type: REDIRECT_USER,
 					payload: { isLoggedOut: true },
 				});
 			}
+			/*** show a failure message */
+			dispatch(alertMessageActions.error(error.toString()));
 		});
 };
 
@@ -117,3 +124,4 @@ export const addEngineer = (engineer) => (dispatch) => {
 		payload: engineer,
 	});
 };
+

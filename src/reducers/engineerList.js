@@ -6,8 +6,7 @@ import {
   GET_USERS,
   ADD_ENGINEER,
   REDIRECT_USER,
-
-} from "../actions/actionType";
+} from '../actions/actionType';
 
 const initialState = {
   engineers: [],
@@ -33,28 +32,45 @@ export default (state = initialState, action) => {
     }
 
     case REMOVE_ENGINEERS:
-      engineers = state.engineers.filter((eng) => eng.id !== payload.id);
+      engineers = state.engineers.filter(
+        (eng) => eng.id !== payload.id
+      );
       removed = state.removed.concat([payload]);
       return { ...state, engineers, removed };
 
     case REPLACE_ENGINEERS:
-      removed = state.removed.filter((eng) => eng.id !== payload.id);
+      removed = state.removed.filter(
+        (eng) => eng.id !== payload.id
+      );
       engineers = state.engineers.concat([payload]);
       return { ...state, engineers, removed };
 
     case SAVE_ENGINEERS:
-      return { ...state, engineers: payload, removed, message: action.flashMessage };
+      return {
+        ...state,
+        engineers: payload,
+        removed,
+        message: action.flashMessage,
+      };
 
     case ADD_ENGINEER:
       return state.engineers.some(
-        (eng) => parseInt(eng.id, 10) === parseInt(payload.id, 10)
+        (eng) =>
+          parseInt(eng.id, 10) === parseInt(payload.id, 10)
       )
         ? state
-        : { ...state, engineers: [...state.engineers, payload] };
+        : {
+            ...state,
+            engineers: [...state.engineers, payload],
+          };
 
     case REDIRECT_USER:
-      localStorage.removeItem("pulseToken");
-      return { ...state, isLoggedOut: payload.isLoggedOut, removed };
+      localStorage.removeItem('pulseToken');
+      return {
+        ...state,
+        isLoggedOut: payload.isLoggedOut,
+        removed,
+      };
 
     default:
       return state;

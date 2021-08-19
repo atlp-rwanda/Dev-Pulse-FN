@@ -1,0 +1,147 @@
+:root{
+    --spacebetween: 10px;
+}
+
+.addRemoveWrapper{
+    // border: 2px solid red;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    // background-color: white;
+    .addSection, .removeSection{
+        width: 40%;
+        .MuiAccordion-root.Mui-expanded{
+            // border: 2px solid red;
+            margin: 0;
+        }
+    }
+    .addSection{
+        margin-right: 10px;
+        min-width: 200px;
+    }
+    .removeSection{
+        min-width: 200px;
+    }
+    h3{
+        background-color: white;
+        width: 100%;
+        color: #3359DE;
+    }
+    .addButton{
+        background-color:#3359DE ;
+        text-transform: capitalize;
+        width: 150px;
+        margin: 10px 0;
+    }
+    .removeButton{
+        background-color: #DE335C;
+        text-transform: capitalize;
+        width: 150px;
+        margin: 10px 0;
+        &:hover{
+            background-color: #af1d3f;
+        }
+    }
+}
+.addWrapper, .removeWrapper{
+    display: flex;
+    flex-direction: column;
+    .autoCompleteInput{
+        background-color: #fff;
+        .MuiOutlinedInput-root{
+            background-color: #fff;
+        }
+        .MuiAutocomplete-endAdornment{
+            background-color: #fff;
+        }
+    }
+}
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    // border: 1px solid red;
+    padding: 0 2rem;
+    .viewEmailsContainer{
+        min-height: 300px;
+        max-height: 300px;
+        overflow: auto;
+        width: 100%;
+        // border: 1px solid blue;
+        padding: 1rem;
+        h3{
+            margin: 10px 0;
+        }
+        .allEmails{
+            display: flex;
+            background-color:  white;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            width: 50%;
+            border: 2px solid rgba(0, 110, 255, 0.433);
+            .eachEmail{
+                // border: 1px solid black;
+                width: auto;
+                margin: 5px;
+                display: flex;
+                justify-content: space-between;
+                padding: 0.4rem 1rem;
+                background-color: #bcc8f5;
+                color: #000;
+                .removeIcon{
+                    margin-left:var(--spacebetween) ;
+                    visibility: hidden;
+                }
+                .removeIcon:hover{
+                    cursor: pointer;
+                }
+                button{
+                    border: none;
+                    background-color: transparent;
+
+
+
+                }
+
+            }
+            .eachEmail:hover{
+                .removeIcon{
+                    visibility: visible ;
+                }
+            }
+        }
+    }
+}
+
+.confirmDialogModal {
+    background: none;
+    .MuiDialog-container{
+        background: rgba(0,0,0,0.5);
+    }
+}
+.successSnackbar{
+    .MuiSnackbarContent-root{
+        background-color: rgb(49, 172, 53);
+        .MuiSnackbarContent-message{
+            background-color: rgb(49, 172, 53);
+        }
+        .MuiSnackbarContent-action{
+            background-color: rgb(49, 172, 53);
+        }
+    }
+}
+.errorSnackbar{
+    .MuiSnackbarContent-root{
+        background-color: rgb(214, 73, 73);
+        .MuiSnackbarContent-message{
+            background-color: rgb(214, 73, 73);
+        }
+        .MuiSnackbarContent-action{
+            background-color: rgb(214, 73, 73);
+        }
+    }
+}

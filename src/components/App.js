@@ -17,6 +17,8 @@ import '../styles/authLogin.scss';
 import PrivateRoute from './PrivateRoute';
 import EngineerList from './egineerList';
 import AuthPage from './AuthPage';
+import AdminDashboard from './AdminDashboard';
+import AuthorizeEmails from './AuthorizeEmails';
 
 const store = configureStore();
 
@@ -44,6 +46,8 @@ class App extends Component {
             <Route path="/login" component={AuthPage} />
             <Route path="/add-lf" component={AddLf} />
             <PrivateRoute path="/profile" component={HomePage} />
+            <PrivateRoute path="/admin" component={AdminDashboard} />
+            <PrivateRoute path="/emails" component={AuthorizeEmails}/>
             <Route path="/users/:id" component={singleEngineer} />
             <PrivateRoute path="/ratings/rate/:engId" component={ManageRatingsPage} />
             <PrivateRoute exact path="/list" component={EngineerList} />

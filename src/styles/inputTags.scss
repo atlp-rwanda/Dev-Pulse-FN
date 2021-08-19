@@ -1,0 +1,53 @@
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: auto;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 14px;
+    border: 1px grey solid;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+  }
+  
+  .tagContainer input {
+    width: 100%;
+    min-width: 50%;
+    border: none;
+    border-radius: 5px;
+    padding: 14px;
+    padding-left: 14px;
+    outline: none;
+  }
+  
+  .tag {
+    display: flex;
+    align-items: center;
+    margin: 7px 0;
+    margin-right: 10px;
+    padding: 5px 10px;
+    padding-right: 5px;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.2);
+    white-space: nowrap;
+    color: black;
+    font-size: 0.8rem;
+  }
+  
+  .tag button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    &:hover{
+        background-color: #a7b8f5;
+    }
+  }
+  

@@ -7,6 +7,12 @@ import fetchProfileReducer from './fetchProfileReducer';
 import ratingReducer from './ratingReducer';
 import createLFReducer from './createLFReducer';
 import emailsList from './emailListReducer';
+import cohorts from './cohorts';
+import programs from './programs'
+import attendance from './attendance';
+import sessions from './sessions';
+
+
 
 export default combineReducers({
   auth: authReducer,
@@ -17,4 +23,8 @@ export default combineReducers({
   createLF: createLFReducer,
   profile: fetchProfileReducer,
   emailList: emailsList,
+  cohorts,
+  programs,
+  attendance,
+  sessions
 });

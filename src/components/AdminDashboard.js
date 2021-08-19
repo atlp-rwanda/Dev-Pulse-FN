@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import Header from './shared/Header';
 import { People } from '@material-ui/icons';
+import { ListAlt } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 220;
@@ -46,6 +47,11 @@ const sideMenus = [
     text: 'Cohorts',
     icon: <People />,
     link: '/admin/cohorts',
+  },
+  {
+    text: 'Sessions',
+    icon: <ListAlt />,
+    link: '/admin/sessions',
   },
 ];
 

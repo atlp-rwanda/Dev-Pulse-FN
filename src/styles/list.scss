@@ -10,6 +10,7 @@ $colors: (
   light-grey: #dbdbdb,
 );
 $shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
+
 @function color($name) {
   @return map-get($colors, $name);
 }
@@ -38,15 +39,18 @@ html {
   padding: 10px 40px;
   cursor: pointer;
 }
+
 .btn-smallest {
   padding: 0 5px;
   margin-right: 20px;
   font-size: 18px;
   height: 25px;
 }
+
 .btn-delete {
   background-color: darken(color(text-secondary), 10%);
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -80,11 +84,13 @@ html {
 .m-1 {
   margin-left: 5px;
 }
+
 .container {
   height: 100%;
   margin: auto;
   max-width: 1200px;
 }
+
 .main-wrapper {
   box-shadow: $shadow;
   margin: 10px;
@@ -139,6 +145,7 @@ html {
     background-color: lighten(color(delete), 20%);
   }
 }
+
 .drop-down {
   width: 100%;
   max-height: 300px;
@@ -148,12 +155,14 @@ html {
   position: absolute;
   top: 29.4px;
 }
+
 .drop-down-user {
   font-size: 18px;
   padding: 10px;
   font-weight: bold;
   display: block;
 }
+
 .drop-down-user:hover {
   background-color: color(light-grey);
 }
@@ -198,3 +207,4 @@ html {
     color: #3359de;
   }
 }
+

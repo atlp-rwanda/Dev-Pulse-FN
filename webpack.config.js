@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { API_URL } = process.env;
+const { API_URL,JWT_KEY } = process.env;
 
 module.exports = {
   entry: './src/index.js',
@@ -48,7 +48,7 @@ module.exports = {
       template: './public/index.html',
     }),
     new webpack.DefinePlugin({
-      'process.env': { API_URL: JSON.stringify(API_URL) },
+      'process.env': { API_URL: JSON.stringify(API_URL),JWT_KEY:JSON.stringify(JWT_KEY)},
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined

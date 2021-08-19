@@ -26,7 +26,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       //"process.env.API_URL": JSON.stringify('https://dev-rating-manager-staging.herokuapp.com/api/v1/')
-      "process.env.API_URL": JSON.stringify('http://localhost:3000')
+      "process.env.API_URL": JSON.stringify('http://localhost:3000'),
+      "process.env.JWT_KEY": JSON.stringify('secret'),
 
     }),
     new HtmlWebpackPlugin({

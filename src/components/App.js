@@ -21,6 +21,10 @@ import AdminDashboard from './AdminDashboard';
 import AuthorizeEmails from './AuthorizeEmails';
 import ManageCohorts from './ManageCohorts';
 import { fetchCohorts, fetchPrograms } from '../actions/EngineerActions';
+import Attendance from './attendance/Attendance';
+import AttendanceForm from './attendance/AttendanceForm'
+import TraineeView from './attendance/TraineeView';
+import Sessions from './Sessions';
 
 class App extends Component {
   static propTypes = {
@@ -68,6 +72,10 @@ class App extends Component {
             component={ManageRatingsPage}
           />
           <PrivateRoute exact path='/list' component={EngineerList} />
+          <PrivateRoute exact path='/attendance' component={Attendance} />
+          <PrivateRoute exact path='/attendance/new' component={AttendanceForm} />
+          <PrivateRoute exact path='/attendance/trainee/:id' component={TraineeView} />
+          <PrivateRoute exact path='/admin/sessions' component={Sessions} />
           <Route component={NotFoundPage} />
         </Switch>
       </>

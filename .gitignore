@@ -38,3 +38,4 @@ node_modules
 src/dist
 .vscode 
 build
+public/files

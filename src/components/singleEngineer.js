@@ -53,20 +53,13 @@ class SingleEngineer extends React.Component {
           const engineerRatings = {};
           engineerRatings.feedback = {};
           (engineerRatings.id = engineer.id),
-            (engineerRatings.date =
-              engineer.updatedAt.split('T')[0]),
-            (engineerRatings.quality =
-              engineer.quality.rate),
-            (engineerRatings.quantity =
-              engineer.quantity.rate),
-            (engineerRatings.initiative =
-              engineer.initiative.rate),
-            (engineerRatings.professionalism =
-              engineer.professionalism.rate),
-            (engineerRatings.communication =
-              engineer.communication.rate),
-            (engineerRatings.integration =
-              engineer.integration.rate),
+            (engineerRatings.date = engineer.updatedAt.split('T')[0]),
+            (engineerRatings.quality = engineer.quality.rate),
+            (engineerRatings.quantity = engineer.quantity.rate),
+            (engineerRatings.initiative = engineer.initiative.rate),
+            (engineerRatings.professionalism = engineer.professionalism.rate),
+            (engineerRatings.communication = engineer.communication.rate),
+            (engineerRatings.integration = engineer.integration.rate),
             (engineerRatings.average = (
               (engineer.quality.rate +
                 engineer.quantity.rate +
@@ -93,16 +86,11 @@ class SingleEngineer extends React.Component {
           const feedback = {};
           (feedback.id = engineer.id),
             (feedback.quality = engineer.quality.feedback),
-            (feedback.quantity =
-              engineer.quantity.feedback),
-            (feedback.initiative =
-              engineer.initiative.feedback),
-            (feedback.professionalism =
-              engineer.professionalism.feedback),
-            (feedback.communication =
-              engineer.communication.feedback),
-            (feedback.integration =
-              engineer.integration.feedback),
+            (feedback.quantity = engineer.quantity.feedback),
+            (feedback.initiative = engineer.initiative.feedback),
+            (feedback.professionalism = engineer.professionalism.feedback),
+            (feedback.communication = engineer.communication.feedback),
+            (feedback.integration = engineer.integration.feedback),
             items.push(feedback);
         });
       }
@@ -112,50 +100,22 @@ class SingleEngineer extends React.Component {
     }
   };
 
-  handleRate = (array) => {
-    console.log(
-      'check ifwe have programs in ratings',
-      array
-    );
-    try {
-      const items = [];
-      if (array.length > 0 && array !== undefined) {
-        array.map((engineer) => {
-          const engineerRatings = {};
-          (engineerRatings.date = 'Average'),
-            (engineerRatings.quality = engineer.quality),
-            (engineerRatings.quantity = engineer.quantity),
-            (engineerRatings.initiative =
-              engineer.initiative),
-            (engineerRatings.professionalism =
-              engineer.professionalism),
-            (engineerRatings.communication =
-              engineer.communication),
-            (engineerRatings.integration =
-              engineer.integration),
-            (engineerRatings.average =
-              engineer.averageRating),
-            items.push(engineerRatings);
-        });
-      }
-      return items;
-    } catch (ex) {
-      console.log(ex);
-    }
+  handleRate = (rate) => {
+    if (!rate) return [];
+    const { averageRating: average, ...rest } = rate;
+
+    return [{ ...rest, date: 'Average', average }];
   };
 
   feed = (feedback) => {
     if (feedback !== undefined) {
       return (
-        <div className="modal">
-          <div className="modal-content">
-            <span
-              className="close"
-              onClick={() => this.closeModal()}
-            >
+        <div className='modal'>
+          <div className='modal-content'>
+            <span className='close' onClick={() => this.closeModal()}>
               &times;
             </span>
-            <table className="tab">
+            <table className='tab'>
               <tbody>
                 <tr>
                   <td>Quality</td>
@@ -217,16 +177,22 @@ class SingleEngineer extends React.Component {
     const average = this.handleRate(engineer.average);
     const feedback = this.handleFeedback(engineer.ratings);
 
-    console.log('This is feedback', feedback);
-    console.log('this is items', items);
+    const selectedProgName =
+      (engineer.programs &&
+        this.props.selectedProgName &&
+        engineer.programs.find((p) => p.id === this.props.selectedProgram)) ||
+      '';
+    const programm =
+      engineer.programs &&
+      engineer.programs.find(({ id }) => id === this.props.selectedProgram);
 
     return (
       <>
-        <div className="container">
+        <div className='container'>
           {this.feed(feedback)}
           <div>
             <ul
-              className="profile-bar tableHeader light-box-shadow"
+              className='profile-bar tableHeader light-box-shadow'
               style={{
                 display: 'flex',
                 fontSize: '14px',
@@ -234,45 +200,50 @@ class SingleEngineer extends React.Component {
                 alignItems: 'center',
               }}
             >
-              <li className="profile-bar-item">{`${user.firstName} ${user.lastName}`}</li>
-              <li className="profile-bar-item">
+              <li className='profile-bar-item'>{`${user.firstName} ${user.lastName}`}</li>
+              <li className='profile-bar-item'>
                 {' '}
                 <strong>Email:</strong>
                 {user.email}
               </li>
-              <li className="profile-bar-item">
+              <li className='profile-bar-item'>
                 <strong>Role: </strong>
                 {user.role}
               </li>
-              <li className="profile-bar-item">
+              <li className='profile-bar-item'>
                 <strong>Cohort: </strong>
                 {user.cohort}
               </li>
               <ChangeCohort />
 
-              <li className="profile-bar-item">
+              <li className='profile-bar-item'>
                 <strong>Program: </strong>
                 {user.programInfo.name || ''}
               </li>
               <ChangeProgram />
-              <li className="profile-bar-item">
+              <li className='profile-bar-item'>
                 <ProgramDropDown />
               </li>
             </ul>
           </div>
           <div>
-            <table className="table">
+            <table className='table'>
               <tbody>
-                <TableContent data={average} />
+                <TableContent
+                  data={
+                    !this.props.selectedProgram
+                      ? average
+                      : this.handleRate(
+                          engineer[`${programm.name.replace(/\s/, '')}Average`]
+                        )
+                  }
+                />
                 <tr>
                   {columns.map((column) => (
                     <th key={column}>{column}</th>
                   ))}
                 </tr>
-                <TableContent
-                  data={items}
-                  openModal={this.openModal}
-                />
+                <TableContent data={items} openModal={this.openModal} />
               </tbody>
             </table>
           </div>
@@ -288,11 +259,10 @@ SingleEngineer.propTypes = {
   fetchPrograms: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ engineer }, props) => {
-  console.log('engineer<><><><>', engineer);
+const mapStateToProps = ({ engineer }) => {
   return {
     engineer,
-    selectedProgram: props.selectedProgram,
+    selectedProgram: engineer.selectedProgram,
   };
 };
 

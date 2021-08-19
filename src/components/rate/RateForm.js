@@ -7,10 +7,7 @@ const RateForm = ({ onRate, rating, onChange, engineer, loading_ }) => {
 	const rateSpec = [
 		"quality",
 		"quantity",
-		"professionalism",
-		"communication",
-		"integration",
-		"initiative",
+		"communication"
 	];
 	return (
 		<div className="wrapper">
@@ -35,9 +32,11 @@ const RateForm = ({ onRate, rating, onChange, engineer, loading_ }) => {
 };
 
 const CategoryElement = ({ category, onChange, onRate }) => {
+
+	const catname = (category === "communication" ? "Professional Communication" : category);
 	return (
 		<div className="rate-editor">
-			<h5>{category}</h5>
+			<h5>{catname}</h5>
 			<select id="rate" name={category} onChange={onChange} required>
 				<option value="null">Select Rating</option>
 				<option value={2}>Very satisfied (2) </option>

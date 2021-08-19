@@ -36,18 +36,19 @@ class ManageRatingsPage extends React.Component {
 	componentDidUpdate() {
 		console.log("Ratings", this.state.rating);
 
-		const allEngineers = this.props.allEngineers;
+		// const allEngineers = this.props.allEngineers;
 		const myEngineerslist = this.props.myEngineerslist;
 
 		//console.log("Engineers<><><>",allEngineers )
 
 		const engineerId = this.props.rating.trainee;
-		let engineer = getEngineerById(allEngineers, engineerId);
+		var engineer ;
+		// let engineer = getEngineerById(allEngineers, engineerId);
 		//console.log("Engineer here from the existing ratings =====>", engineer);
 		//console.log("enginner", engineer)
-		if (engineer && false)
-			this.state.name = `${engineer.trainee.firstName} ${engineer.trainee.lastName}`;
-		else if (!myEngineerslist[0]) {
+		// if (engineer && false)
+			// this.state.name = `${engineer.trainee.firstName} ${engineer.trainee.lastName}`;
+		if (!myEngineerslist[0]) {
 			// in case there is no single rating for this engineer
 			this.props.getMyEngineers();
 		}
@@ -57,7 +58,10 @@ class ManageRatingsPage extends React.Component {
 			//console.log("list of eng", myEngineerslist[0]);
 			engineer = getEngineerById(myEngineerslist, engineerId);
 			console.log("engineer====<><><> from my engineers", engineer);
-			this.setState({ name: engineer.name });
+			if(engineer){
+				this.setState({ name: engineer.name });
+			}
+			
 		}
 
 		// console.log("myEngineers finally here",myEngineerslist)
@@ -65,6 +69,7 @@ class ManageRatingsPage extends React.Component {
 
 	handleChange = (event) => {
 		var rating = { ...this.state.rating };
+		console.log(this.state,"$444444444");
 
 		if (event.target.id === "rate") {
 			rating[event.target.name] = {
@@ -97,10 +102,7 @@ class ManageRatingsPage extends React.Component {
 		const rateSpec = [
 			"quality",
 			"quantity",
-			"professionalism",
 			"communication",
-			"integration",
-			"initiative",
 		];
 
 		for (const spec of rateSpec) {
@@ -129,14 +131,19 @@ class ManageRatingsPage extends React.Component {
 	};
 
 	render() {
+		console.log("\n\n\n\n\n\n\n\n",this.state.name);
 		return (
-			<RatingForm
+			<>
+			{this.state.name && <RatingForm
 				loading_={this.state.loading}
 				engineer={this.state.name}
 				onRate={this.handleRateSave}
 				onChange={this.handleChange}
 				rating={this.rating}
-			/>
+			/> }
+
+			</>
+			
 		);
 	}
 }
@@ -168,7 +175,7 @@ const mapStateToProps = (
 
 	return {
 		rating: { ...newRating, trainee: parseInt(engId, 10) },
-		allEngineers: getRatings.engineers,
+		// allEngineers: getRatings.engineers,
 		myEngineerslist: engineersReducer.engineers,
 
 		ratings,

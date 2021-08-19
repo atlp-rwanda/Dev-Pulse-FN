@@ -52,53 +52,44 @@ class SingleEngineer extends React.Component {
         array.map((engineer) => {
           const engineerRatings = {};
           engineerRatings.feedback = {};
-          (engineerRatings.id = engineer.id),
-            (engineerRatings.date = engineer.updatedAt.split('T')[0]),
-            (engineerRatings.quality = engineer.quality.rate),
-            (engineerRatings.quantity = engineer.quantity.rate),
-            (engineerRatings.initiative = engineer.initiative.rate),
-            (engineerRatings.professionalism = engineer.professionalism.rate),
-            (engineerRatings.communication = engineer.communication.rate),
-            (engineerRatings.integration = engineer.integration.rate),
-            (engineerRatings.average = (
-              (engineer.quality.rate +
-                engineer.quantity.rate +
-                engineer.initiative.rate +
-                engineer.professionalism.rate +
-                engineer.communication.rate +
-                engineer.integration.rate) /
-              6
-            ).toFixed(2)),
-            items.push(engineerRatings);
+          engineerRatings.id = engineer.id,
+          engineerRatings.date = engineer.updatedAt.split('T')[0],
+          engineerRatings.quality = engineer.quality.rate,
+          engineerRatings.quantity = engineer.quantity.rate,
+          engineerRatings.communication = engineer.communication.rate,
+          engineerRatings.average = (
+            (engineer.quality.rate
+            + engineer.quantity.rate
+            + engineer.communication.rate)
+            / 3
+          ).toFixed(2),
+          items.push(engineerRatings);
         });
       }
       return items;
     } catch (ex) {}
   };
 
-  handleFeedback = (array) => {
-    const id = this.state.feedback;
-    console.log('This is id', id);
-    try {
-      const items = [];
-      if (array.length > 0 && array !== undefined) {
-        array.map((engineer) => {
-          const feedback = {};
-          (feedback.id = engineer.id),
-            (feedback.quality = engineer.quality.feedback),
-            (feedback.quantity = engineer.quantity.feedback),
-            (feedback.initiative = engineer.initiative.feedback),
-            (feedback.professionalism = engineer.professionalism.feedback),
-            (feedback.communication = engineer.communication.feedback),
-            (feedback.integration = engineer.integration.feedback),
-            items.push(feedback);
-        });
-      }
-      return items.find((item) => item.id === id);
-    } catch (ex) {
-      console.log(ex);
-    }
-  };
+   handleFeedback = (array) => {
+     const id = this.state.feedback;
+     console.log('This is id', id);
+     try {
+       const items = [];
+       if (array.length > 0 && array !== undefined) {
+         array.map((engineer) => {
+           const feedback = {};
+           feedback.id = engineer.id,
+           feedback.quality = engineer.quality.feedback,
+           feedback.quantity = engineer.quantity.feedback,
+           feedback.communication = engineer.communication.feedback,
+           items.push(feedback);
+         });
+       }
+       return items.find((item) => item.id === id);
+     } catch (ex) {
+       console.log(ex);
+     }
+   }
 
   handleRate = (rate) => {
     if (!rate) return [];
@@ -126,20 +117,8 @@ class SingleEngineer extends React.Component {
                   <td>{feedback.quantity}</td>
                 </tr>
                 <tr>
-                  <td>Communication</td>
+                  <td>ProfessionalCommunication</td>
                   <td>{feedback.communication}</td>
-                </tr>
-                <tr>
-                  <td>Professionalism</td>
-                  <td>{feedback.professionalism}</td>
-                </tr>
-                <tr>
-                  <td>Integration</td>
-                  <td>{feedback.integration}</td>
-                </tr>
-                <tr>
-                  <td>Initiative</td>
-                  <td>{feedback.initiative}</td>
                 </tr>
               </tbody>
             </table>
@@ -156,10 +135,7 @@ class SingleEngineer extends React.Component {
       'Date',
       'Quality',
       'Quantity',
-      'Integration',
-      'Initiative',
-      'Communication',
-      'Proffesionalism',
+      'Professional Communication',
       'Average',
     ];
     const items = this.handleRatings(
@@ -218,7 +194,7 @@ class SingleEngineer extends React.Component {
 
               <li className='profile-bar-item'>
                 <strong>Program: </strong>
-                {user.programInfo.name || ''}
+                {user.programInfo? user.programInfo.name : ''}
               </li>
               <ChangeProgram />
               <li className='profile-bar-item'>

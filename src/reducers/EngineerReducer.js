@@ -25,20 +25,13 @@ const EngineerReducer = (state = initialState, action) => {
         user: payload,
       };
     case CHANGE_PROGRAM:
-      return {
-        ...state,
-        programs: payload,
-      };
+      return { ...state, programs: payload };
     case SELECTED_PROGRAM:
       return { ...state, selectedProgram: payload };
     case SELECTED_COHORT:
       return { ...state, selectedCohort: payload };
     case FETCH_RATING:
-      return {
-        ...state,
-        average: payload.average,
-        ratings: payload.ratings,
-      };
+      return { ...state, ...payload };
     default:
       return state;
   }

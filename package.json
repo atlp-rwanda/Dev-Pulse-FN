@@ -18,10 +18,12 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "immer": "2.1.3",
+    "jsonwebtoken": "^8.5.1",
     "moxios": "^0.4.0",
     "node-sass": "4.9",
     "prop-types": "15.7.2",
     "react": "16.8.4",
+    "react-data-table-component": "^6.11.8",
     "react-dom": "16.8.4",
     "react-icons": "^4.2.0",
     "react-modal": "^3.11.1",
@@ -31,7 +33,8 @@
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.3.4",

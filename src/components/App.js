@@ -19,6 +19,7 @@ import EngineerList from './egineerList';
 import AuthPage from './AuthPage';
 import AdminDashboard from './AdminDashboard';
 import AuthorizeEmails from './AuthorizeEmails';
+import Attendance from './attendance/Attendance';
 
 const store = configureStore();
 
@@ -31,9 +32,9 @@ class App extends Component {
     adminLocation = location.pathname.split('/',3);
 
 
-    constructor(props) {
-      super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
     render() {
       const { location } = this.props;
@@ -57,6 +58,7 @@ class App extends Component {
             <Route path="/users/:id" component={singleEngineer} />
             <PrivateRoute path="/ratings/rate/:engId" component={ManageRatingsPage} />
             <PrivateRoute exact path="/list" component={EngineerList} />
+            <PrivateRoute exact path='/attendance' component={Attendance} />
             <Route component={NotFoundPage} />
           </Switch>
         </Provider>

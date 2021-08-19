@@ -1,0 +1,30 @@
+@import './shared/colors.scss';
+
+.attendance-wrapper {
+  width: 100%;
+  padding: 10;
+
+  .view-toggler {
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+
+    .item {
+      width: 50%;
+      height: 40px;
+      background-color: $main-color;
+      color: $text-color;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .active {
+      background-color: darken($main-color, 10);
+    }
+  }
+
+  .data {
+    padding: 1em 4em;
+  }
+}

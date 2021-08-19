@@ -10,11 +10,13 @@ $colors: (
   light-grey: #dbdbdb,
 );
 $shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
+
 @function color($name) {
   @return map-get($colors, $name);
 }
 
 * {
+<<<<<<< HEAD
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -25,6 +27,19 @@ html {
   height: 100%;
   color: color(text-secondary);
   background-color: color(back-ground);
+=======
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    color: color(text-secondary);
+    background-color: color(back-ground);
+>>>>>>> add attendance
 }
 
 .btn {
@@ -37,16 +52,27 @@ html {
   border-radius: 5px;
   padding: 10px 40px;
 }
+
 .btn-smallest {
+<<<<<<< HEAD
   padding: 0 5px;
   margin-right: 20px;
   font-size: 18px;
   height: 25px;
+=======
+    padding: 0 5px;
+    margin-right: 20px;
+    font-size: 18px;
+    height: 25px;
+>>>>>>> add attendance
 }
+
 .btn-delete {
   background-color: darken(color(text-secondary), 10%);
 }
+
 .navbar {
+<<<<<<< HEAD
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,18 +99,62 @@ html {
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
+=======
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 2rem;
+    width: 100%;
+    height: 60px;
+    top: 0;
+    background-color: color(primary);
+    color: color(whitey);
+
+    .logo-img {
+        width: 35px;
+    }
+
+    ul {
+        list-style-type: none;
+
+    }
+
+    li {
+        :hover {
+            background-color: darken(color(primary), 10%);
+        }
+
+        float: left;
+
+        a {
+            display: block;
+            color: color(whitey);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+>>>>>>> add attendance
     }
   }
 }
+<<<<<<< HEAD
 .m-1 {
   margin-left: 5px;
+=======
+
+.m-1 {
+    margin-left: 5px;
+>>>>>>> add attendance
 }
+
 .container {
   height: 100%;
   margin: auto;
   max-width: 1200px;
 }
+
 .main-wrapper {
+<<<<<<< HEAD
   box-shadow: $shadow;
   margin: 10px;
   padding: 10px 10px 20px 20px;
@@ -136,8 +206,71 @@ html {
   .engineer-delete {
     background-color: lighten(color(delete), 20%);
   }
+=======
+    box-shadow: $shadow;
+    margin: 10px;
+    padding: 10px 10px 20px 20px;
+    background-color: color(whitey);
+
+    >div {
+        background-color: color(whitey);
+    }
+
+    .top {
+        margin-bottom: 30px;
+        color: color(primary)
+    }
+
+    input {
+        width: 100%;
+        height: 30px;
+        border: none;
+        font-size: 16px;
+        margin-right: 20px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid color(text-secondary);
+    }
+
+    input:focus {
+        outline-width: 0;
+    }
+
+    .mylist {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px 20px 20px 30px;
+    }
+
+    h4 {
+        color: darken(color(text-secondary), 20%);
+    }
+
+    .relative-div {
+        position: relative;
+    }
 }
+
+.mylist {
+    .engineer {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: color(back-ground);
+        width: 300px;
+        height: 50px;
+        margin: 10px;
+        text-align: left;
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .engineer-delete {
+        background-color: lighten(color(delete), 20%);
+    }
+>>>>>>> add attendance
+}
+
 .drop-down {
+<<<<<<< HEAD
   width: 100%;
   max-height: 300px;
   overflow: auto;
@@ -145,14 +278,26 @@ html {
   background: #fff;
   position: absolute;
   top: 29.4px;
+=======
+    width: 100%;
+    max-height: 300px;
+    overflow: auto;
+    box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
+    background: #fff;
+    position: absolute;
+    top: 29.4px;
+>>>>>>> add attendance
 }
+
 .drop-down-user {
   font-size: 18px;
   padding: 10px;
   font-weight: bold;
   display: block;
 }
+
 .drop-down-user:hover {
+<<<<<<< HEAD
   background-color: color(light-grey);
 }
 .filters {
@@ -196,3 +341,11 @@ html {
     color: #3359de;
   }
 }
+=======
+    background-color: color(light-grey);
+}
+
+.active-nav {
+    background-color: darken(color(primary), 10%);
+}
+>>>>>>> add attendance

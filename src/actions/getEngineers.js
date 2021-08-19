@@ -9,10 +9,16 @@ export const getEngineers = () => (dispatch) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  axios.get(`${process.env.API_URL}/api/v1/ratings`, config).then((response) => {
-    dispatch({
-      type: GET_ENGINEERS,
-      payload: response,
-    });
-  }).catch((error) => console.log('the response is : ', error));
+  axios
+    .get(`${process.env.API_URL}/api/v1/ratings`, config)
+    .then((response) => {
+      // console.log('rating inge', response.data);
+      dispatch({
+        type: GET_ENGINEERS,
+        payload: response,
+      });
+    })
+    .catch((error) =>
+      console.log('the response is : ', error)
+    );
 };

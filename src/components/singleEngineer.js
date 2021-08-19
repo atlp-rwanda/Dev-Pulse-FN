@@ -2,7 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TableContent from './singleContent';
-import { fetchEngineer, fetchRating } from '../actions/EngineerActions';
+import ProgramDropDown from './shared/ProgramDropDown';
+import {
+  fetchPrograms,
+  fetchEngineer,
+  fetchRating,
+} from '../actions/EngineerActions';
+import ChangeCohort from './shared/ChangeCohort';
+import ChangeProgram from './shared/ChangeProgram';
 
 class SingleEngineer extends React.Component {
   constructor(props) {
@@ -15,29 +22,28 @@ class SingleEngineer extends React.Component {
   }
 
   componentDidMount() {
-    const { match } = this.props;
+    const { match, engineer } = this.props;
     const { id } = match.params;
     const { fetchEngineer, fetchRating } = this.props;
 
     fetchEngineer(id);
 
-
-    console.log("fetchRatings: component")
+    console.log('fetchRatings: component');
     fetchRating(id);
   }
 
   openModal = (id) => {
     this.setState({ feedback: id });
-  }
+  };
 
   afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     // this.subtitle.style.color = '#f00';
-  }
+  };
 
   closeModal = () => {
     this.setState({ feedback: null });
-  }
+  };
 
   handleRatings = (array) => {
     try {
@@ -46,84 +52,109 @@ class SingleEngineer extends React.Component {
         array.map((engineer) => {
           const engineerRatings = {};
           engineerRatings.feedback = {};
-          engineerRatings.id = engineer.id,
-          engineerRatings.date = engineer.updatedAt.split('T')[0],
-          engineerRatings.quality = engineer.quality.rate,
-          engineerRatings.quantity = engineer.quantity.rate,
-          engineerRatings.initiative = engineer.initiative.rate,
-          engineerRatings.professionalism = engineer.professionalism.rate,
-          engineerRatings.communication = engineer.communication.rate,
-          engineerRatings.integration = engineer.integration.rate,
-          engineerRatings.average = (
-            (engineer.quality.rate
-            + engineer.quantity.rate
-            + engineer.initiative.rate
-            + engineer.professionalism.rate
-            + engineer.communication.rate
-            + engineer.integration.rate)
-            / 6
-          ).toFixed(2),
-          items.push(engineerRatings);
+          (engineerRatings.id = engineer.id),
+            (engineerRatings.date =
+              engineer.updatedAt.split('T')[0]),
+            (engineerRatings.quality =
+              engineer.quality.rate),
+            (engineerRatings.quantity =
+              engineer.quantity.rate),
+            (engineerRatings.initiative =
+              engineer.initiative.rate),
+            (engineerRatings.professionalism =
+              engineer.professionalism.rate),
+            (engineerRatings.communication =
+              engineer.communication.rate),
+            (engineerRatings.integration =
+              engineer.integration.rate),
+            (engineerRatings.average = (
+              (engineer.quality.rate +
+                engineer.quantity.rate +
+                engineer.initiative.rate +
+                engineer.professionalism.rate +
+                engineer.communication.rate +
+                engineer.integration.rate) /
+              6
+            ).toFixed(2)),
+            items.push(engineerRatings);
         });
       }
       return items;
-    } catch (ex) {
-    }
-  }
+    } catch (ex) {}
+  };
 
-   handleFeedback = (array) => {
-     const id = this.state.feedback;
-     console.log('This is id', id);
-     try {
-       const items = [];
-       if (array.length > 0 && array !== undefined) {
-         array.map((engineer) => {
-           const feedback = {};
-           feedback.id = engineer.id,
-           feedback.quality = engineer.quality.feedback,
-           feedback.quantity = engineer.quantity.feedback,
-           feedback.initiative = engineer.initiative.feedback,
-           feedback.professionalism = engineer.professionalism.feedback,
-           feedback.communication = engineer.communication.feedback,
-           feedback.integration = engineer.integration.feedback,
-           items.push(feedback);
-         });
-       }
-       return items.find((item) => item.id === id);
-     } catch (ex) {
-       console.log(ex);
-     }
-   }
+  handleFeedback = (array) => {
+    const id = this.state.feedback;
+    console.log('This is id', id);
+    try {
+      const items = [];
+      if (array.length > 0 && array !== undefined) {
+        array.map((engineer) => {
+          const feedback = {};
+          (feedback.id = engineer.id),
+            (feedback.quality = engineer.quality.feedback),
+            (feedback.quantity =
+              engineer.quantity.feedback),
+            (feedback.initiative =
+              engineer.initiative.feedback),
+            (feedback.professionalism =
+              engineer.professionalism.feedback),
+            (feedback.communication =
+              engineer.communication.feedback),
+            (feedback.integration =
+              engineer.integration.feedback),
+            items.push(feedback);
+        });
+      }
+      return items.find((item) => item.id === id);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   handleRate = (array) => {
+    console.log(
+      'check ifwe have programs in ratings',
+      array
+    );
     try {
       const items = [];
       if (array.length > 0 && array !== undefined) {
         array.map((engineer) => {
           const engineerRatings = {};
-          engineerRatings.date = 'Average',
-          engineerRatings.quality = engineer.quality,
-          engineerRatings.quantity = engineer.quantity,
-          engineerRatings.initiative = engineer.initiative,
-          engineerRatings.professionalism = engineer.professionalism,
-          engineerRatings.communication = engineer.communication,
-          engineerRatings.integration = engineer.integration,
-          engineerRatings.average = engineer.averageRating,
-          items.push(engineerRatings);
+          (engineerRatings.date = 'Average'),
+            (engineerRatings.quality = engineer.quality),
+            (engineerRatings.quantity = engineer.quantity),
+            (engineerRatings.initiative =
+              engineer.initiative),
+            (engineerRatings.professionalism =
+              engineer.professionalism),
+            (engineerRatings.communication =
+              engineer.communication),
+            (engineerRatings.integration =
+              engineer.integration),
+            (engineerRatings.average =
+              engineer.averageRating),
+            items.push(engineerRatings);
         });
       }
       return items;
     } catch (ex) {
       console.log(ex);
     }
-  }
+  };
 
   feed = (feedback) => {
     if (feedback !== undefined) {
       return (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={()=>this.closeModal()}>&times;</span>
+            <span
+              className="close"
+              onClick={() => this.closeModal()}
+            >
+              &times;
+            </span>
             <table className="tab">
               <tbody>
                 <tr>
@@ -156,13 +187,11 @@ class SingleEngineer extends React.Component {
         </div>
       );
     }
-  }
-
+  };
 
   render() {
     const { engineer } = this.props;
     const { user } = engineer;
-
     const columns = [
       'Date',
       'Quality',
@@ -173,18 +202,38 @@ class SingleEngineer extends React.Component {
       'Proffesionalism',
       'Average',
     ];
-    const items = this.handleRatings(engineer.ratings);
+    const items = this.handleRatings(
+      engineer.ratings.filter((rate) => {
+        if (
+          rate.program === engineer.selectedProgram ||
+          !engineer.selectedProgram
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
     const average = this.handleRate(engineer.average);
     const feedback = this.handleFeedback(engineer.ratings);
 
     console.log('This is feedback', feedback);
+    console.log('this is items', items);
 
     return (
       <>
         <div className="container">
           {this.feed(feedback)}
           <div>
-            <ul className="profile-bar tableHeader light-box-shadow">
+            <ul
+              className="profile-bar tableHeader light-box-shadow"
+              style={{
+                display: 'flex',
+                fontSize: '14px',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <li className="profile-bar-item">{`${user.firstName} ${user.lastName}`}</li>
               <li className="profile-bar-item">
                 {' '}
@@ -195,6 +244,20 @@ class SingleEngineer extends React.Component {
                 <strong>Role: </strong>
                 {user.role}
               </li>
+              <li className="profile-bar-item">
+                <strong>Cohort: </strong>
+                {user.cohort}
+              </li>
+              <ChangeCohort />
+
+              <li className="profile-bar-item">
+                <strong>Program: </strong>
+                {user.programInfo.name || ''}
+              </li>
+              <ChangeProgram />
+              <li className="profile-bar-item">
+                <ProgramDropDown />
+              </li>
             </ul>
           </div>
           <div>
@@ -202,9 +265,14 @@ class SingleEngineer extends React.Component {
               <tbody>
                 <TableContent data={average} />
                 <tr>
-                  {columns.map((column) => <th key={column}>{column}</th>)}
+                  {columns.map((column) => (
+                    <th key={column}>{column}</th>
+                  ))}
                 </tr>
-                <TableContent data={items} openModal={this.openModal} />
+                <TableContent
+                  data={items}
+                  openModal={this.openModal}
+                />
               </tbody>
             </table>
           </div>
@@ -217,14 +285,19 @@ class SingleEngineer extends React.Component {
 SingleEngineer.propTypes = {
   fetchEngineer: PropTypes.func.isRequired,
   fetchRating: PropTypes.func.isRequired,
+  fetchPrograms: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ engineer }) => {
-
-  console.log("engineer<><><><>", engineer)
+const mapStateToProps = ({ engineer }, props) => {
+  console.log('engineer<><><><>', engineer);
   return {
-  engineer,
-}
-}
+    engineer,
+    selectedProgram: props.selectedProgram,
+  };
+};
 
-export default connect(mapStateToProps, { fetchEngineer, fetchRating })(SingleEngineer);
+export default connect(mapStateToProps, {
+  fetchEngineer,
+  fetchRating,
+  fetchPrograms,
+})(SingleEngineer);

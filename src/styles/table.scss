@@ -3,60 +3,60 @@
 // }
 
 td {
-	padding: 3px;
-	margin: 5px;
-	text-align: center;
+  padding: 3px;
+  margin: 5px;
+  text-align: center;
 }
 
 .tableHeader {
-	height: 50px;
-	margin: 10px auto;
-	color: #3359de;
-	font-size: 20px;
-	padding-top: 15px;
-	padding-left: 16px;
-	background: white;
-	margin-bottom: 20px;
+  height: 50px;
+  margin: 10px auto;
+  color: #3359de;
+  font-size: 20px;
+  padding-top: 8px;
+  padding-left: 16px;
+  background: white;
+  margin-bottom: 20px;
 }
 
 .table {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	width: 100%;
-	margin: 0 auto;
-	border-collapse: separate;
-	border-spacing: 0px 5px;
-	background: rgb(239, 244, 248);
-	margin-top: 20px;
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0px 5px;
+  background: rgb(239, 244, 248);
+  margin-top: 20px;
 }
 
 .table td,
 .table th {
-	border: 0px solid #ddd;
-	background: white;
-	padding: 20px;
+  border: 0px solid #ddd;
+  background: white;
+  padding: 20px;
 }
 
 .table tr:hover {
-	background-color: rgb(146, 15, 15);
+  background-color: rgb(146, 15, 15);
 }
 
 .table th {
-	padding-top: 12px;
-	padding-bottom: 12px;
-	text-align: left;
-	background-color: #3359de;
-	color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #3359de;
+  color: white;
 }
 .name {
-	text-decoration: none;
-	color: #3359de;
+  text-decoration: none;
+  color: #3359de;
 }
 
 .button {
-	width: 60px;
-	height: 30px;
-	color: white;
-	border-radius: 4px;
-	font-size: 12px;
-	background: #3359de;
+  width: 60px;
+  height: 30px;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #3359de;
 }

@@ -22,7 +22,6 @@ class CohortDropDown extends React.Component {
   }
   render() {
     const { cohorts } = this.props;
-    console.log('cohorts', cohorts);
     return (
       <div className="filter-container">
         <select

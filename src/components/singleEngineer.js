@@ -28,7 +28,6 @@ class SingleEngineer extends React.Component {
 
     fetchEngineer(id);
 
-    console.log('fetchRatings: component');
     fetchRating(id);
   }
 
@@ -76,7 +75,6 @@ class SingleEngineer extends React.Component {
 
   handleFeedback = (array) => {
     const id = this.state.feedback;
-    console.log('This is id', id);
     try {
       const items = [];
       if (array.length > 0 && array !== undefined) {
@@ -139,7 +137,6 @@ class SingleEngineer extends React.Component {
 
   render() {
     const { engineer } = this.props;
-    console.log('every single engineer', engineer);
     const { user } = engineer;
     const columns = [
       'Date',

@@ -19,7 +19,6 @@ class ProgramDropDown extends React.Component {
   }
 
   render() {
-    console.log('programs', this.props.programs);
     return (
       <div className="filter-container">
         <select

@@ -5,6 +5,8 @@ import {
   SELECTED_COHORT,
   SELECTED_PROGRAM,
   CHANGE_PROGRAM,
+  UPDATE_ENGINEER_COHORT,
+  GET_COHORTS,
 } from './actionType';
 
 const baseUrl = process.env.API_URL;
@@ -32,9 +34,7 @@ export const fetchCohorts = (id) => async (dispatch) => {
       type: 'GET_COHORTS',
       payload: cohort,
     });
-  } catch (err) {
-    console.log('failed to fech cohorts', err);
-  }
+  } catch (err) {}
 };
 export const fetchPrograms =
   (cohortId) => async (dispatch) => {
@@ -80,7 +80,7 @@ export const updateEngineerCohort =
   (payload) => async (dispatch) => {
     console.log(payload);
     const token = localStorage.getItem('pulseToken');
-    dispatch({ type: 'UPDATE_ENGINEER_COHORT', payload });
+    dispatch({ type: UPDATE_ENGINEER_COHORT, payload });
     const res1 = await axios.get(
       `${baseUrl}/api/v1/programs`,
       {
@@ -174,7 +174,7 @@ export const fetchEngineer = (id) => async (dispatch) => {
     const { data: cohort } = res2.data;
     console.log('cohorts', cohort);
     return dispatch({
-      type: 'GET_COHORTS',
+      type: GET_COHORTS,
       payload: cohort,
     });
   } catch (error) {

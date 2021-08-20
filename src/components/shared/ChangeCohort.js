@@ -25,13 +25,6 @@ class ChangeCohort extends React.Component {
     // this.handleClick();
   }
   render() {
-    console.log(
-      'fetch on change cohort',
-      this.props.cohorts,
-      this.props.user.id,
-      'fetch engineer',
-      this.state.user
-    );
     return (
       <div className="cohorts-change">
         <CgArrowsExchangeAltV
@@ -39,7 +32,6 @@ class ChangeCohort extends React.Component {
         />
         <div className="change-cohort">
           {this.props.cohorts.map((cohort) => {
-            console.log('filter', cohort);
             const cohortId = cohort.id;
             return (
               <p
@@ -47,7 +39,6 @@ class ChangeCohort extends React.Component {
                 onClick={() => {
                   const token =
                     localStorage.getItem('pulseToken');
-                  console.log(token);
                   if (this.state.user !== cohortId) {
                     axios.defaults.headers.common[
                       'Authorization'
@@ -62,8 +53,6 @@ class ChangeCohort extends React.Component {
                     return this.setState({
                       user: cohortId,
                     });
-                  } else {
-                    console.log('did not update cohort');
                   }
                 }}
               >

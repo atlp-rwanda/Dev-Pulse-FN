@@ -46,7 +46,6 @@ class ChangeProgram extends React.Component {
                 onClick={() => {
                   const token =
                     localStorage.getItem('pulseToken');
-                  console.log(token);
                   if (
                     this.state.user !== programId ||
                     this.state.userName !== programName
@@ -66,8 +65,6 @@ class ChangeProgram extends React.Component {
                     return this.setState({
                       users: programName,
                     });
-                  } else {
-                    console.log('did not update cohort');
                   }
                 }}
               >

@@ -52,44 +52,50 @@ class SingleEngineer extends React.Component {
         array.map((engineer) => {
           const engineerRatings = {};
           engineerRatings.feedback = {};
-          engineerRatings.id = engineer.id,
-          engineerRatings.date = engineer.updatedAt.split('T')[0],
-          engineerRatings.quality = engineer.quality.rate,
-          engineerRatings.quantity = engineer.quantity.rate,
-          engineerRatings.communication = engineer.communication.rate,
-          engineerRatings.average = (
-            (engineer.quality.rate
-            + engineer.quantity.rate
-            + engineer.communication.rate)
-            / 3
-          ).toFixed(2),
-          items.push(engineerRatings);
+          (engineerRatings.id = engineer.id),
+            (engineerRatings.date =
+              engineer.updatedAt.split('T')[0]),
+            (engineerRatings.quality =
+              engineer.quality.rate),
+            (engineerRatings.quantity =
+              engineer.quantity.rate),
+            (engineerRatings.communication =
+              engineer.communication.rate),
+            (engineerRatings.average = (
+              (engineer.quality.rate +
+                engineer.quantity.rate +
+                engineer.communication.rate) /
+              3
+            ).toFixed(2)),
+            items.push(engineerRatings);
         });
       }
       return items;
     } catch (ex) {}
   };
 
-   handleFeedback = (array) => {
-     const id = this.state.feedback;
-     console.log('This is id', id);
-     try {
-       const items = [];
-       if (array.length > 0 && array !== undefined) {
-         array.map((engineer) => {
-           const feedback = {};
-           feedback.id = engineer.id,
-           feedback.quality = engineer.quality.feedback,
-           feedback.quantity = engineer.quantity.feedback,
-           feedback.communication = engineer.communication.feedback,
-           items.push(feedback);
-         });
-       }
-       return items.find((item) => item.id === id);
-     } catch (ex) {
-       console.log(ex);
-     }
-   }
+  handleFeedback = (array) => {
+    const id = this.state.feedback;
+    console.log('This is id', id);
+    try {
+      const items = [];
+      if (array.length > 0 && array !== undefined) {
+        array.map((engineer) => {
+          const feedback = {};
+          (feedback.id = engineer.id),
+            (feedback.quality = engineer.quality.feedback),
+            (feedback.quantity =
+              engineer.quantity.feedback),
+            (feedback.communication =
+              engineer.communication.feedback),
+            items.push(feedback);
+        });
+      }
+      return items.find((item) => item.id === id);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   handleRate = (rate) => {
     if (!rate) return [];
@@ -101,12 +107,15 @@ class SingleEngineer extends React.Component {
   feed = (feedback) => {
     if (feedback !== undefined) {
       return (
-        <div className='modal'>
-          <div className='modal-content'>
-            <span className='close' onClick={() => this.closeModal()}>
+        <div className="modal">
+          <div className="modal-content">
+            <span
+              className="close"
+              onClick={() => this.closeModal()}
+            >
               &times;
             </span>
-            <table className='tab'>
+            <table className="tab">
               <tbody>
                 <tr>
                   <td>Quality</td>
@@ -130,6 +139,7 @@ class SingleEngineer extends React.Component {
 
   render() {
     const { engineer } = this.props;
+    console.log('every single engineer', engineer);
     const { user } = engineer;
     const columns = [
       'Date',
@@ -138,6 +148,7 @@ class SingleEngineer extends React.Component {
       'Professional Communication',
       'Average',
     ];
+    const userRole = localStorage.getItem('pulseRole');
     const items = this.handleRatings(
       engineer.ratings.filter((rate) => {
         if (
@@ -153,22 +164,19 @@ class SingleEngineer extends React.Component {
     const average = this.handleRate(engineer.average);
     const feedback = this.handleFeedback(engineer.ratings);
 
-    const selectedProgName =
-      (engineer.programs &&
-        this.props.selectedProgName &&
-        engineer.programs.find((p) => p.id === this.props.selectedProgram)) ||
-      '';
     const programm =
       engineer.programs &&
-      engineer.programs.find(({ id }) => id === this.props.selectedProgram);
+      engineer.programs.find(
+        ({ id }) => id === this.props.selectedProgram
+      );
 
     return (
       <>
-        <div className='container'>
+        <div className="container">
           {this.feed(feedback)}
           <div>
             <ul
-              className='profile-bar tableHeader light-box-shadow'
+              className="profile-bar tableHeader light-box-shadow"
               style={{
                 display: 'flex',
                 fontSize: '14px',
@@ -176,41 +184,47 @@ class SingleEngineer extends React.Component {
                 alignItems: 'center',
               }}
             >
-              <li className='profile-bar-item'>{`${user.firstName} ${user.lastName}`}</li>
-              <li className='profile-bar-item'>
+              <li className="profile-bar-item">{`${user.firstName} ${user.lastName}`}</li>
+              <li className="profile-bar-item">
                 {' '}
                 <strong>Email:</strong>
                 {user.email}
               </li>
-              <li className='profile-bar-item'>
+              <li className="profile-bar-item">
                 <strong>Role: </strong>
                 {user.role}
               </li>
-              <li className='profile-bar-item'>
+              <li className="profile-bar-item">
                 <strong>Cohort: </strong>
                 {user.cohort}
               </li>
-              <ChangeCohort />
-
-              <li className='profile-bar-item'>
+              {userRole === 'Manager' && <ChangeCohort />}
+              <li className="profile-bar-item">
                 <strong>Program: </strong>
-                {user.programInfo? user.programInfo.name : ''}
+                {user.programInfo
+                  ? user.programInfo.name
+                  : ''}
               </li>
-              <ChangeProgram />
-              <li className='profile-bar-item'>
+              {userRole === 'Manager' && <ChangeProgram />}
+              <li className="profile-bar-item">
                 <ProgramDropDown />
               </li>
             </ul>
           </div>
           <div>
-            <table className='table'>
+            <table className="table">
               <tbody>
                 <TableContent
                   data={
                     !this.props.selectedProgram
                       ? average
                       : this.handleRate(
-                          engineer[`${programm.name.replace(/\s/, '')}Average`]
+                          engineer[
+                            `${programm.name.replace(
+                              /\s/,
+                              ''
+                            )}Average`
+                          ]
                         )
                   }
                 />
@@ -219,7 +233,10 @@ class SingleEngineer extends React.Component {
                     <th key={column}>{column}</th>
                   ))}
                 </tr>
-                <TableContent data={items} openModal={this.openModal} />
+                <TableContent
+                  data={items}
+                  openModal={this.openModal}
+                />
               </tbody>
             </table>
           </div>

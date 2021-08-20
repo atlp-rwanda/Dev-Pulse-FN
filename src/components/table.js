@@ -18,10 +18,7 @@ class Table extends Component {
       'Name',
       'Quality',
       'Quantity',
-      'Integration',
-      'Initiative',
-      'Communication',
-      'Proffesionalism',
+      'Professional Communication',
       'Rating',
     ];
 
@@ -60,20 +57,13 @@ class Table extends Component {
     try {
       ratableEngineers.map((engineer) => {
         const engineerRatings = {};
-        engineerRatings.id = engineer.user.id;
-        (engineerRatings.name = `${engineer.user.firstName} ${engineer.user.lastName}`),
-          (engineerRatings.ratings = [
-            (engineerRatings.quality = engineer.quality),
-            (engineerRatings.quantity = engineer.quantity),
-            (engineerRatings.initiative =
-              engineer.initiative),
-            (engineerRatings.professionalism =
-              engineer.professionalism),
-            (engineerRatings.communication =
-              engineer.communication),
-            (engineerRatings.integration =
-              engineer.integration),
-          ]);
+        engineerRatings.id = engineer.user.id
+        engineerRatings.name = `${engineer.user.firstName} ${engineer.user.lastName}`,
+        engineerRatings.ratings = [
+          engineerRatings.quality = engineer.quality,
+          engineerRatings.quantity = engineer.quantity,
+          engineerRatings.communication = engineer.communication,
+        ];
         items.push(engineerRatings);
       });
     } catch (ex) {

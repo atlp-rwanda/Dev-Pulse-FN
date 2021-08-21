@@ -13,7 +13,6 @@ class Table extends Component {
   }
 
   render() {
-    console.log('engineers', this.props.engineers);
     const columns = [
       'Name',
       'Quality',
@@ -24,7 +23,6 @@ class Table extends Component {
 
     const { engineers } = this.props;
     const { myEngineerslist } = this.props;
-    console.log('table Pops', engineers);
     /**
      * Filter all rated engineers to remain with only your Team
      */
@@ -57,13 +55,14 @@ class Table extends Component {
     try {
       ratableEngineers.map((engineer) => {
         const engineerRatings = {};
-        engineerRatings.id = engineer.user.id
-        engineerRatings.name = `${engineer.user.firstName} ${engineer.user.lastName}`,
-        engineerRatings.ratings = [
-          engineerRatings.quality = engineer.quality,
-          engineerRatings.quantity = engineer.quantity,
-          engineerRatings.communication = engineer.communication,
-        ];
+        engineerRatings.id = engineer.user.id;
+        (engineerRatings.name = `${engineer.user.firstName} ${engineer.user.lastName}`),
+          (engineerRatings.ratings = [
+            (engineerRatings.quality = engineer.quality),
+            (engineerRatings.quantity = engineer.quantity),
+            (engineerRatings.communication =
+              engineer.communication),
+          ]);
         items.push(engineerRatings);
       });
     } catch (ex) {

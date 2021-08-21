@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { authUser } from "../actions/authAction";
-import { fetchProfile } from "../actions/fetchProfile";
-import "../styles/authLogin.scss";
-import loginLogo from "../assets/pulse_logo.svg";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { authUser } from '../actions/authAction';
+import { fetchProfile } from '../actions/fetchProfile';
+import '../styles/authLogin.scss';
+import loginLogo from '../assets/pulse_logo.svg';
 
 export class AuthPage extends Component {
   static propTypes = {
@@ -23,13 +23,15 @@ export class AuthPage extends Component {
   }
 
   componentDidMount() {
-    const pulseToken = localStorage.getItem("pulseToken");
+    const pulseToken = localStorage.getItem('pulseToken');
     if (pulseToken) {
       this.props.getProfile();
     }
 
     const { location } = this.props;
-    const base64encoded = location.search.split("&")[0].split("?code=")[1];
+    const base64encoded = location.search
+      .split('&')[0]
+      .split('?code=')[1];
 
     if (base64encoded) {
       const decoded = JSON.parse(atob(base64encoded));
@@ -38,29 +40,38 @@ export class AuthPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { auth, history, profile, getProfile } = nextProps;
+    const { auth, history, profile, getProfile } =
+      nextProps;
 
     if (auth.user.token) {
-      localStorage.setItem("pulseToken", auth.user.token);
+      localStorage.setItem('pulseToken', auth.user.token);
+      profile.success &&
+        localStorage.setItem(
+          'pulseRole',
+          profile.success.data.role
+        );
     }
 
-    if ((localStorage.getItem("pulseToken") && !profile) || auth.user.token) {
+    if (
+      (localStorage.getItem('pulseToken') && !profile) ||
+      auth.user.token
+    ) {
       getProfile();
     }
 
     if (profile.success) {
       switch (profile.success.data.role) {
-        case "Trainee":
+        case 'Trainee':
           history.push(`/users/${profile.success.data.id}`);
           break;
-        case "Manager":
-          history.push("/profile");
+        case 'Manager':
+          history.push('/profile');
           break;
-        case "Lead":
-          history.push("/add-lf");
+        case 'Lead':
+          history.push('/add-lf');
           break;
         default:
-          history.push("/login");
+          history.push('/login');
       }
     }
   }
@@ -68,7 +79,7 @@ export class AuthPage extends Component {
   render() {
     return (
       <>
-        {!localStorage.getItem("pulseToken") && (
+        {!localStorage.getItem('pulseToken') && (
           <div className="authPage">
             <div className="login">
               <div className="pulse-login">
@@ -77,7 +88,7 @@ export class AuthPage extends Component {
                     <img
                       src={loginLogo}
                       alt="logo"
-                      style={{ width: "110px" }}
+                      style={{ width: '110px' }}
                     />
                   </span>
                 </div>
@@ -89,7 +100,9 @@ export class AuthPage extends Component {
                   href="http://localhost:3000/api/v1/users/auth/google"
                 >
                   <span className="icon" />
-                  <span className="login-txt">Sign in to get started</span>
+                  <span className="login-txt">
+                    Sign in to get started
+                  </span>
                 </a>
               </div>
             </div>

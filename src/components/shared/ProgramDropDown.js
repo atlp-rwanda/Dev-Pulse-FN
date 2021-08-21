@@ -11,7 +11,7 @@ class ProgramDropDown extends React.Component {
   }
   async changeProgram() {
     await this.props.fetchPrograms(
-      this.props.selectedCohort
+      this.props.selectedProgram
     );
   }
   componentDidMount() {
@@ -26,6 +26,7 @@ class ProgramDropDown extends React.Component {
           onChange={(e) => {
             this.props.onChange(+e.target.value);
           }}
+          value={this.props.selectedProgram}
         >
           <option value={0}>All Programs</option>
           {this.props.programs.map((program) => {

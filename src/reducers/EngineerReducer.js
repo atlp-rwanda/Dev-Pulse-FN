@@ -4,6 +4,8 @@ import {
   FETCH_RATING,
   SELECTED_COHORT,
   SELECTED_PROGRAM,
+  GET_COHORTS,
+  UPDATE_ENGINEER_COHORT,
 } from '../actions/actionType';
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   selectedProgram: 0,
   cohorts: [],
   programs: [],
+  changeProgramName: '',
 };
 
 const EngineerReducer = (state = initialState, action) => {
@@ -23,6 +26,16 @@ const EngineerReducer = (state = initialState, action) => {
       return {
         ...state,
         user: payload,
+      };
+    case UPDATE_ENGINEER_COHORT:
+      return {
+        ...state,
+        user: { ...state.user, ...payload },
+      };
+    case GET_COHORTS:
+      return {
+        ...state,
+        cohorts: payload,
       };
     case CHANGE_PROGRAM:
       return { ...state, programs: payload };

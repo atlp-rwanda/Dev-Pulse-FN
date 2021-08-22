@@ -1,42 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import {
   selectCohort,
   fetchPrograms,
+  fetchCohorts,
 } from '../../actions/EngineerActions';
 
-const baseUrl = process.env.API_URL;
 class CohortDropDown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cohorts: [],
-    };
   }
+
+  async getCohorts() {
+    await this.props.fetchCohorts(
+      this.props.selectedCohort
+    );
+  }
+
   componentDidMount() {
-    const token = localStorage.getItem('pulseToken');
-    axios
-      .get(`${baseUrl}/api/v1/cohorts`, {
-        method: 'GET',
-        mode: 'cors',
-        cashe: 'no-cashe',
-        credentials: 'same-origin',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-        },
-      })
-      .then((response) => {
-        const cohort = response.data.data;
-        this.setState({ cohorts: cohort });
-      })
-      .catch((err) => {
-        console.log('there is some kind of error', err);
-      });
+    this.getCohorts();
   }
   render() {
+    const { cohorts } = this.props;
     return (
       <div className="filter-container">
         <select
@@ -44,11 +29,12 @@ class CohortDropDown extends React.Component {
           onChange={(e) => {
             this.props.onChange(+e.target.value);
             this.props.fetchPrograms(+e.target.value);
+            this.props.fetchCohorts(+e.target.value);
           }}
           value={this.props.selectedCohort}
         >
           <option value={0}>All Cohorts</option>
-          {this.state.cohorts.map((cohort) => {
+          {this.props.cohorts.map((cohort) => {
             return (
               <option key={cohort.id} value={cohort.id}>
                 {cohort.name}
@@ -61,13 +47,16 @@ class CohortDropDown extends React.Component {
   }
 }
 const mapStateToProps = ({ engineer }) => ({
+  cohorts: engineer.cohorts,
   selectedCohort: engineer.selectedCohort,
-  selectedProgram: engineer.selecttedProgram,
+  selectedProgram: engineer.selectedProgram,
 });
 const mapDispatchToProps = (dispatch) => ({
   onChange: (cohort) => dispatch(selectCohort(cohort)),
   fetchPrograms: (cohortId) =>
     dispatch(fetchPrograms(cohortId)),
+  fetchCohorts: (cohorts) =>
+    dispatch(fetchCohorts(cohorts)),
 });
 export default connect(
   mapStateToProps,

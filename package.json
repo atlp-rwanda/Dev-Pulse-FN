@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Developer Rating manager App",
   "scripts": {
-    "postinstall": "webpack --mode production",
-    "dev": "webpack-dev-server --config webpack.config.dev.js --open --hot",
+    "postinstall": "NODE_ENV=production webpack --mode production",
+    "dev": "NODE_ENV=development  webpack-dev-server --config webpack.config.dev.js --open --hot",
     "start": "node server.js",
     "test": "jest --coverage"
   },

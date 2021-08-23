@@ -2,14 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Button, IconButton, Snackbar, TextField,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  IconButton,
+  Snackbar,
+  TextField,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloseIcon from '@material-ui/icons/Close';
 import ConfirmationDialog from '../DeleteConfirmPopup';
 import { removeAuthorizedEmail } from '../../../actions/emailList';
-import { ErrorSnackBarMessage, SuccessSnackBarMessage } from '../SnackBarMessage';
+import {
+  ErrorSnackBarMessage,
+  SuccessSnackBarMessage,
+} from '../SnackBarMessage';
 
 class RemoveEmails extends Component {
   snack = null;
@@ -56,119 +65,126 @@ class RemoveEmails extends Component {
     }
   }
 
-  handleChange = (event, value) => this.setState({ emails: value })
+  handleChange = (event, value) =>
+    this.setState({ emails: value });
 
   handleRemoveEmails = () => {
     const { removeAuthorizedEmail } = this.props;
     console.log('going to be removed', this.state.emails);
     const emails = [];
-    this.state.emails.map((email) => emails.push(email.email));
+    this.state.emails.map((email) =>
+      emails.push(email.email)
+    );
     console.log('actualemails', emails, emails.length);
     removeAuthorizedEmail(emails);
     return this.setState({ openDialog: false });
-  }
+  };
 
-    confirmDeleteEmails = () => {
-      if (this.state.emails.length) {
-        return this.openConfirDialog();
-      }
-      return null;
+  confirmDeleteEmails = () => {
+    if (this.state.emails.length) {
+      return this.openConfirDialog();
     }
+    return null;
+  };
 
-    closeDialog = () => this.setState({ openDialog: false });
+  closeDialog = () => this.setState({ openDialog: false });
 
-    openConfirDialog = () => {
-      console.log('changing click');
-      this.setState({ openDialog: true });
-    }
+  openConfirDialog = () => {
+    console.log('changing click');
+    this.setState({ openDialog: true });
+  };
 
-    handleCloseSnackSuccess = () => {
-      this.setState({
-        snackMessageData: {
-          open: false,
-          message: '',
-        },
-        snackMessageError: {
-          open: false,
-          message: '',
-        },
-      });
-    }
+  handleCloseSnackSuccess = () => {
+    this.setState({
+      snackMessageData: {
+        open: false,
+        message: '',
+      },
+      snackMessageError: {
+        open: false,
+        message: '',
+      },
+    });
+  };
 
-    render() {
-      const { emailsList } = this.props;
-      const { snackMessageData, snackMessageError } = this.state;
-      return (
-        <>
-          <SuccessSnackBarMessage
-            open={snackMessageData.open}
-            message={snackMessageData.message}
-            close={this.handleCloseSnackSuccess}
-          />
-          <ErrorSnackBarMessage
-            open={snackMessageError.open}
-            message={snackMessageError.message}
-            close={this.handleCloseSnackSuccess}
-          />
-          <ConfirmationDialog
-            openDialog={this.state.openDialog}
-            closeDialog={this.closeDialog}
-            items={this.state.emails.length}
-            confirmed={this.handleRemoveEmails}
-          />
+  render() {
+    const { emailsList } = this.props;
+    const { snackMessageData, snackMessageError } =
+      this.state;
+    return (
+      <>
+        <SuccessSnackBarMessage
+          open={snackMessageData.open}
+          message={snackMessageData.message}
+          close={this.handleCloseSnackSuccess}
+        />
+        <ErrorSnackBarMessage
+          open={snackMessageError.open}
+          message={snackMessageError.message}
+          close={this.handleCloseSnackSuccess}
+        />
+        <ConfirmationDialog
+          openDialog={this.state.openDialog}
+          closeDialog={this.closeDialog}
+          items={this.state.emails.length}
+          confirmed={this.handleRemoveEmails}
+        />
 
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="remove-emails"
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="remove-emails"
+          >
+            <h3>Remove Emails</h3>
+          </AccordionSummary>
+          <AccordionDetails className="removeWrapper">
+            <Autocomplete
+              multiple
+              className="autoCompleteInput"
+              options={emailsList}
+              getOptionLabel={(option) => option.email}
+              value={this.state.emails}
+              onChange={this.handleChange}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <>
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Add comma separated emails"
+                  />
+                </>
+              )}
+            />
+            <Button
+              onClick={this.confirmDeleteEmails}
+              className="removeButton"
+              variant="contained"
+              color="secondary"
             >
-              <h3>Remove Emails</h3>
-            </AccordionSummary>
-            <AccordionDetails className="removeWrapper">
-              <Autocomplete
-                multiple
-                className="autoCompleteInput"
-                options={emailsList}
-                getOptionLabel={(option) => option.email}
-                value={this.state.emails}
-                onChange={this.handleChange}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <>
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      placeholder="Add comma separated emails"
-                    />
-                  </>
-                )}
-              />
-              <Button
-                onClick={this.confirmDeleteEmails}
-                className="removeButton"
-                variant="contained"
-                color="secondary"
-              >
-                Remove
-                {' '}
-              </Button>
-            </AccordionDetails>
-          </Accordion>
-        </>
-      );
-    }
+              Remove{' '}
+            </Button>
+          </AccordionDetails>
+        </Accordion>
+      </>
+    );
+  }
 }
 RemoveEmails.propTypes = {
   emails: PropTypes.object.isRequired,
   removeAuthorizedEmail: PropTypes.func.isRequired,
 };
 
-
-const mapStateToProps = (state) => ({ emails: state.emailList || [] });
+const mapStateToProps = (state) => ({
+  emails: state.emailList || [],
+});
 
 const mapDispatchToProps = {
   removeAuthorizedEmail,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RemoveEmails);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RemoveEmails);

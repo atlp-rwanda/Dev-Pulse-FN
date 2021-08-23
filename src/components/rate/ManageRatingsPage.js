@@ -131,7 +131,6 @@ class ManageRatingsPage extends React.Component {
 	};
 
 	render() {
-		console.log("\n\n\n\n\n\n\n\n",this.state.name);
 		return (
 			<>
 			{this.state.name && <RatingForm

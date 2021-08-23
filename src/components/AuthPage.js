@@ -97,7 +97,7 @@ export class AuthPage extends Component {
                 </div>
                 <a
                   className="btn-login"
-                  href="http://localhost:3000/api/v1/users/auth/google"
+                  href={`${process.env.API_URL}/api/v1/users/auth/google`}
                 >
                   <span className="icon" />
                   <span className="login-txt">

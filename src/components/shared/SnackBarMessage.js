@@ -18,13 +18,22 @@ export const SuccessSnackBarMessage = (props) => {
         onClose={close}
         message={message}
         key={`${message}`}
-        action={(
+        action={
           <>
-            <IconButton style={{ backgroundColor: 'green', color: 'white' }} size="small" aria-label="close" color="inherit" onClick={close}>
+            <IconButton
+              style={{
+                backgroundColor: 'green',
+                color: 'white',
+              }}
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={close}
+            >
               <CloseIcon fontSize="small" />
             </IconButton>
           </>
-        )}
+        }
       />
     </div>
   );
@@ -46,13 +55,22 @@ export const ErrorSnackBarMessage = (props) => {
         onClose={close}
         message={message}
         key={`${message}`}
-        action={(
+        action={
           <>
-            <IconButton style={{ backgroundColor: 'red', color: 'white' }} size="small" aria-label="close" color="inherit" onClick={close}>
+            <IconButton
+              style={{
+                backgroundColor: 'red',
+                color: 'white',
+              }}
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={close}
+            >
               <CloseIcon fontSize="small" />
             </IconButton>
           </>
-        )}
+        }
       />
     </div>
   );

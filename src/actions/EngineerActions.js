@@ -129,6 +129,29 @@ export const fetchEngineer = (id) => async (dispatch) => {
       type: FETCH_ENGINEER,
       payload: user,
     });
+    if (user) {
+      const res2 = await axios.get(
+        `${baseUrl}/api/v1/cohorts`,
+        {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
+      const { data: cohort } = res2.data;
+      console.log('cohorts', cohort);
+      dispatch({
+        type: GET_COHORTS,
+        payload: cohort,
+      });
+    }
+
     const res1 = await axios.get(
       `${baseUrl}/api/v1/programs`,
       {
@@ -156,26 +179,6 @@ export const fetchEngineer = (id) => async (dispatch) => {
     dispatch({
       type: CHANGE_PROGRAM,
       payload: [],
-    });
-    const res2 = await axios.get(
-      `${baseUrl}/api/v1/cohorts`,
-      {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-        },
-      }
-    );
-    const { data: cohort } = res2.data;
-    console.log('cohorts', cohort);
-    return dispatch({
-      type: GET_COHORTS,
-      payload: cohort,
     });
   } catch (error) {
     console.log('the response is : ', error);

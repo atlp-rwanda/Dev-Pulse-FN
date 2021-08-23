@@ -44,7 +44,7 @@ const sideMenus = [
     icon: <MailIcon />,
     link: '/admin/emails',
   },
-  ];
+];
 
 export default function AdminDashboard(props) {
   const classes = useStyles();
@@ -53,7 +53,10 @@ export default function AdminDashboard(props) {
     <>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="absolute" className={classes.appBar}>
+        <AppBar
+          position="absolute"
+          className={classes.appBar}
+        >
           <Header />
         </AppBar>
         <Drawer
@@ -67,7 +70,13 @@ export default function AdminDashboard(props) {
           <div className={classes.drawerContainer}>
             <List>
               {sideMenus.map((menu, index) => (
-                <ListItem button key={menu.text} onClick={() => props.history.push(menu.link)}>
+                <ListItem
+                  button
+                  key={menu.text}
+                  onClick={() =>
+                    props.history.push(menu.link)
+                  }
+                >
                   <ListItemIcon>{menu.icon}</ListItemIcon>
                   <ListItemText primary={menu.text} />
                 </ListItem>

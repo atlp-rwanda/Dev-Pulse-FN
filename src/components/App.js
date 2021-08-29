@@ -20,6 +20,7 @@ import AuthPage from './AuthPage';
 import AdminDashboard from './AdminDashboard';
 import AuthorizeEmails from './AuthorizeEmails';
 import Attendance from './attendance/Attendance';
+import AttendanceForm from './attendance/AttendanceForm'
 
 const store = configureStore();
 
@@ -59,6 +60,7 @@ class App extends Component {
             <PrivateRoute path="/ratings/rate/:engId" component={ManageRatingsPage} />
             <PrivateRoute exact path="/list" component={EngineerList} />
             <PrivateRoute exact path='/attendance' component={Attendance} />
+            <PrivateRoute exact path='/attendance/new' component={AttendanceForm} />
             <Route component={NotFoundPage} />
           </Switch>
         </Provider>

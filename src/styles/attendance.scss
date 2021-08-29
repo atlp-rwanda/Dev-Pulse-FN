@@ -27,4 +27,33 @@
   .data {
     padding: 1em 4em;
   }
+  .att-header{
+    width: 100%;
+    background-color: $text-color;
+    padding: 1em 4em;
+    color: $main-color;
+    
+  }
+  .att-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:.2em;
+    margin-top: .5em;
+    .att-btn{
+      .btn{
+        padding: 6px 12px !important;
+      }
+    }
+    .att-filters{
+      display: flex;
+     .filter-data{
+       width: 100px !important;
+       height: 35px;
+       &:first-child{
+         margin-right: 10px !important;
+       }
+     }
+    }
+  }
 }

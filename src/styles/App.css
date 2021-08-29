@@ -1,11 +1,12 @@
 * {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body, html {
+body,
+html {
   font-family: 'Roboto', sans-serif;
   height: 100%;
   color: #717372;
@@ -39,11 +40,11 @@ body, html {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 0.7rem 2rem;
   width: 100%;
   height: 60px;
@@ -95,7 +96,7 @@ body, html {
 
 .main-wrapper {
   -webkit-box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
-          box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
+  box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
   margin: 10px;
   padding: 10px 10px 20px 20px;
   background: #fff;
@@ -125,7 +126,7 @@ body, html {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   padding: 20px 20px 20px 30px;
 }
 
@@ -142,7 +143,7 @@ body, html {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   background-color: #eff4f8;
   width: 300px;
   height: 50px;
@@ -157,7 +158,7 @@ body, html {
   max-height: 300px;
   overflow: auto;
   -webkit-box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
-          box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
+  box-shadow: 0 2px 5px rgba(104, 104, 104, 0.8);
   background: #fff;
   position: absolute;
   top: 29.4px;
@@ -171,6 +172,6 @@ body, html {
 }
 
 .drop-down-user:hover {
-  background-color: #DBDBDB;
+  background-color: #dbdbdb;
 }
 /*# sourceMappingURL=App.css.map */

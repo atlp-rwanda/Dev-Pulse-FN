@@ -12,20 +12,17 @@ class CohortDropDown extends React.Component {
   }
 
   async getCohorts() {
-    await this.props.fetchCohorts(
-      this.props.selectedCohort
-    );
+    await this.props.fetchCohorts(this.props.selectedCohort);
   }
 
   componentDidMount() {
     this.getCohorts();
   }
   render() {
-    const { cohorts } = this.props;
     return (
-      <div className="filter-container">
+      <div className='filter-container'>
         <select
-          className="filter-data filter-cohorts"
+          className='filter-data filter-cohorts'
           onChange={(e) => {
             this.props.onChange(+e.target.value);
             this.props.fetchPrograms(+e.target.value);
@@ -33,7 +30,7 @@ class CohortDropDown extends React.Component {
           }}
           value={this.props.selectedCohort}
         >
-          <option value={0}>All Cohorts</option>
+          <option value={0}>{this.props.default}</option>
           {this.props.cohorts.map((cohort) => {
             return (
               <option key={cohort.id} value={cohort.id}>
@@ -46,6 +43,7 @@ class CohortDropDown extends React.Component {
     );
   }
 }
+CohortDropDown.defaultProps = { default: 'All Cohorts' };
 const mapStateToProps = ({ engineer }) => ({
   cohorts: engineer.cohorts,
   selectedCohort: engineer.selectedCohort,
@@ -53,12 +51,7 @@ const mapStateToProps = ({ engineer }) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   onChange: (cohort) => dispatch(selectCohort(cohort)),
-  fetchPrograms: (cohortId) =>
-    dispatch(fetchPrograms(cohortId)),
-  fetchCohorts: (cohorts) =>
-    dispatch(fetchCohorts(cohorts)),
+  fetchPrograms: (cohortId) => dispatch(fetchPrograms(cohortId)),
+  fetchCohorts: (cohorts) => dispatch(fetchCohorts(cohorts)),
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CohortDropDown);
+export default connect(mapStateToProps, mapDispatchToProps)(CohortDropDown);

@@ -6,6 +6,12 @@ import {
   SELECTED_PROGRAM,
   GET_COHORTS,
   UPDATE_ENGINEER_COHORT,
+  ADD_COHORT,
+  ADD_PROGRAM,
+  REMOVE_PROGRAM,
+  REMOVE_COHORT,
+  UPDATE_COHORT,
+  UPDATE_PROGRAM,
 } from '../actions/actionType';
 
 const initialState = {
@@ -45,6 +51,32 @@ const EngineerReducer = (state = initialState, action) => {
       return { ...state, selectedCohort: payload };
     case FETCH_RATING:
       return { ...state, ...payload };
+    case ADD_COHORT:
+      return { ...state, cohorts: [...state.cohorts, payload] };
+    case ADD_PROGRAM:
+      return { ...state, programs: [...state.programs, payload] };
+    case REMOVE_PROGRAM:
+      return {
+        ...state,
+        programs: state.programs.filter((p) => p.id !== payload.id),
+      };
+    case REMOVE_COHORT:
+      return {
+        ...state,
+        cohorts: state.cohorts.filter((c) => c.id !== payload.id),
+      };
+    case UPDATE_COHORT:
+      return {
+        ...state,
+        cohorts: state.cohorts.map((c) => (c.id === payload.id ? payload : c)),
+      };
+    case UPDATE_PROGRAM:
+      return {
+        ...state,
+        programs: state.programs.map((p) =>
+          p.id === payload.id ? payload : p
+        ),
+      };
     default:
       return state;
   }

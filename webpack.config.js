@@ -1,38 +1,18 @@
 require('dotenv/config.js');
-const webpack = require('webpack')
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-process.env.NODE_ENV = 'production';
 const { API_URL } = process.env;
 
 module.exports = {
-  mode: 'production',
+  entry: './src/index.js',
   target: 'web',
-  devtool: 'cheap-module-source-map',
-  entry: './src/index',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: './',
-    filename: 'bundle.js',
+    publicPath: '/',
+    path: path.join(__dirname, '/build'),
+    filename: 'bundle.js'
   },
-  devServer: {
-    stats: 'minimal',
-    overlay: true,
-    port: '5000',
-    historyApiFallback: true,
-    disableHostCheck: true,
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    https: false,
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      "process.env.API_URL": JSON.stringify(API_URL)
-    }),
-    new HtmlWebpackPlugin({
-      template: 'public/index.html',
-    }),
-  ],
   module: {
     rules: [
       {
@@ -56,4 +36,23 @@ module.exports = {
       },
     ],
   },
-};
+  devServer: {
+    publicPath: '/',
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
+  },
+  mode: process.env.NODE_ENV || 'development',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+    new webpack.DefinePlugin({
+      'process.env': { API_URL: JSON.stringify(API_URL) },
+    }),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+      DEBUG: false
+    }),
+  ]
+}

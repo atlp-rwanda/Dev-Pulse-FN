@@ -11,6 +11,5 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server is Running on Port ${port} ...`);
+  console.log(`Server is Running on Port ${port}`);
 });

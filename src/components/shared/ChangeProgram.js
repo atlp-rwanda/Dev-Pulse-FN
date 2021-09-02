@@ -14,7 +14,7 @@ class ChangeProgram extends React.Component {
     super(props);
     this.state = {
       user: this.props.user.program,
-      users: this.props.user.programInfo.name,
+      users: this.props.user.programInfo ? this.props.user.programInfo.name : null,
       userCohort: this.props.user.cohort,
     };
   }

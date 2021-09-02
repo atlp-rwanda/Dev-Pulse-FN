@@ -96,7 +96,7 @@ class ManageRatingsPage extends React.Component {
 		//   }
 	};
 
-	handleRateSave = (event) => {
+	handleRateSave = async (event) => {
 		this.setState({ loading: true });
 		const { history } = this.props;
 		const rateSpec = [
@@ -123,11 +123,11 @@ class ManageRatingsPage extends React.Component {
 		//setsavingRating(true);
 		// rating is the local state being set locally above
 		console.log("rating to save", this.state.rating);
-		setTimeout(() => {
-			rateEngineer(this.state.rating);
-			this.setState({ loading: false });
-			history.push("/profile");
-		}, 2000);
+		await new Promise(async () => {
+            await rateEngineer(this.state.rating);
+            this.setState({ loading: false });
+            history.push("/profile");
+        });
 	};
 
 	render() {

@@ -14,14 +14,16 @@ class ChangeCohort extends React.Component {
     super(props);
     this.state = {
       user: this.props.user.cohort,
+      program: this.props.user.programId,
+      programInfo: this.props.user.programInfo,
     };
   }
-
   async getCohorts() {
     this.props.selectedCohort;
   }
   componentDidMount() {
     this.getCohorts();
+    console.log('props user', this.props.user.programInfo);
     // this.handleClick();
   }
   render() {
@@ -32,11 +34,11 @@ class ChangeCohort extends React.Component {
         />
         <div className="change-cohort">
           {this.props.cohorts.map((cohort) => {
-            const cohortId = cohort.id;
             return (
               <p
                 key={cohort.id}
                 onClick={() => {
+                  const cohortId = cohort.id;
                   const token =
                     localStorage.getItem('pulseToken');
                   if (this.state.user !== cohortId) {
@@ -47,11 +49,14 @@ class ChangeCohort extends React.Component {
                       `${baseUrl}/api/v1/users/${this.props.user.id}/cohort/${cohortId}`
                     );
                     this.props.updateCohort({
-                      cohortId,
                       cohort: cohortId,
+                      program: null,
+                      programInfo: null,
                     });
                     return this.setState({
                       user: cohortId,
+                      program: null,
+                      programInfo: null,
                     });
                   }
                 }}
@@ -67,7 +72,9 @@ class ChangeCohort extends React.Component {
 }
 const mapStateToProps = ({ engineer }) => ({
   user: engineer.user,
+  program: engineer.user,
   cohorts: engineer.cohorts,
+  programInfo: engineer.programInfo,
   selectedCohort: engineer.selectedCohort,
 });
 

@@ -57,12 +57,14 @@ class ChangeProgram extends React.Component {
                       `${baseUrl}/api/v1/users/${this.props.user.id}/program/${programId}`
                     );
                     this.props.updateProgram({
+                      program: programId,
                       programInfo: {
                         id: programId,
                         name: programName,
                       },
                     });
                     return this.setState({
+                      user: programId,
                       users: programName,
                     });
                   }

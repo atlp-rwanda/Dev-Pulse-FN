@@ -78,7 +78,6 @@ export const fetchPrograms =
   };
 export const updateEngineerCohort =
   (payload) => async (dispatch) => {
-    console.log(payload);
     const token = localStorage.getItem('pulseToken');
     dispatch({ type: UPDATE_ENGINEER_COHORT, payload });
     const res1 = await axios.get(
@@ -106,6 +105,7 @@ export const updateEngineerCohort =
       });
     }
   };
+
 export const fetchEngineer = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
@@ -125,6 +125,7 @@ export const fetchEngineer = (id) => async (dispatch) => {
       }
     );
     const { data: user } = res.data;
+    console.log('user list', user);
     dispatch({
       type: FETCH_ENGINEER,
       payload: user,
@@ -171,11 +172,13 @@ export const fetchEngineer = (id) => async (dispatch) => {
       const filterPrograms = programs.filter(
         (program) => program.cohortId === user.cohort
       );
+      console.log('filteredprograms', filterPrograms);
       return dispatch({
         type: CHANGE_PROGRAM,
         payload: filterPrograms,
       });
     }
+    console.log('programs');
     dispatch({
       type: CHANGE_PROGRAM,
       payload: [],

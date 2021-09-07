@@ -207,14 +207,16 @@ class SingleEngineer extends React.Component {
               <li className="profile-bar-item">
                 <ProgramDropDown />
               </li>
-              <li className="profile-bar-item">
-                <Link
-                  className="btn"
-                  to={'/ratings/rate/' + user.id}
-                >
-                  Rate
-                </Link>
-              </li>
+              {userRole === 'Manager' && (
+                <li className="profile-bar-item">
+                  <Link
+                    className="btn"
+                    to={'/ratings/rate/' + user.id}
+                  >
+                    Rate
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           <div>

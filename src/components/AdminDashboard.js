@@ -1,19 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Header from './shared/Header';
+import { People } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 220;
 
@@ -44,6 +42,11 @@ const sideMenus = [
     icon: <MailIcon />,
     link: '/admin/emails',
   },
+  {
+    text: 'Cohorts',
+    icon: <People />,
+    link: '/admin/cohorts',
+  },
 ];
 
 export default function AdminDashboard(props) {
@@ -53,15 +56,12 @@ export default function AdminDashboard(props) {
     <>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar
-          position="absolute"
-          className={classes.appBar}
-        >
+        <AppBar position='absolute' className={classes.appBar}>
           <Header />
         </AppBar>
         <Drawer
           className={classes.drawer}
-          variant="permanent"
+          variant='permanent'
           classes={{
             paper: classes.drawerPaper,
           }}
@@ -72,10 +72,9 @@ export default function AdminDashboard(props) {
               {sideMenus.map((menu, index) => (
                 <ListItem
                   button
+                  component={Link}
                   key={menu.text}
-                  onClick={() =>
-                    props.history.push(menu.link)
-                  }
+                  to={menu.link}
                 >
                   <ListItemIcon>{menu.icon}</ListItemIcon>
                   <ListItemText primary={menu.text} />

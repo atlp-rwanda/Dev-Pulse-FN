@@ -49,6 +49,7 @@ class ManageCohorts extends Component {
                 <AddCohort
                   type='remove'
                   scope='cohort'
+                  list={cohorts.map((c) => c.name)}
                   handleSubmit={(name) => {
                     const { id } = cohorts.find((c) => c.name === name);
                     removeCohort(id);

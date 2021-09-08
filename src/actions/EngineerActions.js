@@ -299,9 +299,10 @@ export const removeProgram = (id) => async (dispatch) => {
         type: REMOVE_PROGRAM,
         payload: response.data.data,
       });
+    else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
-    toast.error('Unable to remove program!');
+    toast.error(error.response.data.message || 'Unable to remove program!');
   }
 };
 
@@ -324,9 +325,10 @@ export const removeCohort = (id) => async (dispatch) => {
         type: REMOVE_COHORT,
         payload: response.data.data,
       });
+    else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
-    toast.error('Unable to remove cohort!');
+    toast.error(error.response.data.message || 'Unable to remove cohort!');
   }
 };
 

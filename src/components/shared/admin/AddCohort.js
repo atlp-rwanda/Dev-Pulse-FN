@@ -5,9 +5,11 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  TextField,
 } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 
-const AddCohort = ({ type, scope, handleSubmit, style, dated }) => {
+const AddCohort = ({ type, scope, handleSubmit, style, dated, list }) => {
   const [data, setData] = React.useState('');
   const [start, setStart] = React.useState('');
   const [end, setEnd] = React.useState('');
@@ -33,15 +35,34 @@ const AddCohort = ({ type, scope, handleSubmit, style, dated }) => {
           </h3>
         </AccordionSummary>
         <AccordionDetails className='addWrapper'>
-          <div className='tagContainer'>
-            <input
-              type='text'
+          {type !== 'remove' ? (
+            <div className='tagContainer'>
+              <input
+                type='text'
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                placeholder={`${scope} to ${type}`}
+                required
+              />
+            </div>
+          ) : (
+            <Autocomplete
+              className='autoCompleteInput'
+              multiple={false}
+              options={list || []}
+              // getOptionLabel={(option) => option}
               value={data}
-              onChange={(e) => setData(e.target.value)}
-              placeholder={`${scope} to ${type}`}
-              required
+              onChange={(_, val) => setData(val)}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant='outlined'
+                  placeholder={`${scope} to ${type}`}
+                />
+              )}
             />
-          </div>
+          )}
           {dated && (
             <>
               <div className='tagContainer'>
@@ -65,9 +86,9 @@ const AddCohort = ({ type, scope, handleSubmit, style, dated }) => {
             </>
           )}
           <Button
-            className='addButton'
+            className={type === 'remove' ? 'removeButton' : 'addButton'}
+            color={type === 'remove' ? 'secondary' : 'primary'}
             variant='contained'
-            color='primary'
             onClick={onSubmit}
           >
             {type}

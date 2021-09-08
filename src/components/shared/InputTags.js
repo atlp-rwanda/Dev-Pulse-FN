@@ -35,6 +35,27 @@ const InputTags = (props) => {
   const deleteTag = (index) => {
     setTags(tags.filter((tag, i) => i !== index));
   };
+  const breakDownIntoEmails = (text,separator) =>{
+    return text.split(separator).map((tag) => tag.trim());
+  }
+  const filterExistingEmails = (emails,existingEmails) =>{
+    let filtered = [];
+    pastedTags.forEach(tag => {
+      if(!tagsCopy.includes(tag)) {
+        filtered.push(tag);
+      }
+    });
+  }
+  const handlePaste =(e) => {
+    e.preventDefault();
+    const { clipboardData } = e;
+    const pastedText = clipboardData.getData('Text');
+    const emails = pastedText.split(/[,\s]+/);
+    const allEmails = [ ...tags, ...emails];
+    const filtered = new Set(allEmails);
+    setTags([...filtered]);
+    setInput('');
+  };
   return (
     <div className="tagContainer">
       {tags.map((tag, index) => (
@@ -51,6 +72,7 @@ const InputTags = (props) => {
         onChange={onChange}
         type="email"
         required
+        onPaste={handlePaste}
       />
     </div>
 

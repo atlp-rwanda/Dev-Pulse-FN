@@ -78,16 +78,16 @@ render() {
   const { snackMessageData, snackMessageError } = this.state;
   return (
     <>
-      <SuccessSnackBarMessage
+      {/* <SuccessSnackBarMessage
         open={snackMessageData.open}
         message={snackMessageData.message}
         close={this.handleCloseSnackSuccess}
-      />
-      <ErrorSnackBarMessage
+      /> */}
+      {/* <ErrorSnackBarMessage
         open={snackMessageError.open}
         message={snackMessageError.message}
         close={this.handleCloseSnackSuccess}
-      />
+      /> */}
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}

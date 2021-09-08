@@ -22,16 +22,17 @@ import AuthorizeEmails from './AuthorizeEmails';
 import ManageCohorts from './ManageCohorts';
 import { fetchCohorts, fetchPrograms } from '../actions/EngineerActions';
 import Attendance from './attendance/Attendance';
-import AttendanceForm from './attendance/AttendanceForm'
+import AttendanceForm from './attendance/AttendanceForm';
 import TraineeView from './attendance/TraineeView';
 import Sessions from './Sessions';
 import RateAll from './rate/RateAll';
+import Analytics from './analytics';
 
 class App extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   };
   adminLocation = location.pathname.split('/', 3);
 
@@ -74,13 +75,22 @@ class App extends Component {
           />
           <PrivateRoute exact path='/list' component={EngineerList} />
           <PrivateRoute exact path='/attendance' component={Attendance} />
-          <PrivateRoute exact path='/attendance/new' component={AttendanceForm} />
-          <PrivateRoute exact path='/attendance/trainee/:id' component={TraineeView} />
+          <PrivateRoute
+            exact
+            path='/attendance/new'
+            component={AttendanceForm}
+          />
+          <PrivateRoute
+            exact
+            path='/attendance/trainee/:id'
+            component={TraineeView}
+          />
           <PrivateRoute exact path='/admin/sessions' component={Sessions} />
           <PrivateRoute
             path='/ratings/rate/all'
             component={ManageRatingsPage}
           />
+          <PrivateRoute exact path='/admin/analytics' component={Analytics} />
           <Route component={NotFoundPage} />
         </Switch>
       </>
@@ -90,12 +100,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   cohorts: state.engineer.cohorts,
-  programs: state.engineer.programs,
+  programs: state.engineer.programs
 });
 
 const mapDispatchToprops = (dispatch) => ({
   fetchCohorts: () => dispatch(fetchCohorts()),
-  fetchPrograms:() => dispatch(fetchPrograms()),
+  fetchPrograms: () => dispatch(fetchPrograms()),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToprops)(withRouter(App));

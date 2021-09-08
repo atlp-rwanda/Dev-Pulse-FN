@@ -15,6 +15,12 @@ import {
   REMOVE_PROGRAM,
   UPDATE_PROGRAM,
   UPDATE_COHORT,
+  FETCH_ALL_USERS_PENDING,
+  FETCH_ALL_USERS_FAILED,
+  FTECH_ALL_USER_SUCCESS,
+  EXPORT_TRAINEE_RATINGS_PENDING,
+  EXPORT_TRAINEE_RATINGS_SUCCESS,
+  EXPORT_TRAINEE_RATINGS_FAILED
 } from './actionType';
 
 const baseUrl = process.env.API_URL;
@@ -440,3 +446,85 @@ export const addProgram =
       toast.error('Unable to add program!');
     }
   };
+
+export const fetchAllUsers = () => async (dispatch) => {
+  dispatch({
+    type: FETCH_ALL_USERS_PENDING,
+    payload: ''
+  });
+  try {
+    const token = localStorage.getItem('pulseToken');
+    const res = await axios.get(`${baseUrl}/api/v1/users/all`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+    const { data } = res;
+
+    if (data) {
+      const users = [];
+      data.data.forEach((user) => {
+        if (user.role === 'Trainee') {
+          users.push(user);
+        }
+      });
+      dispatch({
+        type: FTECH_ALL_USER_SUCCESS,
+        payload: users
+      });
+    } else {
+      dispatch({
+        type: FETCH_ALL_USERS_FAILED,
+        payload: []
+      });
+    }
+  } catch (error) {
+    console.log('the response is : ', error);
+  }
+};
+
+export const exportTraineeRatings = (id, timeRange) => async (dispatch) => {
+  const token = localStorage.getItem('pulseToken');
+  dispatch({
+    type: EXPORT_TRAINEE_RATINGS_PENDING,
+    payload: ''
+  });
+  try {
+    const res = await axios.get(
+      `${baseUrl}/api/v1/users/${id}/ratings/?from=${timeRange.from}&to=${timeRange.to}`,
+      {
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`
+        }
+      }
+    );
+    const { data } = res;
+
+    if (data && data.data.ratings.length) {
+      dispatch({
+        type: EXPORT_TRAINEE_RATINGS_SUCCESS,
+        payload: data.data.ratings
+      });
+      toast.success(`Ratings retrieved successfully, click download`);
+    } else {
+      toast.error(`No ratings available in that time range`);
+    }
+  } catch (error) {
+    toast.error(`Error while retriving data, select start and end dates`);
+    dispatch({
+      type: EXPORT_TRAINEE_RATINGS_FAILED,
+      payload: []
+    });
+  }
+};

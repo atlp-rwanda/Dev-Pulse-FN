@@ -1,11 +1,11 @@
 /* eslint-disable import/no-named-as-default */
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import configureStore from '../store';
 import Header from './shared/Header';
 import HomePage from './HomePage';
 import singleEngineer from './singleEngineer';
@@ -19,49 +19,70 @@ import EngineerList from './egineerList';
 import AuthPage from './AuthPage';
 import AdminDashboard from './AdminDashboard';
 import AuthorizeEmails from './AuthorizeEmails';
-
-const store = configureStore();
+import ManageCohorts from './ManageCohorts';
+import { fetchCohorts, fetchPrograms } from '../actions/EngineerActions';
 
 class App extends Component {
-    static propTypes = {
-      match: PropTypes.object.isRequired,
-      location: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-    };
-    adminLocation = location.pathname.split('/',3);
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+  adminLocation = location.pathname.split('/', 3);
 
+  constructor(props) {
+    super(props);
+  }
 
-    constructor(props) {
-      super(props);
-    }
+  componentDidMount() {
+    const { cohorts, programs, fetchCohorts, fetchPrograms } = this.props;
+    if (!cohorts.length) fetchCohorts();
+    if (!programs.length) fetchPrograms();
+  }
 
-    render() {
-      const { location } = this.props;
-      return (
-        <Provider store={store}>
-          <ToastContainer />
-          {
-            location.pathname === '/login' ? null :
-              location.pathname.split('/',3).includes('admin') ? <AdminDashboard/> : 
-              <Header />
-          }
-          <Switch>
-            <Route exact path="/" component={AuthPage}>
-              <Redirect to="/login" />
-            </Route>
-            <Route path="/login" component={AuthPage} />
-            <Route path="/add-lf" component={AddLf} />
-            <PrivateRoute path="/profile" component={HomePage} />
-            <PrivateRoute path="/admin" exact component={AdminDashboard} />
-            <PrivateRoute path="/admin/emails" component={AuthorizeEmails}/>
-            <Route path="/users/:id" component={singleEngineer} />
-            <PrivateRoute path="/ratings/rate/:engId" component={ManageRatingsPage} />
-            <PrivateRoute exact path="/list" component={EngineerList} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Provider>
-      );
-    }
+  render() {
+    const { location } = this.props;
+    return (
+      <>
+        <ToastContainer />
+        {location.pathname === '/login' ? null : location.pathname
+            .split('/', 3)
+            .includes('admin') ? (
+          <AdminDashboard />
+        ) : (
+          <Header />
+        )}
+        <Switch>
+          <Route exact path='/' component={AuthPage}>
+            <Redirect to='/login' />
+          </Route>
+          <Route path='/login' component={AuthPage} />
+          <Route path='/add-lf' component={AddLf} />
+          <PrivateRoute path='/profile' component={HomePage} />
+          <PrivateRoute path='/admin' exact component={AdminDashboard} />
+          <PrivateRoute path='/admin/emails' component={AuthorizeEmails} />
+          <PrivateRoute path='/admin/cohorts' component={ManageCohorts} />
+          <Route path='/users/:id' component={singleEngineer} />
+          <PrivateRoute
+            path='/ratings/rate/:engId'
+            component={ManageRatingsPage}
+          />
+          <PrivateRoute exact path='/list' component={EngineerList} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </>
+    );
+  }
 }
 
-export default withRouter(App);
+const mapStateToProps = (state) => ({
+  cohorts: state.engineer.cohorts,
+  programs: state.engineer.programs,
+});
+
+const mapDispatchToprops = (dispatch) => ({
+  fetchCohorts: () => dispatch(fetchCohorts()),
+  fetchPrograms: () => dispatch(fetchPrograms()),
+});
+
+export default connect(mapStateToProps, mapDispatchToprops)(withRouter(App));

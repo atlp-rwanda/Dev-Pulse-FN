@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const InputTags = (props) => {
-  const { tags, setTags } = props;
+  const { tags, setTags, type } = props;
   const [input, setInput] = useState('');
   const [isKeyReleased, setIsKeyReleased] = useState(false);
   const onChange = (e) => {
@@ -12,7 +12,11 @@ const InputTags = (props) => {
     const { key } = e;
     const trimmedInput = input.trim();
 
-    if (([' ', ',','Enter'].includes(key)) && trimmedInput.length && !tags.includes(trimmedInput)) {
+    if (
+      [' ', ',', 'Enter'].includes(key) &&
+      trimmedInput.length &&
+      !tags.includes(trimmedInput)
+    ) {
       e.preventDefault();
       setTags([...tags, trimmedInput]);
       setInput('');
@@ -57,26 +61,31 @@ const InputTags = (props) => {
     setInput('');
   };
   return (
-    <div className="tagContainer">
+    <div className='tagContainer'>
       {tags.map((tag, index) => (
-        <div className="tag" key={`${tag + index}`}>
+        <div className='tag' key={`${tag + index}`}>
           {tag}
-          <button type="button" onClick={() => deleteTag(index)}>x</button>
+          <button type='button' onClick={() => deleteTag(index)}>
+            x
+          </button>
         </div>
       ))}
       <input
         value={input}
-        placeholder="Add comma separated emails"
+        placeholder={`Add comma separated ${type}s`}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         onChange={onChange}
-        type="email"
+        type={type}
         required
         onPaste={handlePaste}
       />
     </div>
-
   );
+};
+
+InputTags.defaultProps = {
+  type: 'email',
 };
 
 export default InputTags;

@@ -37,7 +37,7 @@ export class AddLf extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {
- status, clearData, profile, history 
+ status, clearData, profile, history
 } = nextProps;
     if (profile.success.data.role !== 'Super LF') {
       toast.error('Unauthorized Page', {

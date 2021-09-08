@@ -18,4 +18,4 @@ const rateAllTrainees=(data)=>async(dispatch)=>{
 
 
 
-export default rateAllTrainees; 
+export default rateAllTrainees;

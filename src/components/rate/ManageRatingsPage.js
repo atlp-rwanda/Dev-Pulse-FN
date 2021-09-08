@@ -134,7 +134,7 @@ class ManageRatingsPage extends React.Component {
 
     return (
       <>
-      {ratingMode==='all' ? (<RateAll />) : 
+      {ratingMode==='all' ? (<RateAll />) :
       <>
       {this.state.name && (
           <RatingForm

@@ -113,7 +113,7 @@ class RemoveEmails extends Component {
       this.state;
     return (
       <>
-        <SuccessSnackBarMessage
+        {/* <SuccessSnackBarMessage
           open={snackMessageData.open}
           message={snackMessageData.message}
           close={this.handleCloseSnackSuccess}
@@ -122,7 +122,7 @@ class RemoveEmails extends Component {
           open={snackMessageError.open}
           message={snackMessageError.message}
           close={this.handleCloseSnackSuccess}
-        />
+        /> */}
         <ConfirmationDialog
           openDialog={this.state.openDialog}
           closeDialog={this.closeDialog}

@@ -46,10 +46,9 @@ class Header extends Component {
     return (
       <>
         <nav className="navbar">
-          <img
-            className="logo-img"
-            src="https://res.cloudinary.com/bahati/image/upload/v1572334416/samples/Mystuff/pulse_vjdvgh.png"
-          />
+          <NavLink to="/" >
+            <img className="logo-img" src="https://res.cloudinary.com/bahati/image/upload/v1572334416/samples/Mystuff/pulse_vjdvgh.png" />
+          </NavLink>
           <h1>
             <i className="fas fa-code" /> PULSE
           </h1>

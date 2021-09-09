@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
   FETCH_EMAILS_ERROR,
   FETCH_EMAILS_SUCCESS,
@@ -20,6 +21,7 @@ export const saveAuthorizedEmail = (emails) => (dispatch) => {
   axios.post(`${process.env.API_URL}/api/v1/emails`, body, config)
     .then((res) => {
       console.log('add response', res.data);
+      toast.success('Email(s) saved successfully');
       dispatch({
         type: ADD_EMAILS_SUCCESS,
         payload: {
@@ -30,6 +32,7 @@ export const saveAuthorizedEmail = (emails) => (dispatch) => {
     })
     .catch((error) => {
       console.log('Errorrrrrrr=>', body, error.response);
+      toast.error(error.response.data.message);
       dispatch({
         type: ADD_EMAILS_ERROR,
         payload: error.response.data.message,
@@ -50,6 +53,7 @@ export const removeAuthorizedEmail = (emails) => (dispatch) => {
   instance.delete(`${process.env.API_URL}/api/v1/emails`, { data: body}, config)
     .then((res) => {
       console.log('remmove response', res.data, emails);
+      toast.success('Email(s) removed successfully');
       dispatch({
         type: REMOVE_EMAILS_SUCCESS,
         payload: {
@@ -60,7 +64,7 @@ export const removeAuthorizedEmail = (emails) => (dispatch) => {
     })
     .catch((error) => {
       console.log('Errorrrrrrr=>', error.response);
-      console.log('eeeeeeeeero', body, config);
+      toast.error(error.response.data.message);
       dispatch({
         type: REMOVE_EMAILS_ERROR,
         payload: error.response.data.message,

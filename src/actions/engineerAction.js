@@ -14,7 +14,9 @@ export const rateEngineer = (ratings) => {
     .rateEngineer(ratings)
     .then((savedRatings) => {
       toast.success('Done Saving');
-      return dispatch(rateEngineerSuccess(savedRatings));
+      return rateEngineerSuccess(savedRatings);
     })
-    .catch((error) => toast.error(error));
+    .catch((error) => {
+      toast.error(error.response.data.message);
+    });
 };

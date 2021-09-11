@@ -1,4 +1,4 @@
-import { DeleteForever, Edit } from '@material-ui/icons';
+import { DeleteForever, Edit, Check } from '@material-ui/icons';
 import React, { useState } from 'react';
 
 const EachProgram = ({ program, onEdit, onDelete }) => {
@@ -28,7 +28,7 @@ const EachProgram = ({ program, onEdit, onDelete }) => {
 
   return (
     <div className='eachEmail eachProgram' key={program.name}>
-      <Edit onClick={() => setEditing(!editing)} />{' '}
+      <Edit style={{cursor: 'pointer'}} onClick={() => setEditing(!editing)} />{' '}
       {!editing ? (
         <p>{editVal.name}</p>
       ) : (
@@ -54,9 +54,14 @@ const EachProgram = ({ program, onEdit, onDelete }) => {
               }
             />
           </form>
-          <button>
-            <DeleteForever onClick={handleDelete} />
-          </button>
+          <div style={{padding: '0 3px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
+            <button type="submit">
+              <Check />
+            </button>
+            <button type="button">
+              <DeleteForever onClick={handleDelete} />
+            </button>
+          </div>
         </div>
       )}
     </div>

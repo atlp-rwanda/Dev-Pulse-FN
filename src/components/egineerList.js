@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SearchDropDown from './shared/SearchDropDown';
 import Engineer from './engineer';
+import { toast } from 'react-toastify';
 import {
   myEngineers,
   deleteEngineer,
@@ -13,12 +14,14 @@ import {
   getUsers,
 } from '../actions/engineerList';
 import '../styles/myEngineers.css';
+import { ImSpinner } from 'react-icons/im';
 
 export class EngineerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       localUsers: [],
+      loading_: false,
     };
   }
 
@@ -45,10 +48,16 @@ export class EngineerList extends Component {
     const { replaceEngineer } = this.props;
     replaceEngineer(user);
   };
-
   handleSaving = (users) => {
+    this.setState({ loading_: true });
     const { saveEngineers } = this.props;
+
     saveEngineers(users);
+    setTimeout(() => {
+      this.setState({ loading_: false });
+
+      toast.success('Successfully Saved');
+    }, 3000);
   };
 
   search = (e) => {
@@ -81,6 +90,7 @@ export class EngineerList extends Component {
 
   render() {
     const { engineers } = this.props;
+    console.log('engineers', engineers);
     const { localUsers } = this.state;
 
     if (engineers.isLoggedOut === true) {
@@ -89,17 +99,17 @@ export class EngineerList extends Component {
 
     return (
       <>
-        <div className='container'>
+        <div className="container">
           <main>
-            <div className='main-wrapper'>
-              <div className='top'>
+            <div className="main-wrapper">
+              <div className="top">
                 <h2>Edit My Developers</h2>
               </div>
-              <div className='relative-div'>
+              <div className="relative-div">
                 <input
                   onChange={this.search}
-                  type='text'
-                  placeholder='Search for developer to add to your list'
+                  type="text"
+                  placeholder="Search for developer to add to your list"
                 />
                 <SearchDropDown
                   hideList={this.handleDropdownClick}
@@ -107,50 +117,46 @@ export class EngineerList extends Component {
                 />
               </div>
               <h4>My List</h4>
-              {engineers.message && (
-                <div class='alert success'>
-                  <input type='checkbox' id='alert2' />
-                  <label class='close' title='close' for='alert2'>
-                    <i class='icon-remove'></i>
-                  </label>
-                  <p class='inner'>{engineers.message}.</p>
-                </div>
-              )}
 
-              <div className='mylist'>
+              <div className="mylist">
                 {engineers.engineers.map((eng) => (
                   <Engineer
                     key={eng.id}
                     onDelete={this.handleDelete}
-                    handleNameClicked={this.handleClickedName}
-                    value='-'
+                    handleNameClicked={
+                      this.handleClickedName
+                    }
+                    value="-"
                     engineer={eng}
                   />
                 ))}
               </div>
-              <div className='mylist' />
+              <div className="mylist" />
               <h4>Developers Removed</h4>
-              <div className='mylist'>
+              <div className="mylist">
                 {engineers.removed.map((eng) => (
                   <Engineer
                     key={eng.id}
                     onDelete={this.handleReplacing}
-                    value='+'
+                    value="+"
                     engineer={eng}
-                    btnClass='btn-delete'
-                    mainClass='engineer-delete'
+                    btnClass="btn-delete"
+                    mainClass="engineer-delete"
                   />
                 ))}
               </div>
               <div>
-                <Link
+                <button
+                  type="submit"
                   onClick={() => {
                     this.handleSaving(engineers.engineers);
                   }}
-                  className='btn'
+                  className="btn"
+                  disabled={this.state.loading_}
                 >
+                  {this.state.loading_ && <ImSpinner />}
                   Save My List
-                </Link>
+                </button>
               </div>
             </div>
           </main>
@@ -186,4 +192,7 @@ const mapDispatchToprops = {
   getUsers,
 };
 
-export default connect(mapStateToProps, mapDispatchToprops)(EngineerList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToprops
+)(EngineerList);

@@ -211,10 +211,12 @@ export const fetchRating = (id) => (dispatch) => {
     })
     .then((response) => {
       console.log('fetching rating done', response);
+      const res = response.data.data;
+      !res.average ? res.average = [] : null;
 
       dispatch({
         type: FETCH_RATING,
-        payload: response.data.data,
+        payload: res,
       });
     })
     .catch((error) => console.log('the response is : ', error));

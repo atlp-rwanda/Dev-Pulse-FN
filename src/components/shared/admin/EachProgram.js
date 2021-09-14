@@ -28,40 +28,56 @@ const EachProgram = ({ program, onEdit, onDelete }) => {
 
   return (
     <div className='eachEmail eachProgram' key={program.name}>
-      <Edit style={{cursor: 'pointer'}} onClick={() => setEditing(!editing)} />{' '}
+      <Edit
+        style={{ cursor: 'pointer' }}
+        onClick={() => setEditing(!editing)}
+      />{' '}
       {!editing ? (
         <p>{editVal.name}</p>
       ) : (
         <div className='cohortChange'>
-          <form onSubmit={handleEdit} className='tagContainer'>
-            <input
-              type='text'
-              value={editVal.name}
-              onChange={(e) => setEditVal({ ...editVal, name: e.target.value })}
-            />
-            <input
-              type='date'
-              value={editVal.start_date}
-              onChange={(e) =>
-                setEditVal({ ...editVal, start_date: e.target.value })
-              }
-            />
-            <input
-              type='date'
-              value={editVal.end_date}
-              onChange={(e) =>
-                setEditVal({ ...editVal, end_date: e.target.value })
-              }
-            />
+          <form onSubmit={handleEdit} style={{ display: 'flex' }}>
+            <div className='tagContainer'>
+              <input
+                type='text'
+                value={editVal.name}
+                onChange={(e) =>
+                  setEditVal({ ...editVal, name: e.target.value })
+                }
+              />
+              <input
+                type='date'
+                value={editVal.start_date}
+                onChange={(e) =>
+                  setEditVal({ ...editVal, start_date: e.target.value })
+                }
+              />
+              <input
+                type='date'
+                value={editVal.end_date}
+                onChange={(e) =>
+                  setEditVal({ ...editVal, end_date: e.target.value })
+                }
+              />
+            </div>
+            <div
+              style={{
+                padding: '0 3px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+              }}
+            >
+              <button type='submit'>
+                <Check />
+              </button>
+              <button type='button'>
+                <DeleteForever onClick={handleDelete} />
+              </button>
+            </div>
           </form>
-          <div style={{padding: '0 3px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
-            <button type="submit">
-              <Check />
-            </button>
-            <button type="button">
-              <DeleteForever onClick={handleDelete} />
-            </button>
-          </div>
         </div>
       )}
     </div>

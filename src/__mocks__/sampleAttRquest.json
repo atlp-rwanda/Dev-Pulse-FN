@@ -1,0 +1,23 @@
+{
+  "data": {
+    "1": [
+      {
+        "id": 1,
+        "name": "Umuhire Heritier",
+        "attendance": 1,
+        "comment": "adatacmoonet"
+      }
+    ],
+    "2": [
+      {
+        "id": 2,
+        "name": "Irudunda Irenee",
+        "attendance": 0,
+        "comment": "this is"
+      }
+    ]
+  },
+  "sessionId": "1"
+}
+
+

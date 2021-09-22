@@ -15,6 +15,8 @@ const editUsers = (users) =>
     id: eng.id,
     name: `${eng.firstName} ${eng.lastName}`,
     email: eng.email,
+    cohort:eng.cohort,
+    program:eng.program,
   }));
 
 export const myEngineers = () => (dispatch) => {
@@ -34,6 +36,7 @@ export const myEngineers = () => (dispatch) => {
         type: MY_ENGINEERS,
         payload: engineers,
       });
+      return engineers;
     })
     .catch((error) => {
       console.log('Error==>', error);

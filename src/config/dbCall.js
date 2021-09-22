@@ -11,6 +11,17 @@ const dbCall = axios.create({
  * @since 29.07.2021
  */
 
+dbCall.interceptors.request.use((config) => {
+  const token = localStorage.getItem('pulseToken');
+  if(token){
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+
 dbCall.interceptors.response.use(
   (response) =>
     new Promise((resolve, reject) => {

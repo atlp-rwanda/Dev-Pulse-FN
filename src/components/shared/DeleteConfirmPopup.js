@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function ConfirmationDialog(props) {
   const {
-    openDialog, closeDialog, items, confirmed,
+    openDialog, closeDialog, items, confirmed,label
   } = props;
 
   return (
@@ -29,7 +29,7 @@ export default function ConfirmationDialog(props) {
           {' '}
           {items}
           {' '}
-          email(s)?
+         {label?label :' email(s)'}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

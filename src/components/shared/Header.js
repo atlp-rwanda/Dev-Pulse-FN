@@ -63,6 +63,17 @@ class Header extends Component {
               </li>
             )}
             <li>
+              <NavLink
+                to="/attendance"
+                title="attendance"
+                activeClassName='active-nav'
+              >
+                <i className="fas fa-list-alt " />
+                <span className="m-1">Attendance</span>
+
+              </NavLink>
+            </li>
+            <li>
               <Link
                 onClick={() => this.logOut()}
                 to="/login"

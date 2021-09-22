@@ -13,7 +13,7 @@ const InputTags = (props) => {
     const trimmedInput = input.trim();
 
     if (
-      [' ', ',', 'Enter'].includes(key) &&
+      [',', 'Enter'].includes(key) &&
       trimmedInput.length &&
       !tags.includes(trimmedInput)
     ) {

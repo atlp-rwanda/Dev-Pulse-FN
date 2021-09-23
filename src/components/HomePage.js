@@ -7,7 +7,7 @@ import CohortDropDown from './shared/CohortDropDown';
 const HomePage = () => (
   <div className="container">
     <p className="tableHeader">
-      My Developers A Average Score
+      My Developers Average Score
     </p>
     <div
       style={{

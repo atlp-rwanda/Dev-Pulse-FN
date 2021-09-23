@@ -42,8 +42,6 @@ const CategoryElement = ({ category, onChange, onRate }) => {
 				<option value={2}>Very satisfied (2) </option>
 				<option value={1}>Satisfied (1)</option>
 				<option value={0}>Neutral (0)</option>
-				<option value={-1}>Unsatisfied (-1) </option>
-				<option value={-2}>Very Unsatisfied (-2) </option>
 			</select>
 			<textarea
 				rows="5"

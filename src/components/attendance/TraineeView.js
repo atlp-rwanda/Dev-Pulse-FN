@@ -57,7 +57,7 @@ const TraineeView = (props) => {
       <div className='heading'>
       <div className='view-toggler'>
         {TabList.map(({ id, label }) => (
-          <div onClick={() => setActiveTab(id)} key={id} className={activeTab === id ? 'item active' : 'item'}>
+          <div onClick={() => setActiveTab(id)} key={id} className={activeTab === id ? 'item active pointer' : 'item pointer'}>
             <span>{label}</span>
           </div>
         ))}

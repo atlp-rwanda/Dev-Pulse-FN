@@ -56,10 +56,7 @@ handleAddSessions = () => {
   const { createSessions } = this.props;
   const { tags } = this.state;
   console.log('sessions', this.state.tags, this.props);
-  if (tags.length){
-    createSessions(tags);
-    this.setState({ tags: [] });
-  }
+  if (tags.length) createSessions(tags);
   return null;
 }
 

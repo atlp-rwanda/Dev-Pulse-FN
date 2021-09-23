@@ -1,5 +1,4 @@
 import dbCall from "../config/dbCall";
-import { toast } from 'react-toastify';
 import {
     CREATING_SESSIONS,
     CREATING_SESSIONS_SUCCESS,
@@ -31,24 +30,21 @@ export const createSessions = (data) => (dispatch) => {
     dbCall.post('/sessions', data).then((response) => {
         const { data } = response;
         dispatch({ type: CREATING_SESSIONS_SUCCESS, payload: data.data });
-        toast.success(data.message);
     }).catch(error => {
         const respErr = (error.response ? error.response : error);
-        toast.error(respErr);
         dispatch({ type: CREATING_SESSIONS_FAILED, payload: respErr });
     });
 }
 
 
 export const removeSessions = (data) => (dispatch) => {
-
+    console.
     dispatch({ type: DELETING_SESSIONS, payload: null });
-    dbCall.post('/sessions/remove', data).then((response) => {
-        toast.success(response.data.message);
-        dispatch({ type: DELETING_SESSIONS_SUCCESS, payload: data });
+    dbCall.post('/sessions', data).then((response) => {
+        const { data } = response;
+        dispatch({ type: DELETING_SESSIONS_SUCCESS, payload: data.data });
     }).catch(error => {
         const respErr = (error.response ? error.response : error);
-        toast.error(respErr);
         dispatch({ type: DELETING_SESSIONS_FAILED, payload: respErr });
     });
 

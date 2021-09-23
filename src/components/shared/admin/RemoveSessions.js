@@ -15,6 +15,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CloseIcon from '@material-ui/icons/Close';
 import ConfirmationDialog from '../DeleteConfirmPopup';
 import { removeSessions } from '../../../actions/sessions';
+import {
+  ErrorSnackBarMessage,
+  SuccessSnackBarMessage,
+} from '../SnackBarMessage';
 
 class RemoveSessions extends Component {
   snack = null;
@@ -48,7 +52,7 @@ class RemoveSessions extends Component {
           message: emails.removeSuccess.message,
         },
       });
-
+      console.log('prrrrrrrrrrrrrrrrrrops', this.state);
     }
     if (emails.removeError.status) {
       console.log('failed in will props.......', emails);
@@ -71,7 +75,6 @@ class RemoveSessions extends Component {
       emails.push(email.id)
     );
     removeSessions(emails);
-    this.setState({ emails:[] });
     return this.setState({ openDialog: false });
   };
 

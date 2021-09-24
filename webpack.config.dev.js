@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+dotenv.config();
 
 process.env.NODE_ENV = 'development';
 
@@ -23,12 +26,13 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      //"process.env.API_URL": JSON.stringify('https://dev-rating-manager-staging.herokuapp.com/api/v1/')
-      'process.env.API_URL': JSON.stringify('http://localhost:3000'),
-      'process.env.JWT_KEY': JSON.stringify('secret')
+      'process.env.API_URL': JSON.stringify('http://localhost:3000')
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html'
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser'
     })
   ],
   module: {
@@ -51,5 +55,16 @@ module.exports = {
         use: ['file-loader']
       }
     ]
+  },
+  resolve: {
+    alias: {
+      process: 'process/browser'
+    },
+    fallback: {
+      util: require.resolve('util'),
+      buffer: require.resolve('buffer'),
+      stream: false,
+      crypto: false
+    }
   }
 };

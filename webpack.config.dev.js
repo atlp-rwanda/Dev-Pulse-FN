@@ -1,9 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-dotenv.config();
 
 process.env.NODE_ENV = 'development';
 
@@ -15,24 +12,24 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: 'main.bundle.js'
+    filename: 'bundle.js'
   },
   devServer: {
+    stats: 'minimal',
+    overlay: true,
     port: '5000',
     historyApiFallback: true,
+    disableHostCheck: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     https: false
   },
-
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify('http://localhost:3000')
+      'process.env.API_URL': JSON.stringify('http://localhost:3000'),
+      'process.env.JWT_KEY': JSON.stringify('secret')
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html'
-    }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser'
     })
   ],
   module: {
@@ -55,16 +52,5 @@ module.exports = {
         use: ['file-loader']
       }
     ]
-  },
-  resolve: {
-    alias: {
-      process: 'process/browser'
-    },
-    fallback: {
-      util: require.resolve('util'),
-      buffer: require.resolve('buffer'),
-      stream: false,
-      crypto: false
-    }
   }
 };

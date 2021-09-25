@@ -55,13 +55,5 @@ module.exports = {
       NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
       DEBUG: false
     })
-  ],
-  resolve: {
-    fallback: {
-      util: require.resolve('util'),
-      buffer: require.resolve('buffer'),
-      stream: false,
-      crypto: false
-    }
-  }
+  ]
 };

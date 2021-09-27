@@ -15,6 +15,12 @@ import {
   REMOVE_PROGRAM,
   UPDATE_PROGRAM,
   UPDATE_COHORT,
+  FETCH_ALL_USERS_PENDING,
+  FETCH_ALL_USERS_FAILED,
+  FTECH_ALL_USER_SUCCESS,
+  EXPORT_TRAINEE_RATINGS_PENDING,
+  EXPORT_TRAINEE_RATINGS_SUCCESS,
+  EXPORT_TRAINEE_RATINGS_FAILED
 } from './actionType';
 
 const baseUrl = process.env.API_URL;
@@ -33,18 +39,25 @@ export const fetchCohorts = (id) => async (dispatch) => {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
 
+<<<<<<< HEAD
           'Access-Control-Allow-Origin': `${process.env.API_URL}`,
         },
       }
     );
+=======
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+>>>>>>> 3c649ea ( exporting data as csv)
     const { data: cohort } = res.data;
     return dispatch({
       type: 'GET_COHORTS',
-      payload: cohort,
+      payload: cohort
     });
   } catch (err) {}
 };
 
+<<<<<<< HEAD
 export const fetchPrograms =
   (cohortId) => async (dispatch) => {
     const token = localStorage.getItem('pulseToken');
@@ -74,6 +87,31 @@ export const fetchPrograms =
         return dispatch({
           type: CHANGE_PROGRAM,
           payload: [],
+=======
+export const fetchPrograms = (cohortId) => async (dispatch) => {
+  const token = localStorage.getItem('pulseToken');
+  return axios
+    .get(`${baseUrl}/api/v1/programs`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    })
+    .then((response) => {
+      const programs = response.data.data;
+      if (cohortId) {
+        const filterPrograms = programs.filter(
+          (program) => program.cohortId === cohortId
+        );
+        return dispatch({
+          type: CHANGE_PROGRAM,
+          payload: filterPrograms
+>>>>>>> 3c649ea ( exporting data as csv)
         });
       })
       .catch((err) => {
@@ -112,18 +150,82 @@ export const updateEngineerCohort =
       );
       return dispatch({
         type: CHANGE_PROGRAM,
+<<<<<<< HEAD
         payload: filterPrograms,
       });
     }
   };
+=======
+        payload: []
+      });
+    })
+    .catch((err) => {
+      console.log('failed to get programs', err);
+      return null;
+    })
+
+    .catch((error) => {
+      console.log('the response is : ', error);
+    });
+};
+
+export const updateEngineerCohort = (payload) => async (dispatch) => {
+  console.log(payload);
+  const token = localStorage.getItem('pulseToken');
+  dispatch({ type: UPDATE_ENGINEER_COHORT, payload });
+  const res1 = await axios.get(`${baseUrl}/api/v1/programs`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': `${process.env.API_URL}`
+    }
+  });
+  if (payload.cohort) {
+    const { data: programs } = res1.data;
+    const filterPrograms = programs.filter(
+      (program) => program.cohortId === payload.cohort
+    );
+    return dispatch({
+      type: CHANGE_PROGRAM,
+      payload: filterPrograms
+    });
+  }
+};
+>>>>>>> 3c649ea ( exporting data as csv)
 
 export const fetchEngineer = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
+<<<<<<< HEAD
     const res = await axios.get(
       `${baseUrl}/api/v1/users/${id}`,
       {
         // change the url
+=======
+    const res = await axios.get(`${baseUrl}/api/v1/users/${id}`, {
+      // change the url
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+    const { data: user } = res.data;
+    dispatch({
+      type: FETCH_ENGINEER,
+      payload: user
+    });
+    if (user) {
+      const res2 = await axios.get(`${baseUrl}/api/v1/cohorts`, {
+>>>>>>> 3c649ea ( exporting data as csv)
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -131,6 +233,7 @@ export const fetchEngineer = (id) => async (dispatch) => {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
+<<<<<<< HEAD
           'Access-Control-Allow-Origin': `${process.env.API_URL}`,
         },
       }
@@ -155,14 +258,20 @@ export const fetchEngineer = (id) => async (dispatch) => {
           },
         }
       );
+=======
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`
+        }
+      });
+>>>>>>> 3c649ea ( exporting data as csv)
       const { data: cohort } = res2.data;
       console.log('cohorts', cohort);
       dispatch({
         type: GET_COHORTS,
-        payload: cohort,
+        payload: cohort
       });
     }
 
+<<<<<<< HEAD
     const res1 = await axios.get(
       `${baseUrl}/api/v1/programs`,
       {
@@ -177,6 +286,19 @@ export const fetchEngineer = (id) => async (dispatch) => {
         },
       }
     );
+=======
+    const res1 = await axios.get(`${baseUrl}/api/v1/programs`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+>>>>>>> 3c649ea ( exporting data as csv)
     if (user.cohort) {
       const { data: programs } = res1.data;
       const filterPrograms = programs.filter(
@@ -185,13 +307,13 @@ export const fetchEngineer = (id) => async (dispatch) => {
       console.log('filteredprograms', filterPrograms);
       return dispatch({
         type: CHANGE_PROGRAM,
-        payload: filterPrograms,
+        payload: filterPrograms
       });
     }
     console.log('programs');
     dispatch({
       type: CHANGE_PROGRAM,
-      payload: [],
+      payload: []
     });
   } catch (error) {
     console.log('the response is : ', error);
@@ -201,14 +323,14 @@ export const fetchEngineer = (id) => async (dispatch) => {
 export const selectCohort = (cohort) => (dispatch) => {
   dispatch({
     type: SELECTED_COHORT,
-    payload: cohort,
+    payload: cohort
   });
 };
 
 export const selectProgram = (program) => (dispatch) => {
   dispatch({
     type: SELECTED_PROGRAM,
-    payload: program,
+    payload: program
   });
 };
 export const averageRating = (payload) => (dispatch) => {
@@ -230,8 +352,8 @@ export const fetchRating = (id) => (dispatch) => {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
     })
     .then((response) => {
       console.log(
@@ -243,7 +365,7 @@ export const fetchRating = (id) => (dispatch) => {
 
       dispatch({
         type: FETCH_RATING,
-        payload: res,
+        payload: res
       });
     })
     .catch((error) =>
@@ -256,6 +378,7 @@ export const updateProgram =
     try {
       const token = localStorage.getItem('pulseToken');
 
+<<<<<<< HEAD
       const response = await axios.patch(
         `${baseUrl}/api/v1/programs/${id}`,
         { ...program, id: undefined },
@@ -280,6 +403,32 @@ export const updateProgram =
       toast.error(`Unable to update program!`);
     }
   };
+=======
+    const response = await axios.patch(
+      `${baseUrl}/api/v1/programs/${id}`,
+      { ...program, id: undefined },
+      {
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`
+        }
+      }
+    );
+    if (response.status === 200)
+      dispatch({
+        type: UPDATE_PROGRAM,
+        payload: response.data.data
+      });
+  } catch (error) {
+    console.log(error);
+    toast.error(`Unable to update program!`);
+  }
+};
+>>>>>>> 3c649ea ( exporting data as csv)
 
 export const updateCohort =
   ({ id, name }) =>
@@ -297,14 +446,14 @@ export const updateCohort =
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-          },
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`
+          }
         }
       );
       if (response.status === 200)
         dispatch({
           type: UPDATE_COHORT,
-          payload: response.data.data,
+          payload: response.data.data
         });
     } catch (error) {
       console.log(error);
@@ -316,6 +465,7 @@ export const removeProgram = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
 
+<<<<<<< HEAD
     const response = await axios.delete(
       `${baseUrl}/api/v1/programs/${id}`,
       {
@@ -329,10 +479,22 @@ export const removeProgram = (id) => async (dispatch) => {
         },
       }
     );
+=======
+    const response = await axios.delete(`${baseUrl}/api/v1/programs/${id}`, {
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+>>>>>>> 3c649ea ( exporting data as csv)
     if (response.status === 200)
       dispatch({
         type: REMOVE_PROGRAM,
-        payload: response.data.data,
+        payload: response.data.data
       });
     else toast.error(response.data.message);
   } catch (error) {
@@ -348,6 +510,7 @@ export const removeCohort = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
 
+<<<<<<< HEAD
     const response = await axios.delete(
       `${baseUrl}/api/v1/cohorts/${id}`,
       {
@@ -361,10 +524,22 @@ export const removeCohort = (id) => async (dispatch) => {
         },
       }
     );
+=======
+    const response = await axios.delete(`${baseUrl}/api/v1/cohorts/${id}`, {
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+>>>>>>> 3c649ea ( exporting data as csv)
     if (response.status === 200)
       dispatch({
         type: REMOVE_COHORT,
-        payload: response.data.data,
+        payload: response.data.data
       });
     else toast.error(response.data.message);
   } catch (error) {
@@ -390,14 +565,14 @@ export const addCohort = (name) => async (dispatch) => {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-        },
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`
+        }
       }
     );
     if (response.status === 201)
       dispatch({
         type: ADD_COHORT,
-        payload: response.data.data,
+        payload: response.data.data
       });
   } catch (error) {
     console.log(error);
@@ -426,17 +601,97 @@ export const addProgram =
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-          },
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`
+          }
         }
       );
       if (response.status === 201)
         dispatch({
           type: ADD_PROGRAM,
-          payload: response.data.data,
+          payload: response.data.data
         });
     } catch (error) {
       console.log(error);
       toast.error('Unable to add program!');
     }
   };
+
+export const fetchAllUsers = () => async (dispatch) => {
+  dispatch({
+    type: FETCH_ALL_USERS_PENDING,
+    payload: ''
+  });
+  try {
+    const token = localStorage.getItem('pulseToken');
+    const res = await axios.get(`${baseUrl}/api/v1/users/all`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': `${process.env.API_URL}`
+      }
+    });
+    const { data } = res;
+
+    if (data) {
+      const users = [];
+      data.data.forEach((user) => {
+        if (user.role === 'Trainee') {
+          users.push(user);
+        }
+      });
+      dispatch({
+        type: FTECH_ALL_USER_SUCCESS,
+        payload: users
+      });
+    } else {
+      dispatch({
+        type: FETCH_ALL_USERS_FAILED,
+        payload: []
+      });
+    }
+  } catch (error) {
+    console.log('the response is : ', error);
+  }
+};
+
+export const exportTraineeRatings = (id, timeRange) => async (dispatch) => {
+  const token = localStorage.getItem('pulseToken');
+  dispatch({
+    type: EXPORT_TRAINEE_RATINGS_PENDING,
+    payload: ''
+  });
+  try {
+    const res = await axios.get(
+      `${baseUrl}/api/v1/users/${id}/ratings/?from=${timeRange.from}&to=${timeRange.to}`,
+      {
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`
+        }
+      }
+    );
+    const { data } = res;
+
+    if (data) {
+      dispatch({
+        type: EXPORT_TRAINEE_RATINGS_SUCCESS,
+        payload: data.data.ratings
+      });
+    } else {
+      dispatch({
+        type: EXPORT_TRAINEE_RATINGS_FAILED,
+        payload: []
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

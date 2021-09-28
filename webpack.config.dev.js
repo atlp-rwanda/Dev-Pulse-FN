@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   devServer: {
     stats: 'minimal',
@@ -21,40 +21,36 @@ module.exports = {
     historyApiFallback: true,
     disableHostCheck: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    https: false,
+    https: false
   },
   plugins: [
     new webpack.DefinePlugin({
-      //"process.env.API_URL": JSON.stringify('https://dev-rating-manager-staging.herokuapp.com/api/v1/')
-      "process.env.API_URL": JSON.stringify('http://localhost:3000'),
-      "process.env.JWT_KEY": JSON.stringify('secret'),
-
+      'process.env.API_URL': JSON.stringify('http://localhost:3000'),
+      'process.env.JWT_KEY': JSON.stringify('secret')
     }),
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
-    }),
+      template: 'public/index.html'
+    })
   ],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ['babel-loader']
       },
       {
         test: /(\.css)$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader',
-        ],
-      },
-    ],
-  },
+        use: ['file-loader']
+      }
+    ]
+  }
 };

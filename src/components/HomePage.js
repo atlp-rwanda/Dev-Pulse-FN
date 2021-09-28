@@ -6,9 +6,12 @@ import CohortDropDown from './shared/CohortDropDown';
 
 const HomePage = () => (
   <div className="container">
-    <p className="tableHeader">
-      My Developers Average Score
-    </p>
+<div className='tableHeading'>
+ <div className='flex space-between items-center'>
+ <div> My Developers Average Score</div>
+  <Link className='btn mt-10' to='/ratings/rate/all'>Rate all</Link>
+ </div>
+</div>
     <div
       style={{
         display: 'flex',

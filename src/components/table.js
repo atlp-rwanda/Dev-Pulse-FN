@@ -29,7 +29,7 @@ class Table extends Component {
     const ratableEngineers = engineers
       .filter((el) => {
         return myEngineerslist.some((f) => {
-          return f.id === el.user.id;
+          return f?.id === el?.user?.id;
         });
       })
       .filter((engineer) => {

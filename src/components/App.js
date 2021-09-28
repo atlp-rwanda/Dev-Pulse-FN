@@ -25,6 +25,7 @@ import Attendance from './attendance/Attendance';
 import AttendanceForm from './attendance/AttendanceForm'
 import TraineeView from './attendance/TraineeView';
 import Sessions from './Sessions';
+import RateAll from './rate/RateAll';
 
 class App extends Component {
   static propTypes = {
@@ -39,7 +40,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { cohorts, programs, fetchCohorts, fetchPrograms } = this.props;
+    const { cohorts, programs, fetchCohorts, fetchPrograms} = this.props;
     if (!cohorts.length) fetchCohorts();
     if (!programs.length) fetchPrograms();
   }
@@ -48,25 +49,25 @@ class App extends Component {
     const { location } = this.props;
     return (
       <>
-        <ToastContainer />
-        {location.pathname === '/login' ? null : location.pathname
-            .split('/', 3)
-            .includes('admin') ? (
-          <AdminDashboard />
-        ) : (
-          <Header />
-        )}
-        <Switch>
-          <Route exact path='/' component={AuthPage}>
-            <Redirect to='/login' />
-          </Route>
+      <ToastContainer />
+      {location.pathname === '/login' ? null : location.pathname
+          .split('/', 3)
+          .includes('admin') ? (
+        <AdminDashboard />
+      ) : (
+        <Header />
+      )}
+      <Switch>
+        <Route exact path='/' component={AuthPage}>
+          <Redirect to='/login' />
+        </Route>
           <Route path='/login' component={AuthPage} />
           <Route path='/add-lf' component={AddLf} />
           <PrivateRoute path='/profile' component={HomePage} />
           <PrivateRoute path='/admin' exact component={AdminDashboard} />
           <PrivateRoute path='/admin/emails' component={AuthorizeEmails} />
           <PrivateRoute path='/admin/cohorts' component={ManageCohorts} />
-          <Route path='/users/:id' component={singleEngineer} />
+          <PrivateRoute path='/users/:id' component={singleEngineer} />
           <PrivateRoute
             path='/ratings/rate/:engId'
             component={ManageRatingsPage}
@@ -76,6 +77,10 @@ class App extends Component {
           <PrivateRoute exact path='/attendance/new' component={AttendanceForm} />
           <PrivateRoute exact path='/attendance/trainee/:id' component={TraineeView} />
           <PrivateRoute exact path='/admin/sessions' component={Sessions} />
+          <PrivateRoute
+            path='/ratings/rate/all'
+            component={ManageRatingsPage}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </>
@@ -90,7 +95,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToprops = (dispatch) => ({
   fetchCohorts: () => dispatch(fetchCohorts()),
-  fetchPrograms: () => dispatch(fetchPrograms()),
+  fetchPrograms:() => dispatch(fetchPrograms()),
 });
 
 export default connect(mapStateToProps, mapDispatchToprops)(withRouter(App));

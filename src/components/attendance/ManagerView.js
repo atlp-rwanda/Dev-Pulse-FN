@@ -64,16 +64,25 @@ const ManagerView = (props) => {
 
         return traineeAttendance;
       });
+
       const mapData = newData.map((data) => {
+       const traineeAttendance = data.map((record) => {
+         return parseInt(record.attendance);
+       });
+       const totalRecords = data.length;
+       const sumOfAttendance = traineeAttendance.reduce((a, b) => a + b, 0);
+       const averageAttendance = sumOfAttendance / totalRecords;
+
         const traineesAtt = _.groupBy(data, 'session');
         const sessionsHere = Object.keys(traineesAtt);
+       
         const sessionsAtt = sessionsHere.map((session) => {
           const mean = _.meanBy(traineesAtt[session], 'attendance');
           const traineeId = traineesAtt[session][0].trainee;
           const sessionNameExists = sessions.find(s => s.id === parseInt(session));
           if(sessionNameExists){
             const sessionName = sessionNameExists.name;
-            return { [sessionName]: mean.toFixed(2), trainee: traineeId, name: myTrainees.find(t => t.id === traineeId).name }
+            return { totalAverage:averageAttendance,[sessionName]: mean.toFixed(2), trainee: traineeId, name: myTrainees.find(t => t.id === traineeId).name }
           }
           return {trainee: traineeId, name: myTrainees.find(t => t.id === traineeId).name}
 
@@ -82,6 +91,8 @@ const ManagerView = (props) => {
       });
 
       const finalData = mapData.map((data) => {
+        const { totalAverage } = data;
+
         let x = {};
         data.map((c) => {
           x = { ...x, ...c }
@@ -90,14 +101,15 @@ const ManagerView = (props) => {
         let sum = 0;
         Object.keys(x).map((key) => {
 
-          if (key !== 'name' && key !== 'trainee') {
+          if (key !== 'name' && key !== 'trainee' && key !== 'totalAverage') {
             sum = sum + parseFloat(x[key]);
           }
         })
 
-        const average = (sum > 0 ? sum / n : 0);
+        // const average = (sum > 0 ? sum / n : 0);
+        const average = totalAverage ? totalAverage.toFixed(2) : 0;
 
-        return { ...x, average: average.toFixed(2) };
+        return { ...x, average: average };
       });
       setData(finalData);
       const newColumns = [{
@@ -107,8 +119,8 @@ const ManagerView = (props) => {
         cell: row => <Link className='att-link' to={`/attendance/trainee/${row.trainee}`}>{row.name}</Link>,
       }, ...newSession, {
         name: 'Average',
-        selector: 'average',
-        cell:row=><div className={parseFloat(row.average) <1 ? 'text-red':''}>{row.average}</div>,
+        selector: 'totalAverage',
+        cell:row=><div className={parseFloat(row.totalAverage) <1 ? 'text-red':''}>{parseFloat(row.totalAverage).toFixed(2)}</div>,
         sortable: true,
       }];
       setColumns(newColumns);

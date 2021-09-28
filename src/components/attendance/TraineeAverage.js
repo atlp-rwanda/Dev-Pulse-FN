@@ -55,12 +55,21 @@ const TraineeAverage = (props) => {
     const newData = all.filter(record => record.trainee ==id);
     const mapData = () => {
       const traineesAtt = _.groupBy(newData, 'session');
+
+      const traineeAttendance = newData.map((record) => {
+         return parseInt(record.attendance);
+       });
+
+       const totalRecords = newData.length;
+       const sumOfAttendance = traineeAttendance.reduce((a, b) => a + b, 0);
+       const averageAttendance = sumOfAttendance / totalRecords;
+
       const sessionsHere = Object.keys(traineesAtt);
       const sessionsAtt = sessionsHere.map((session) => {
         const mean = _.meanBy(traineesAtt[session], 'attendance');
         const traineeId = traineesAtt[session][0].trainee;
         const sessionName = sessions.find(s => s.id == session).name;
-        return { [sessionName]: mean.toFixed(2), trainee: traineeId }
+        return {averageAttendance:averageAttendance ,[sessionName]: mean.toFixed(2), trainee: traineeId }
       });
       return sessionsAtt;
     }
@@ -73,11 +82,12 @@ const TraineeAverage = (props) => {
       const n = Object.keys(x).length - 1;
       let sum = 0;
       Object.keys(x).map((key) => {
-        if (key != 'name' && key != 'trainee') {
+        if (key != 'name' && key != 'trainee' && key != 'averageAttendance') {
           sum = sum + parseFloat(x[key]);
         }
       })
-      const average = sum / n;
+      const { totalAverage } = data;
+       const average = totalAverage ? totalAverage.toFixed(2) : 0;
       return { ...x, average: average.toFixed(2) };
     };
 
@@ -91,7 +101,7 @@ const TraineeAverage = (props) => {
       name: 'Average',
       selector: 'average',
       sortable: true,
-      cell:row=><div className={parseFloat(row.average) <1 ? 'text-red':''}>{row.average}</div>,
+      cell:row=><div className={parseFloat(row.averageAttendance) <1 ? 'text-red':''}>{parseFloat(row.averageAttendance).toFixed(2)}</div>,
     }];
     setColumns(newColumns);
   }, [props.history,attendances]);

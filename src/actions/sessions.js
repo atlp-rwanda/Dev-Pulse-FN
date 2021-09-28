@@ -47,7 +47,7 @@ export const removeSessions = (data) => (dispatch) => {
         toast.success(response.data.message);
         dispatch({ type: DELETING_SESSIONS_SUCCESS, payload: data });
     }).catch(error => {
-        const respErr = (error.response ? error.response : error);
+        const respErr = (error.response ? error.response.data.message : error);
         toast.error(respErr);
         dispatch({ type: DELETING_SESSIONS_FAILED, payload: respErr });
     });

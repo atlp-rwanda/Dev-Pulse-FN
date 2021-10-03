@@ -34,6 +34,18 @@ class Table extends Component {
       })
       .filter((engineer) => {
         if (
+          engineer.quality < this.props.average ||
+          engineer.quantity < this.props.average ||
+          engineer.communication < this.props.average ||
+          this.props.average < 1
+        ) {
+          return true;
+        }
+
+        return false;
+      })
+      .filter((engineer) => {
+        if (
           engineer.user.cohort ===
             this.props.selectedCohort ||
           this.props.selectedCohort === 0
@@ -50,7 +62,6 @@ class Table extends Component {
           return true;
         return false;
       });
-    // console.log('filterbyCohort', filterbyCohort);
     const items = [];
     try {
       ratableEngineers.map((engineer) => {
@@ -68,7 +79,6 @@ class Table extends Component {
     } catch (ex) {
       console.log(ex);
     }
-
     return (
       <div>
         <table className="table">
@@ -94,6 +104,7 @@ const mapStateToProps = ({
   engineers: getRatings.engineers,
   myEngineerslist: engineersReducer.engineers,
   selectedCohort: engineer.selectedCohort,
+  average: engineer.averageRating,
   selectedProgram: engineer.selectedProgram,
 });
 

@@ -8,6 +8,7 @@ import {
   CHANGE_PROGRAM,
   UPDATE_ENGINEER_COHORT,
   GET_COHORTS,
+  AVERAGE_RATING,
   ADD_COHORT,
   ADD_PROGRAM,
   REMOVE_COHORT,
@@ -21,18 +22,21 @@ const baseUrl = process.env.API_URL;
 export const fetchCohorts = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
-    const res = await axios.get(`${baseUrl}/api/v1/cohorts`, {
-      method: 'GET',
-      mode: 'cors',
-      cashe: 'no-cashe',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    const res = await axios.get(
+      `${baseUrl}/api/v1/cohorts`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        cashe: 'no-cashe',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
 
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    });
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
     const { data: cohort } = res.data;
     return dispatch({
       type: 'GET_COHORTS',
@@ -41,95 +45,11 @@ export const fetchCohorts = (id) => async (dispatch) => {
   } catch (err) {}
 };
 
-export const fetchPrograms = (cohortId) => async (dispatch) => {
-  const token = localStorage.getItem('pulseToken');
-  return axios
-    .get(`${baseUrl}/api/v1/programs`, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    })
-    .then((response) => {
-      const programs = response.data.data;
-      if (cohortId) {
-        const filterPrograms = programs.filter(
-          (program) => program.cohortId === cohortId
-        );
-        return dispatch({
-          type: CHANGE_PROGRAM,
-          payload: filterPrograms,
-        });
-      }
-      return dispatch({
-        type: CHANGE_PROGRAM,
-        payload: [],
-      });
-    })
-    .catch((err) => {
-      console.log('failed to get programs', err);
-      return null;
-    })
-
-    .catch((error) => {
-      console.log('the response is : ', error);
-    });
-};
-
-export const updateEngineerCohort = (payload) => async (dispatch) => {
-  console.log(payload);
-  const token = localStorage.getItem('pulseToken');
-  dispatch({ type: UPDATE_ENGINEER_COHORT, payload });
-  const res1 = await axios.get(`${baseUrl}/api/v1/programs`, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-    },
-  });
-  if (payload.cohort) {
-    const { data: programs } = res1.data;
-    const filterPrograms = programs.filter(
-      (program) => program.cohortId === payload.cohort
-    );
-    return dispatch({
-      type: CHANGE_PROGRAM,
-      payload: filterPrograms,
-    });
-  }
-};
-
-export const fetchEngineer = (id) => async (dispatch) => {
-  try {
+export const fetchPrograms =
+  (cohortId) => async (dispatch) => {
     const token = localStorage.getItem('pulseToken');
-    const res = await axios.get(`${baseUrl}/api/v1/users/${id}`, {
-      // change the url
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    });
-    const { data: user } = res.data;
-    dispatch({
-      type: FETCH_ENGINEER,
-      payload: user,
-    });
-    if (user) {
-      const res2 = await axios.get(`${baseUrl}/api/v1/cohorts`, {
+    return axios
+      .get(`${baseUrl}/api/v1/programs`, {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -139,7 +59,102 @@ export const fetchEngineer = (id) => async (dispatch) => {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': `${process.env.API_URL}`,
         },
+      })
+      .then((response) => {
+        const programs = response.data.data;
+        if (cohortId) {
+          const filterPrograms = programs.filter(
+            (program) => program.cohortId === cohortId
+          );
+          return dispatch({
+            type: CHANGE_PROGRAM,
+            payload: filterPrograms,
+          });
+        }
+        return dispatch({
+          type: CHANGE_PROGRAM,
+          payload: [],
+        });
+      })
+      .catch((err) => {
+        console.log('failed to get programs', err);
+        return null;
+      })
+
+      .catch((error) => {
+        console.log('the response is : ', error);
       });
+  };
+
+export const updateEngineerCohort =
+  (payload) => async (dispatch) => {
+    console.log(payload);
+    const token = localStorage.getItem('pulseToken');
+    dispatch({ type: UPDATE_ENGINEER_COHORT, payload });
+    const res1 = await axios.get(
+      `${baseUrl}/api/v1/programs`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
+    if (payload.cohort) {
+      const { data: programs } = res1.data;
+      const filterPrograms = programs.filter(
+        (program) => program.cohortId === payload.cohort
+      );
+      return dispatch({
+        type: CHANGE_PROGRAM,
+        payload: filterPrograms,
+      });
+    }
+  };
+
+export const fetchEngineer = (id) => async (dispatch) => {
+  try {
+    const token = localStorage.getItem('pulseToken');
+    const res = await axios.get(
+      `${baseUrl}/api/v1/users/${id}`,
+      {
+        // change the url
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
+    const { data: user } = res.data;
+    dispatch({
+      type: FETCH_ENGINEER,
+      payload: user,
+    });
+    if (user) {
+      const res2 = await axios.get(
+        `${baseUrl}/api/v1/cohorts`,
+        {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
       const { data: cohort } = res2.data;
       console.log('cohorts', cohort);
       dispatch({
@@ -148,17 +163,20 @@ export const fetchEngineer = (id) => async (dispatch) => {
       });
     }
 
-    const res1 = await axios.get(`${baseUrl}/api/v1/programs`, {
-      method: 'GET',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    });
+    const res1 = await axios.get(
+      `${baseUrl}/api/v1/programs`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
     if (user.cohort) {
       const { data: programs } = res1.data;
       const filterPrograms = programs.filter(
@@ -193,6 +211,12 @@ export const selectProgram = (program) => (dispatch) => {
     payload: program,
   });
 };
+export const averageRating = (payload) => (dispatch) => {
+  dispatch({
+    type: AVERAGE_RATING,
+    payload,
+  });
+};
 
 export const fetchRating = (id) => (dispatch) => {
   const token = localStorage.getItem('pulseToken');
@@ -210,46 +234,52 @@ export const fetchRating = (id) => (dispatch) => {
       },
     })
     .then((response) => {
-      console.log('fetching rating done', response);
+      console.log(
+        'fetching rating done',
+        response.data.data.average
+      );
       const res = response.data.data;
-      !res.average ? res.average = [] : null;
+      !res.average ? (res.average = []) : null;
 
       dispatch({
         type: FETCH_RATING,
         payload: res,
       });
     })
-    .catch((error) => console.log('the response is : ', error));
-};
-
-export const updateProgram = (id, program) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('pulseToken');
-
-    const response = await axios.patch(
-      `${baseUrl}/api/v1/programs/${id}`,
-      { ...program, id: undefined },
-      {
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-        },
-      }
+    .catch((error) =>
+      console.log('the response is : ', error)
     );
-    if (response.status === 200)
-      dispatch({
-        type: UPDATE_PROGRAM,
-        payload: response.data.data,
-      });
-  } catch (error) {
-    console.log(error);
-    toast.error(`Unable to update program!`);
-  }
 };
+
+export const updateProgram =
+  (id, program) => async (dispatch) => {
+    try {
+      const token = localStorage.getItem('pulseToken');
+
+      const response = await axios.patch(
+        `${baseUrl}/api/v1/programs/${id}`,
+        { ...program, id: undefined },
+        {
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
+      if (response.status === 200)
+        dispatch({
+          type: UPDATE_PROGRAM,
+          payload: response.data.data,
+        });
+    } catch (error) {
+      console.log(error);
+      toast.error(`Unable to update program!`);
+    }
+  };
 
 export const updateCohort =
   ({ id, name }) =>
@@ -286,16 +316,19 @@ export const removeProgram = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
 
-    const response = await axios.delete(`${baseUrl}/api/v1/programs/${id}`, {
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    });
+    const response = await axios.delete(
+      `${baseUrl}/api/v1/programs/${id}`,
+      {
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
     if (response.status === 200)
       dispatch({
         type: REMOVE_PROGRAM,
@@ -304,7 +337,10 @@ export const removeProgram = (id) => async (dispatch) => {
     else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
-    toast.error(error.response.data.message || 'Unable to remove program!');
+    toast.error(
+      error.response.data.message ||
+        'Unable to remove program!'
+    );
   }
 };
 
@@ -312,16 +348,19 @@ export const removeCohort = (id) => async (dispatch) => {
   try {
     const token = localStorage.getItem('pulseToken');
 
-    const response = await axios.delete(`${baseUrl}/api/v1/cohorts/${id}`, {
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-      },
-    });
+    const response = await axios.delete(
+      `${baseUrl}/api/v1/cohorts/${id}`,
+      {
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+        },
+      }
+    );
     if (response.status === 200)
       dispatch({
         type: REMOVE_COHORT,
@@ -330,7 +369,10 @@ export const removeCohort = (id) => async (dispatch) => {
     else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
-    toast.error(error.response.data.message || 'Unable to remove cohort!');
+    toast.error(
+      error.response.data.message ||
+        'Unable to remove cohort!'
+    );
   }
 };
 
@@ -364,13 +406,19 @@ export const addCohort = (name) => async (dispatch) => {
 };
 
 export const addProgram =
-  (name, startDate, endDate, cohortId) => async (dispatch) => {
+  (name, startDate, endDate, cohortId) =>
+  async (dispatch) => {
     try {
       const token = localStorage.getItem('pulseToken');
 
       const response = await axios.post(
         `${baseUrl}/api/v1/programs`,
-        { name, start_date: startDate, end_date: endDate, cohortId },
+        {
+          name,
+          start_date: startDate,
+          end_date: endDate,
+          cohortId,
+        },
         {
           mode: 'cors',
           cache: 'no-cache',

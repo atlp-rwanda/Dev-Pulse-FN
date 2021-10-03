@@ -6,6 +6,7 @@ import {
   SELECTED_PROGRAM,
   GET_COHORTS,
   UPDATE_ENGINEER_COHORT,
+  AVERAGE_RATING,
   ADD_COHORT,
   ADD_PROGRAM,
   REMOVE_PROGRAM,
@@ -19,6 +20,7 @@ const initialState = {
   average: [],
   ratings: [],
   selectedCohort: 0,
+  averageRating: '0.9',
   selectedProgram: 0,
   cohorts: [],
   programs: [],
@@ -51,24 +53,38 @@ const EngineerReducer = (state = initialState, action) => {
       return { ...state, selectedCohort: payload };
     case FETCH_RATING:
       return { ...state, ...payload };
+    case AVERAGE_RATING:
+      return { ...state, averageRating: payload };
     case ADD_COHORT:
-      return { ...state, cohorts: [...state.cohorts, payload] };
+      return {
+        ...state,
+        cohorts: [...state.cohorts, payload],
+      };
     case ADD_PROGRAM:
-      return { ...state, programs: [...state.programs, payload] };
+      return {
+        ...state,
+        programs: [...state.programs, payload],
+      };
     case REMOVE_PROGRAM:
       return {
         ...state,
-        programs: state.programs.filter((p) => p.id !== payload.id),
+        programs: state.programs.filter(
+          (p) => p.id !== payload.id
+        ),
       };
     case REMOVE_COHORT:
       return {
         ...state,
-        cohorts: state.cohorts.filter((c) => c.id !== payload.id),
+        cohorts: state.cohorts.filter(
+          (c) => c.id !== payload.id
+        ),
       };
     case UPDATE_COHORT:
       return {
         ...state,
-        cohorts: state.cohorts.map((c) => (c.id === payload.id ? payload : c)),
+        cohorts: state.cohorts.map((c) =>
+          c.id === payload.id ? payload : c
+        ),
       };
     case UPDATE_PROGRAM:
       return {

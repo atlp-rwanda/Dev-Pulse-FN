@@ -35,13 +35,10 @@ class TraineesTable extends Component {
   render() {
     const { trainees, ratingsToExport } = this.props;
 
-    console.log('HHHHHHHH', ratingsToExport);
-
     const columns = [
       'First Name',
       'Last Name',
       'Email',
-      'Cohort',
       'Joined',
       'Graduated',
       'Action'
@@ -67,7 +64,6 @@ class TraineesTable extends Component {
                       </Link>
                     </td>
 
-                    <td>{item.cohortInfo && item.cohortInfo.name}</td>
                     <td>{moment(item.createdAt).format('DD-MM-YYYY')}</td>
                     <td>{item.graduated === false ? 'False' : 'True'}</td>
 
@@ -120,26 +116,13 @@ class TraineesTable extends Component {
                         </div>
                       </div>
                       <div className='export'>
-                        <button
+                        <CsvDownload
+                          data={ratingsToExport}
+                          filename='traineeRatings.csv'
                           className='button'
-                          type='button'
-                          onClick={() => this.handelExport(item.id)}
                         >
-                          Retrieve
-                        </button>
-                        {ratingsToExport.length ? (
-                          <CsvDownload
-                            data={ratingsToExport}
-                            filename='traineeRatings.csv'
-                            className='button'
-                          >
-                            Download ✨
-                          </CsvDownload>
-                        ) : (
-                          <button className='' disabled={true}>
-                            Download ✨
-                          </button>
-                        )}
+                          Download ✨
+                        </CsvDownload>
                       </div>
                     </div>
                   </div>

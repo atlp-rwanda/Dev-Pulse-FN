@@ -122,7 +122,7 @@ class TraineesTable extends Component {
                             filename='traineeRatings.csv'
                             className='button'
                           >
-                            Download ✨
+                            Download
                           </CsvDownload>
                         ) : (
                           <button

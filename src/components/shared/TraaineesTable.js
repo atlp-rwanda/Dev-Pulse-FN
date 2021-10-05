@@ -116,13 +116,23 @@ class TraineesTable extends Component {
                         </div>
                       </div>
                       <div className='export'>
-                        <CsvDownload
-                          data={ratingsToExport}
-                          filename='traineeRatings.csv'
-                          className='button'
-                        >
-                          Download ✨
-                        </CsvDownload>
+                        {ratingsToExport.length ? (
+                          <CsvDownload
+                            data={ratingsToExport}
+                            filename='traineeRatings.csv'
+                            className='button'
+                          >
+                            Download ✨
+                          </CsvDownload>
+                        ) : (
+                          <button
+                            className='button'
+                            type='button'
+                            onClick={() => this.handelExport(item.id)}
+                          >
+                            Retrieve
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

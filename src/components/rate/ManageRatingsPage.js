@@ -7,6 +7,7 @@ import RatingForm from './RateForm';
 import { getEngineers } from '../../actions/getEngineers';
 import { myEngineers } from '../../actions/engineerList';
 import { toast } from 'react-toastify';
+import RateAll from './RateAll';
 //import { getMyEngineers } from '../../api/rateApi';
 
 class ManageRatingsPage extends React.Component {
@@ -42,6 +43,7 @@ class ManageRatingsPage extends React.Component {
     //console.log("Engineers<><><>",allEngineers )
 
     const engineerId = this.props.rating.trainee;
+
     var engineer;
     // let engineer = getEngineerById(allEngineers, engineerId);
     //console.log("Engineer here from the existing ratings =====>", engineer);
@@ -128,9 +130,13 @@ class ManageRatingsPage extends React.Component {
   };
 
   render() {
+    const { ratingMode } = this.props;
+
     return (
       <>
-        {this.state.name && (
+      {ratingMode==='all' ? (<RateAll />) : 
+      <>
+      {this.state.name && (
           <RatingForm
             loading_={this.state.loading}
             engineer={this.state.name}
@@ -139,6 +145,7 @@ class ManageRatingsPage extends React.Component {
             rating={this.rating}
           />
         )}
+      </>}
       </>
     );
   }
@@ -171,6 +178,7 @@ const mapStateToProps = (
     rating: { ...newRating, trainee: parseInt(engId, 10) },
     myEngineerslist: engineersReducer.engineers,
     ratings,
+    ratingMode:engId
   };
 };
 const mapDispatchToProps = {

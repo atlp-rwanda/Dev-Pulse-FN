@@ -22,7 +22,8 @@ const Engineer = ({
   <div className={mainClasses(mainClass)} style={{ width: 400 }}>
     <button onClick={() => onDelete(engineer)} className={btnClasses(btnClass)} type="button">{value}</button>
     <p onClick={() => handleNameClicked(engineer.id)}>
-      {engineer.name} {' '}{engineer.email}
+     <div> {engineer.name}</div>
+      <div>{engineer.email}</div>
     </p>
   </div>
 );

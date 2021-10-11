@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 import SearchDropDown from './shared/SearchDropDown';
 import Engineer from './engineer';
 import { toast } from 'react-toastify';
+import EngineerFilters from './EngineerFilters';
+import { getAllCohorts  } from '../actions/cohorts'
+import { getAllPrograms } from '../actions/programs'
 import {
   myEngineers,
   deleteEngineer,
@@ -22,16 +25,40 @@ export class EngineerList extends Component {
     this.state = {
       localUsers: [],
       loading_: false,
+      allEngineers: [],
     };
   }
 
   componentDidMount() {
-    const { myEngineers, getUsers, users } = this.props;
+    const { myEngineers, getUsers, users,cohorts,programs,getAllCohorts,
+      getAllPrograms } = this.props;
+    
     myEngineers();
 
     if (users.length === 0) {
       getUsers();
     }
+    if(!cohorts.cohorts){
+      getAllCohorts();
+
+    }
+    if(!programs.programs){
+      getAllPrograms();
+    }
+
+  }
+  componentWillReceiveProps(nextProps) {
+    const { engineers } = nextProps;
+    this.setState({...this.state, allEngineers: engineers.engineers});
+  }
+
+
+
+  filterByCohort = (trainees) => {
+
+    this.setState({...this.state, allEngineers: trainees});
+    console.log('\n\n\n\n\n\n\n\n\n\n\n\ next props', trainees ,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+
   }
 
   handleRedirect = () => {
@@ -91,7 +118,7 @@ export class EngineerList extends Component {
   render() {
     const { engineers } = this.props;
     console.log('engineers', engineers);
-    const { localUsers } = this.state;
+    const { localUsers,allEngineers } = this.state;
 
     if (engineers.isLoggedOut === true) {
       this.handleRedirect();
@@ -117,9 +144,9 @@ export class EngineerList extends Component {
                 />
               </div>
               <h4>My List</h4>
-
+                  <EngineerFilters filterByCohort={this.filterByCohort} allEngineers={engineers.engineers} />
               <div className="mylist">
-                {engineers.engineers.map((eng) => (
+                {allEngineers.map((eng) => (
                   <Engineer
                     key={eng.id}
                     onDelete={this.handleDelete}
@@ -176,11 +203,14 @@ EngineerList.propTypes = {
   users: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({ engineersReducer }) => {
+const mapStateToProps = ({ engineersReducer,cohorts,programs }) => {
   console.log('engineers state', engineersReducer);
   return {
     engineers: engineersReducer,
     users: engineersReducer.users,
+    cohorts,
+    programs
+
   };
 };
 
@@ -190,6 +220,8 @@ const mapDispatchToprops = {
   replaceEngineer,
   saveEngineers,
   getUsers,
+  getAllCohorts,
+  getAllPrograms
 };
 
 export default connect(

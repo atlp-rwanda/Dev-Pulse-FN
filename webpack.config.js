@@ -38,6 +38,7 @@ module.exports = {
     publicPath: '/',
     historyApiFallback: true,
     contentBase: './',
+    port: '5000',
     hot: true
   },
   mode: process.env.NODE_ENV || 'development',

@@ -22,6 +22,7 @@ import {
   EXPORT_TRAINEE_RATINGS_SUCCESS,
   EXPORT_TRAINEE_RATINGS_FAILED,
 } from './actionType';
+import deleteFeedback from '../helpers/flattenRatings';
 
 const baseUrl = process.env.API_URL;
 
@@ -518,9 +519,11 @@ export const exportTraineeRatings = (id, timeRange) => async (dispatch) => {
     const { data } = res;
 
     if (data && data.data.ratings.length) {
+      // flatten the ratings for 2d view in cvs
+      const flattenedRatings = data.data.ratings.map(rating => deleteFeedback(rating));
       dispatch({
         type: EXPORT_TRAINEE_RATINGS_SUCCESS,
-        payload: data.data.ratings,
+        payload: flattenedRatings
       });
       toast.success(`Ratings retrieved successfully, click download`);
     } else {

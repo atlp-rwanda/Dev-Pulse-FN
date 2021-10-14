@@ -14,7 +14,7 @@ import {
   UPDATE_COHORT,
   UPDATE_PROGRAM,
   FTECH_ALL_USER_SUCCESS,
-  EXPORT_TRAINEE_RATINGS_SUCCESS
+  EXPORT_TRAINEE_RATINGS_SUCCESS,
 } from '../actions/actionType';
 
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
   programs: [],
   changeProgramName: '',
   trainees: [],
-  ratingsToExport: []
+  ratingsToExport: [],
 };
 
 const EngineerReducer = (state = initialState, action) => {
@@ -37,17 +37,17 @@ const EngineerReducer = (state = initialState, action) => {
     case FETCH_ENGINEER:
       return {
         ...state,
-        user: payload
+        user: payload,
       };
     case UPDATE_ENGINEER_COHORT:
       return {
         ...state,
-        user: { ...state.user, ...payload }
+        user: { ...state.user, ...payload },
       };
     case GET_COHORTS:
       return {
         ...state,
-        cohorts: payload
+        cohorts: payload,
       };
     case CHANGE_PROGRAM:
       return { ...state, programs: payload };
@@ -72,38 +72,34 @@ const EngineerReducer = (state = initialState, action) => {
     case REMOVE_PROGRAM:
       return {
         ...state,
-        programs: state.programs.filter(
-          (p) => p.id !== payload.id
-        ),
+        programs: state.programs.filter((p) => p.id !== payload.id),
       };
     case REMOVE_COHORT:
       return {
         ...state,
-        cohorts: state.cohorts.filter(
-          (c) => c.id !== payload.id
-        ),
+        cohorts: state.cohorts.filter((c) => c.id !== payload.id),
       };
     case UPDATE_COHORT:
       return {
         ...state,
-        cohorts: state.cohorts.map((c) =>
-          c.id === payload.id ? payload : c
-        ),
+        cohorts: state.cohorts.map((c) => (c.id === payload.id ? payload : c)),
       };
     case UPDATE_PROGRAM:
       return {
         ...state,
-        programs: state.programs.map((p) => (p.id === payload.id ? payload : p))
+        programs: state.programs.map((p) =>
+          p.id === payload.id ? payload : p
+        ),
       };
     case FTECH_ALL_USER_SUCCESS:
       return {
         ...state,
-        trainees: [...payload]
+        trainees: payload,
       };
     case EXPORT_TRAINEE_RATINGS_SUCCESS:
       return {
         ...state,
-        ratingsToExport: [...payload]
+        ratingsToExport: payload,
       };
     default:
       return state;

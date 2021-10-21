@@ -14,7 +14,9 @@ import {
   UPDATE_COHORT,
   UPDATE_PROGRAM,
   FTECH_ALL_USER_SUCCESS,
-  EXPORT_TRAINEE_RATINGS_SUCCESS
+  EXPORT_TRAINEE_RATINGS_SUCCESS,
+  ADD_SPRINT,
+  FETCH_SPRINTS_SUCCESS,
 } from '../actions/actionType';
 
 const initialState = {
@@ -26,6 +28,7 @@ const initialState = {
   selectedProgram: 0,
   cohorts: [],
   programs: [],
+  sprints: [],
   changeProgramName: '',
   trainees: [],
   ratingsToExport: []
@@ -76,6 +79,16 @@ const EngineerReducer = (state = initialState, action) => {
           (p) => p.id !== payload.id
         ),
       };
+    case FETCH_SPRINTS_SUCCESS:
+      return{
+        ...state,
+        sprints: [...state.sprints, ...payload],
+      }
+    case ADD_SPRINT:
+      return {
+        ...state,
+        sprints: [...state.sprints, payload],
+      }
     case REMOVE_COHORT:
       return {
         ...state,

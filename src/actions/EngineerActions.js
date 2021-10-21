@@ -11,6 +11,7 @@ import {
   AVERAGE_RATING,
   ADD_COHORT,
   ADD_PROGRAM,
+  ADD_SPRINT,
   REMOVE_COHORT,
   REMOVE_PROGRAM,
   UPDATE_PROGRAM,
@@ -20,7 +21,8 @@ import {
   FTECH_ALL_USER_SUCCESS,
   EXPORT_TRAINEE_RATINGS_PENDING,
   EXPORT_TRAINEE_RATINGS_SUCCESS,
-  EXPORT_TRAINEE_RATINGS_FAILED
+  EXPORT_TRAINEE_RATINGS_FAILED,
+  FETCH_SPRINTS_SUCCESS,
 } from './actionType';
 
 const baseUrl = process.env.API_URL;
@@ -90,6 +92,32 @@ export const fetchPrograms =
       .catch((error) => {
         console.log('the response is : ', error);
       });
+  };
+  export const fetchSprints = () => async (dispatch) => {
+    try {
+      const token = localStorage.getItem('pulseToken');
+      
+      const res = await axios.get(
+        `${baseUrl}/api/v1/sprint`,
+        {
+          method: 'GET',
+          mode: 'cors',
+          cashe: 'no-cashe',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+  
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
+      console.log('the action sprint', res.data.data);
+      return dispatch({
+        type: FETCH_SPRINTS_SUCCESS,
+        payload: res.data.data,
+      });
+    } catch (err) {}
   };
 
 export const updateEngineerCohort =
@@ -416,7 +444,7 @@ export const addProgram =
   async (dispatch) => {
     try {
       const token = localStorage.getItem('pulseToken');
-
+      console.log('addProgram');
       const response = await axios.post(
         `${baseUrl}/api/v1/programs`,
         {
@@ -441,6 +469,41 @@ export const addProgram =
           type: ADD_PROGRAM,
           payload: response.data.data,
         });
+    } catch (error) {
+      console.log(error);
+      toast.error('Unable to add program!');
+    }
+  };
+
+  export const addSprint =
+  (name, programId) =>
+  async (dispatch) => {
+    try {
+      const token = localStorage.getItem('pulseToken');
+      console.log('executed addSprint', name, programId)
+      const response = await axios.post(
+        `${baseUrl}/api/v1/sprint`,
+        {
+          name,
+          programId,
+        },
+        {
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
+      if (response.status === 201)
+        dispatch({
+          type: ADD_SPRINT,
+          payload: response.data.data,
+        });
+        toast.success('Sprint created successfully');
     } catch (error) {
       console.log(error);
       toast.error('Unable to add program!');

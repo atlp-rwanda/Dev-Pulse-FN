@@ -10,6 +10,7 @@
 .flex-parent {
 	margin-top: 20px;
 	display: flex;
+	flex-direction: column;
 	// flex-wrap: wrap;
 	align-content: center;
 	justify-content: space-around;
@@ -20,7 +21,26 @@
 	> div {
 		background: white;
 	}
-	
+	.allTogether{
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-bottom: 2rem;
+		height: 3rem;
+		select{
+			margin: 0;
+		}
+		span{
+			background: #bcc8f5;
+			color: #3359df;
+			padding: 0.5rem 2rem;
+			border-radius: 30px;
+			margin-right: 5px;
+		}
+	}
+	.rateCategories{
+		display: flex;
+	}
 }
 
 .rate-editor {

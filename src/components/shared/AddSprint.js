@@ -5,7 +5,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { TextField } from '@material-ui/core';
+import { InputLabel ,MenuItem,Select,FormControl} from '@material-ui/core';
+
+
+
 
 export default function AddSprintPopup(props) {
     const [name, setName] = React.useState('');
@@ -19,6 +22,8 @@ export default function AddSprintPopup(props) {
   }
   const sprint = list?.data.filter((item, idx) => item.programId === list?.progId);
   console.log('filtered sprints', sprint,list);
+
+  const nbrs = new Array(12).fill(0).map((item, idx) => idx);
 
   return (
     <Dialog
@@ -36,13 +41,16 @@ export default function AddSprintPopup(props) {
         >
         {
             !list?.state ? (
-                <TextField 
-                helperText="Sprint name is required"
-                id="outlined-basic" 
-                variant="outlined" 
-                value={name}
-                onChange={(e) => handleTextChange(e)}
-                />
+                <FormControl variant="outlined" className="formControl">
+                  <InputLabel >Sprint</InputLabel> 
+                  <Select  value={name} onChange={(e) => handleTextChange(e)} style={{width:200}}>
+                    {
+                      nbrs.map((item, idx) => (
+                        <MenuItem key={idx} value={`SPrint ${item+1}`}>Sprint {item+1}</MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
             ):(
                 <ul className='sprintList'>
                     { !sprint.length && (<h4>No sprint created yet!</h4>)}

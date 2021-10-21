@@ -43,6 +43,7 @@ const EachProgram = ({ program, onEdit, onDelete, onAddSprint, onListSprint }) =
         <Add 
           style={{ cursor: 'pointer' }}
           onClick={handleAdd}
+
         />
         <List
           style={{ cursor: 'pointer' }}

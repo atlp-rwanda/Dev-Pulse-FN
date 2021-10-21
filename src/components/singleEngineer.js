@@ -47,6 +47,7 @@ class SingleEngineer extends React.Component {
   };
 
   handleRatings = (array) => {
+
     try {
       const items = [];
       if (array.length > 0 && array !== undefined) {
@@ -55,7 +56,8 @@ class SingleEngineer extends React.Component {
           engineerRatings.feedback = {};
           (engineerRatings.id = engineer.id),
             (engineerRatings.date =
-              engineer.updatedAt.split('T')[0]),
+              // engineer.updatedAt.split('T')[0]),
+              engineer.sprintInfo?.name),
             (engineerRatings.quality =
               engineer.quality.rate),
             (engineerRatings.quantity =
@@ -71,6 +73,7 @@ class SingleEngineer extends React.Component {
             items.push(engineerRatings);
         });
       }
+
       return items;
     } catch (ex) {}
   };
@@ -141,7 +144,7 @@ class SingleEngineer extends React.Component {
     const { engineer } = this.props;
     const { user } = engineer;
     const columns = [
-      'Date',
+      'Sprint',
       'Quality',
       'Quantity',
       'Professional Communication',

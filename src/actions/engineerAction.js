@@ -9,9 +9,9 @@ export const rateEngineerSuccess = (savedRatings) => {
 };
 
 //make a thunk to dispatch the RATE_ENGINEER action after hitting the rating API
-export const rateEngineer = (ratings) => {
+export const rateEngineer = (ratings, sprint) => {
   return ratingApi
-    .rateEngineer(ratings)
+    .rateEngineer(ratings, sprint)
     .then((savedRatings) => {
       toast.success('Done Saving');
       return rateEngineerSuccess(savedRatings);

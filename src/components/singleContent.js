@@ -1,6 +1,7 @@
 import React from 'react';
 
 const TableBody = ({ data, openModal }) => {
+  console.log("\n\n\n\n\n\n\n\n\n", data);
   return (
     <>
       {data.map((item, i) => (

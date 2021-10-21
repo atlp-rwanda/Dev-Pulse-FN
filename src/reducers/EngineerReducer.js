@@ -87,7 +87,7 @@ const EngineerReducer = (state = initialState, action) => {
     case ADD_SPRINT:
       return {
         ...state,
-        sprints: [...state.sprints, payload],
+        sprints: [...state.sprints,payload],
       }
     case REMOVE_COHORT:
       return {

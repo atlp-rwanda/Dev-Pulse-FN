@@ -170,6 +170,7 @@ export const fetchEngineer = (id) => async (dispatch) => {
       }
     );
     const { data: user } = res.data;
+    console.log('fetchin...', res.data);
     dispatch({
       type: FETCH_ENGINEER,
       payload: user,
@@ -498,15 +499,15 @@ export const addProgram =
           },
         }
       );
-      if (response.status === 201)
         dispatch({
           type: ADD_SPRINT,
           payload: response.data.data,
         });
         toast.success('Sprint created successfully');
     } catch (error) {
+      const errorMessage = error.response.data.message || 'Unable to add sprint';
       console.log(error);
-      toast.error('Unable to add program!');
+      toast.error(errorMessage);
     }
   };
 

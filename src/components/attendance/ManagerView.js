@@ -120,7 +120,7 @@ const ManagerView = (props) => {
       }, ...newSession, {
         name: 'Average',
         selector: 'totalAverage',
-        cell:row=><div className={parseFloat(row.totalAverage) <1 ? 'text-red':''}>{parseFloat(row.totalAverage).toFixed(2)}</div>,
+        cell:({totalAverage})=><div className={parseFloat(totalAverage) <1 ? 'text-red':''}>{totalAverage && <span>{parseFloat(totalAverage).toFixed(2)}</span>}</div>,
         sortable: true,
       }];
       setColumns(newColumns);

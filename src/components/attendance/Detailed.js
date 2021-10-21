@@ -57,19 +57,17 @@ const TraineeAverage = (props) => {
 
   const Columns = [
     {
-      name: 'Date',
-      selector: 'date',
-      cell: row => <div className='pointer' onClick={()=>displayComment(row)}>{moment(row.date, moment.ISO_8601).format('MM/DD/YYYY HH:mm')}</div>,
+      name: 'Sprint',
+      cell: row => <div className='pointer' onClick={()=>displayComment(row)}>{row.sprint.name}</div>,
       sortable: true,
     },
     {
       name: 'Session',
-      cell: row => <div  className='pointer' onClick={()=>displayComment(row)}>{getSession(row.session).name}</div>,
+      cell: row => <div  className='pointer' onClick={()=>displayComment(row)}>{getSession(row.session)?.name}</div>,
       sortable: true,
     },
     {
       name: 'Record',
-      selector: 'attendance',
       cell: row => <div  className='pointer' className={parseFloat(row.attendance) <1 ? 'text-red':''} onClick={()=>displayComment(row)}>{row.attendance}</div>,
       sortable: true,
     },

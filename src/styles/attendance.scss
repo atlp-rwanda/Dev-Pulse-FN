@@ -29,12 +29,7 @@
         background-color: darken($main-color, 10);
       }
     }
-
-
   }
-
-
-
   .data {
     padding: 1em 4em;
 
@@ -83,6 +78,7 @@
   color:#3359df !important;
 }
 .loaderContainer{
+
   position: fixed;
   width: 100%;
   height: 300px;
@@ -117,3 +113,4 @@
 .mt-10{
   margin-top: 5px;
 }
+

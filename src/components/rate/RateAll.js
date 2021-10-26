@@ -208,4 +208,3 @@ const CategoryElement = ({ category, onChange, onFeedback, specref, textbox, fie
 
 
 export default withRouter(RateAll);
-

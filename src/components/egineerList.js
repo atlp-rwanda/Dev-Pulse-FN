@@ -32,7 +32,7 @@ export class EngineerList extends Component {
   componentDidMount() {
     const { myEngineers, getUsers, users,cohorts,programs,getAllCohorts,
       getAllPrograms } = this.props;
-    
+
     myEngineers();
 
     if (users.length === 0) {
@@ -60,7 +60,6 @@ export class EngineerList extends Component {
     console.log('\n\n\n\n\n\n\n\n\n\n\n\ next props', trainees ,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 
   }
-
   handleRedirect = () => {
     const { history } = this.props;
     history.push('/login');
@@ -117,7 +116,6 @@ export class EngineerList extends Component {
 
   render() {
     const { engineers } = this.props;
-    console.log('engineers', engineers);
     const { localUsers,allEngineers } = this.state;
 
     if (engineers.isLoggedOut === true) {

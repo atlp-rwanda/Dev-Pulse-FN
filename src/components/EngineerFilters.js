@@ -8,7 +8,6 @@ const EngineerFilters = (props) => {
     const [selectedProgram,setSelectedProgram] = useState('all');
     const [cohortsPrograms,setCohortPrograms] = useState([]);
     const { cohorts ,programs,allEngineers,filterByCohort } = props;
-    
 
     useEffect(()=>{
         if(!cohorts.loading){

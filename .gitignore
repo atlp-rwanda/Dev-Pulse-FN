@@ -39,3 +39,4 @@ src/dist
 .vscode 
 build
 public/files
+.yarnrc

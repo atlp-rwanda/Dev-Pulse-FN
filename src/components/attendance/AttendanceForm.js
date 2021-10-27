@@ -57,6 +57,7 @@ const AttendanceForm = ({ history, ...props }) => {
   const [cohortTrainees, setCohortTrainees] = useState([]);
   const [myTrainees, setMyTrainees] = useState([]);
   const [filterChanged, setFilterChanged] = useState(false);
+  const [sprint,setSprint]=useState(null);
 
 
   const openDialog = (id) => {
@@ -207,16 +208,24 @@ const AttendanceForm = ({ history, ...props }) => {
       return (attObject[id][0].attendance);
     }
   }
+
+  const setActiveSprint=(id)=>{
+    setSprint(id);
+  }
+
   const saveAttendance = async () => {
+    if(!sprint){
+      toast.error('sprint is required');
+      return false;
+    }
      const getAllRecords =  Object.keys(attObject).map((key) => {
         return {...attObject[key][0]}
       });
       const prepare = getAllRecords.filter(record => record.attendance>=0);
       const finalData =_.groupBy(prepare, 'id');
-    const data = { data: finalData, sessionId: sessionRef.current.value };
+    const data = { data: finalData, sessionId: sessionRef.current.value,sprintId:sprint };
     setSaving(true);
     const saved = await props.SaveAttendance(data);
-    console.log(attObject, "avedddddd");
     if (!saved.success) {
       setSaving(false);
       return toast.error('Failed', {
@@ -246,7 +255,7 @@ const AttendanceForm = ({ history, ...props }) => {
               ))}
             </select>
           </div>
-          <Filters cohorts={cohorts} setCohortValue={setCohortValue} programRef={programRef} setProgramValue={setProgramValue} cohortPrograms={cohortPrograms} />
+          <Filters setSprint={setActiveSprint} cohorts={cohorts} setCohortValue={setCohortValue} programRef={programRef} setProgramValue={setProgramValue} cohortPrograms={cohortPrograms} />
           <button disabled={saving} className='btn' onClick={saveAttendance}>
             <p>{saving ? 'Saving ...' : 'Save'}</p>
           </button>

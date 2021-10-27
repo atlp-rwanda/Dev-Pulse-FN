@@ -63,6 +63,18 @@
 .emailsContainer {
   margin: 10vh 0 0 20vw;
 }
+.sprintList{
+  list-style-type: none;
+  // border: 1px solid blue;
+  min-width: 250px;
+  li{
+    border: 1px solid #3359de;
+    padding: 5px;
+    background: #bcc8f5;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+}
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -72,7 +84,7 @@
     min-height: 300px;
     max-height: 300px;
     overflow: auto;
-    width: 100%;
+    width: 90%;
     margin-left: 8vw;
     padding: 1rem;
     h3 {
@@ -118,8 +130,32 @@
         .cohortChange {
           display: flex;
         }
+        .programHeader{
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          // border: 1px solid red;
+        }
       }
     }
+  }
+
+
+
+
+  .cohorts{
+    width: 25rem;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 10px;
+
+    .select-cohort{
+
+      height: 67px;
+    }
+
   }
 }
 

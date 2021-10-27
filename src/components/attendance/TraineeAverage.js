@@ -101,7 +101,7 @@ const TraineeAverage = (props) => {
       name: 'Average',
       selector: 'average',
       sortable: true,
-      cell:row=><div className={parseFloat(row.averageAttendance) <1 ? 'text-red':''}>{parseFloat(row.averageAttendance).toFixed(2)}</div>,
+      cell:row=><div className={parseFloat(row.averageAttendance) <1 ? 'text-red':''}>{ row.averageAttendance && (<span>{parseFloat(row.averageAttendance).toFixed(2)}</span>)}</div>,
     }];
     setColumns(newColumns);
   }, [props.history,attendances]);

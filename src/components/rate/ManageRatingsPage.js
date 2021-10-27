@@ -8,6 +8,7 @@ import { getEngineers } from '../../actions/getEngineers';
 import { myEngineers } from '../../actions/engineerList';
 import { toast } from 'react-toastify';
 import RateAll from './RateAll';
+import { fetchEngineer, fetchSprints } from '../../actions/EngineerActions';
 //import { getMyEngineers } from '../../api/rateApi';
 
 class ManageRatingsPage extends React.Component {
@@ -31,7 +32,12 @@ class ManageRatingsPage extends React.Component {
   //const [savingRating, setsavingRating] = useState(false);
 
   componentDidMount() {
+    console.log("eeenginer", this.props.rating.trainee);
+    if(this.props?.rating?.trainee){
+      this.props.fetchEngineer(this.props.rating.trainee);
+    }
     this.props.getEngineers();
+    !this.props.sprints.length && this.props.fetchSprints();
   }
 
   componentDidUpdate() {
@@ -97,7 +103,7 @@ class ManageRatingsPage extends React.Component {
     //   }
   };
 
-  handleRateSave = async (event) => {
+  handleRateSave = async (event, sprint) => {
     this.setState({ loading: true });
     const { history } = this.props;
     const rateSpec = ['quality', 'quantity', 'communication'];
@@ -120,8 +126,9 @@ class ManageRatingsPage extends React.Component {
     //setsavingRating(true);
     // rating is the local state being set locally above
     // console.log('rating to save', engineersReducer);
+    console.log('sprint to send', sprint);
     await new Promise(async () => {
-      await rateEngineer(this.state.rating);
+      await rateEngineer(this.state.rating, sprint);
       this.setState({ loading: false });
       setTimeout(() => {
         history.push(`/users/${this.state.rating.trainee}`);
@@ -130,7 +137,8 @@ class ManageRatingsPage extends React.Component {
   };
 
   render() {
-    const { ratingMode } = this.props;
+    const { ratingMode, engineer, sprints } = this.props;
+    console.log('retrievedEng', this.props.engineer, this.props.sprints);
 
     return (
       <>
@@ -143,6 +151,7 @@ class ManageRatingsPage extends React.Component {
             onRate={this.handleRateSave}
             onChange={this.handleChange}
             rating={this.rating}
+            more={{engDetails:engineer , sprints: [...sprints]}}
           />
         )}
       </>}
@@ -169,7 +178,7 @@ const getEngineerById = (engineers, id) => {
 };
 
 const mapStateToProps = (
-  { getRatings, engineersReducer, ratings },
+  { getRatings, engineersReducer, ratings, engineer },
   ownProps,
 ) => {
   const engId = ownProps.match.params.engId;
@@ -178,13 +187,17 @@ const mapStateToProps = (
     rating: { ...newRating, trainee: parseInt(engId, 10) },
     myEngineerslist: engineersReducer.engineers,
     ratings,
-    ratingMode:engId
+    ratingMode:engId,
+    engineer: engineer.user,
+    sprints: engineer.sprints,
   };
 };
 const mapDispatchToProps = {
   rateEngineer,
   getEngineers: () => getEngineers(),
   getMyEngineers: () => myEngineers(),
+  fetchEngineer,
+  fetchSprints,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRatingsPage);

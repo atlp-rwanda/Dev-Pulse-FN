@@ -38,6 +38,8 @@ const RateAll = (props) => {
     const [activeTrainee, SetActiveTrainee] = useState(null);
     const [sortedTrainees,setSortedTRainees] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [sprints,setSprints] = useState([]);
+    const [activeSprint,setActiveSprint] = useState(null);
     const dispatch = useDispatch();
     useEffect(()=>{
         if(!allCohorts.cohorts){
@@ -121,7 +123,12 @@ const RateAll = (props) => {
     }
     const onRate=async()=>{
         setLoading(true);
-        const rating = await rateAllTrainees(state)(dispatch);
+        if(!activeSprint){
+            setLoading(false);
+            toast.error('Sprint is required');
+            return 0;
+        }
+        const rating = await rateAllTrainees(state,activeSprint)(dispatch);
         setLoading(false);
        if(rating){
            props.history.push('/profile');
@@ -130,6 +137,20 @@ const RateAll = (props) => {
 
     const filterByCohort=(data)=>{
         setSortedTRainees(data)
+    }
+    const getProgramSprints=(id)=>{
+
+        const selectedProgram = allPrograms.programs.filter(program=>program.id==id);
+        setSprints(selectedProgram[0].sprints);
+        setActiveSprint(selectedProgram[0]?.sprints[0]?.id);
+
+    }
+
+    const onChangeProgram=async(programId)=>{
+        setActiveSprint(null);
+        setSprints([]);
+        getProgramSprints(programId);
+
     }
     const validRatingData = () => {
         if (Object.keys(state).length >= 1) {
@@ -160,10 +181,13 @@ const RateAll = (props) => {
                         ))}
                     </select>
                 </div>
-                <EngineerFilters style={{width:'200px'}} filterByCohort={filterByCohort} allEngineers={ratableTrainees} />
+                <EngineerFilters onChangeProgram={onChangeProgram} style={{width:'200px'}} filterByCohort={filterByCohort} allEngineers={ratableTrainees} />
+                <select onChange={(e)=>setActiveSprint(e.target.value)} className='select filter-data select-big'>
+                    {sprints.map((sprint)=><option value={sprint.id} key={sprint.id}>{sprint.name}</option>)}
+                </select>
                 </div>
             </div>
-            <div className="flex-parent">
+            <div className="flex-parent" style={{flexDirection:'row'}}>
                 {activeTrainee &&
                     <>
                         {rateSpec.map((rate) => (

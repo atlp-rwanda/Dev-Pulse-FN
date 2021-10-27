@@ -22,7 +22,7 @@ class CohortDropDown extends React.Component {
     return (
       <div className='filter-container'>
         <select
-          className='filter-data filter-cohorts'
+          className='filter-data filter-cohorts select-cohort'
           onChange={(e) => {
             this.props.onChange(+e.target.value);
             this.props.fetchPrograms(+e.target.value);

@@ -7,7 +7,7 @@ const EngineerFilters = (props) => {
     const [selectedCohort,setSelectedCohort] = useState('all');
     const [selectedProgram,setSelectedProgram] = useState('all');
     const [cohortsPrograms,setCohortPrograms] = useState([]);
-    const { cohorts ,programs,allEngineers,filterByCohort } = props;
+    const { cohorts ,programs,allEngineers,filterByCohort,onChangeProgram } = props;
 
     useEffect(()=>{
         if(!cohorts.loading){
@@ -34,6 +34,9 @@ const EngineerFilters = (props) => {
     },[selectedProgram]);
 
     const onCohortChange = (e) => {
+      if(onChangeProgram){
+        onChangeProgram(0);
+      }
         const cohortId = e.target.value;
         setSelectedCohort(cohortId);
         const filteredEngineers = allEngineers.filter(engineer => engineer.cohort === parseInt(cohortId));
@@ -41,7 +44,11 @@ const EngineerFilters = (props) => {
     }
     const onProgramChange = (e) => {
         const programId = e.target.value;
+        if(onChangeProgram){
+          onChangeProgram(programId);
+        }
         setSelectedProgram(programId);
+
     }
     return (
             <div className='data'>

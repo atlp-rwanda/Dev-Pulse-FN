@@ -1,7 +1,7 @@
-import { DeleteForever, Edit, Check } from '@material-ui/icons';
+import { DeleteForever, Edit, Check, Add, List } from '@material-ui/icons';
 import React, { useState } from 'react';
 
-const EachProgram = ({ program, onEdit, onDelete }) => {
+const EachProgram = ({ program, onEdit, onDelete, onAddSprint, onListSprint }) => {
   const [editing, setEditing] = useState(false);
   const [editVal, setEditVal] = useState({
     ...program,
@@ -25,13 +25,31 @@ const EachProgram = ({ program, onEdit, onDelete }) => {
     setEditing(false);
     onDelete(program.id);
   };
+  const handleAdd = () =>{
+    console.log('programsssss', program);
+    return onAddSprint(program.id);
+  }
+  const handleList = () =>{
+    return onListSprint(program.id);
+  }
 
   return (
     <div className='eachEmail eachProgram' key={program.name}>
-      <Edit
-        style={{ cursor: 'pointer' }}
-        onClick={() => setEditing(!editing)}
-      />{' '}
+      <div className='programHeader'>
+        <Edit
+          style={{ cursor: 'pointer' }}
+          onClick={() => setEditing(!editing)}
+        />
+        <Add 
+          style={{ cursor: 'pointer' }}
+          onClick={handleAdd}
+
+        />
+        <List
+          style={{ cursor: 'pointer' }}
+          onClick={handleList}
+         />
+      </div>
       {!editing ? (
         <p>{editVal.name}</p>
       ) : (

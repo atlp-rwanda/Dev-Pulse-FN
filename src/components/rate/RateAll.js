@@ -191,7 +191,7 @@ const RateAll = (props) => {
                 {activeTrainee &&
                     <>
                         {rateSpec.map((rate) => (
-                            <CategoryElement fieldsData={fieldsData} textbox={textbox} specref={specref} key={rate} category={rate} onFeedback={onFeedback} onChange={onSpecChange} />
+                            <CategoryElement trainee={activeTrainee} state={state} fieldsData={fieldsData} textbox={textbox} specref={specref} key={rate} category={rate} onFeedback={onFeedback} onChange={onSpecChange} />
                         ))}
                     </>}
             </div>
@@ -206,17 +206,20 @@ const RateAll = (props) => {
 }
 
 
-const CategoryElement = ({ category, onChange, onFeedback, specref, textbox, fieldsData }) => {
+const CategoryElement = ({ category, onChange, onFeedback, specref, textbox, fieldsData,state,trainee }) => {
+    console.log("fieldsData",fieldsData);
+    const records = state[trainee]?.[category];
+    const rate = JSON.stringify(records?.rate)
 
     const catname = (category === "communication" ? "Professional Communication" : category);
     return (
         <div className="rate-editor">
             <h5>{catname}</h5>
-            <select value={fieldsData[category].spec} ref={specref} id="rate" name={category} required onChange={onChange}>
-                <option value="null">Select Rating</option>
-                <option value={2}>Very satisfied (2) </option>
-                <option value={1}>Satisfied (1)</option>
-                <option value={0}>Neutral (0)</option>
+            <select value={rate || 'null'} ref={specref} id="rate" name={category} required onChange={onChange}>
+                <option value={'null'}>Select Rating</option>
+                <option  value={'2'}>Very satisfied (2) </option>
+                <option value={'1'}>Satisfied (1)</option>
+                <option value={'0'}>Neutral (0)</option>
             </select>
             <textarea
                 rows="5"
@@ -224,7 +227,7 @@ const CategoryElement = ({ category, onChange, onFeedback, specref, textbox, fie
                 id="feedback"
                 name={category}
                 onChange={onFeedback}
-                value={fieldsData[category].feedback}
+                value={records?.feedback|| ''}
             ></textarea>
         </div>
     );

@@ -58,7 +58,7 @@ const TraineeAverage = (props) => {
   const Columns = [
     {
       name: 'Sprint',
-      cell: row => <div className='pointer' onClick={()=>displayComment(row)}>{row.sprint.name}</div>,
+      cell: row => <div className='pointer' onClick={()=>displayComment(row)}>{row.sprint?.name}</div>,
       sortable: true,
     },
     {

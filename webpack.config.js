@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { API_URL, JWT_KEY } = process.env;
+const { API_URL, JWT_KEY, NODE_ENV } = process.env;
 
 module.exports = {
   entry: './src/index.js',
@@ -11,50 +11,57 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.join(__dirname, '/build'),
-    filename: 'main.bundle.js'
+    filename: 'main.bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['babel-loader'],
       },
       {
-        test: /(\.css)$/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        test: /(\.(s[ac]|c)ss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader']
-      }
-    ]
+        use: ['file-loader'],
+      },
+    ],
   },
   devServer: {
     publicPath: '/',
     historyApiFallback: true,
     contentBase: './',
     port: '5000',
-    hot: true
+    hot: true,
   },
-  mode: process.env.NODE_ENV || 'development',
+  mode: NODE_ENV,
+  resolve: {
+    fallback: {
+      util: require.resolve('util/'),
+      assert: require.resolve('assert/'),
+      stream: require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      zlib: require.resolve('browserify-zlib'),
+    },
+  },
   plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        API_URL: JSON.stringify(API_URL),
-        JWT_KEY: JSON.stringify(JWT_KEY)
-      }
+      'process.env.API_URL': JSON.stringify(API_URL),
+      'process.env.JWT_KEY': JSON.stringify(JWT_KEY),
     }),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-      DEBUG: false
-    })
-  ]
+      NODE_ENV: 'production', // use 'development' unless process.env.NODE_ENV is defined
+      DEBUG: false,
+    }),
+  ],
 };

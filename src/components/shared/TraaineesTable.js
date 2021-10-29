@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import CsvDownload from 'react-json-to-csv';
 import {
   fetchAllUsers,
-  exportTraineeRatings
+  exportTraineeRatings,
 } from '../../actions/EngineerActions';
 
 class TraineesTable extends Component {
@@ -16,7 +16,7 @@ class TraineesTable extends Component {
       id: null,
       from: '',
       to: '',
-      btn: 'disabled'
+      btn: 'disabled',
     };
   }
   async fetchTrainees() {
@@ -25,7 +25,7 @@ class TraineesTable extends Component {
   handelExport(id) {
     this.props.exportTraineeRatings(id, {
       from: this.state.from,
-      to: this.state.to
+      to: this.state.to,
     });
   }
   componentDidMount() {
@@ -33,7 +33,7 @@ class TraineesTable extends Component {
   }
 
   render() {
-    const { trainees, ratingsToExport } = this.props;
+    const { trainees, ratingsToExport, selectedCohort } = this.props;
 
     const columns = [
       'First Name',
@@ -41,7 +41,7 @@ class TraineesTable extends Component {
       'Email',
       'Joined',
       'Graduated',
-      'Action'
+      'Action',
     ];
     return (
       <div className='filter-container'>
@@ -53,114 +53,122 @@ class TraineesTable extends Component {
                   <th key={column}>{column}</th>
                 ))}
               </tr>
-              {trainees.map((trainee, i) => (
-                <>
-                  <tr key={i}>
-                    <td>{trainee.firstName}</td>
-                    <td>{trainee.lastName}</td>
-                    <td>
-                      <Link to={`/users/${trainee.id}`} className='name'>
-                        {trainee.email}
-                      </Link>
-                    </td>
+              {trainees
+                .filter((e) =>
+                  !selectedCohort
+                    ? true
+                    : e.cohort === selectedCohort
+                    ? true
+                    : false
+                )
+                .map((trainee, i) => (
+                  <>
+                    <tr key={i}>
+                      <td>{trainee.firstName}</td>
+                      <td>{trainee.lastName}</td>
+                      <td>
+                        <Link to={`/users/${trainee.id}`} className='name'>
+                          {trainee.email}
+                        </Link>
+                      </td>
 
-                    <td>{moment(trainee.createdAt).format('DD-MM-YYYY')}</td>
-                    <td>{trainee.graduated === false ? 'False' : 'True'}</td>
+                      <td>{moment(trainee.createdAt).format('DD-MM-YYYY')}</td>
+                      <td>{trainee.graduated === false ? 'False' : 'True'}</td>
 
-                    <td>
-                      <button
-                        className='button'
-                        type='button'
-                        onClick={() => {
-                          this.setState({
-                            popupClass: 'block',
-                            id: trainee.id
-                          });
-                        }}
-                      >
-                        Export
-                      </button>
-                    </td>
-                  </tr>
-                  <div className={`${this.state.popupClass} popup-container`}>
-                    <div className='popup'>
-                      <button
-                        className='close '
-                        onClick={() => {
-                          this.setState({
-                            popupClass: 'hidden',
-                            id: null,
-                            from: '',
-                            to: ''
-                          });
-                        }}
-                      >
-                        X
-                      </button>
-                      <div className='flex pt-4'>
-                        <div>
-                          <p>Select Start Date</p>
-                          <input
-                            type='date'
-                            value={this.state.from}
-                            onChange={(e) => {
-                              this.setState({
-                                ...this.state,
-                                from: e.target.value
-                              });
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <p>Select End Date</p>
-                          <input
-                            type='date'
-                            value={this.state.to}
-                            onChange={(e) => {
-                              this.setState({
-                                ...this.state,
-                                to: e.target.value
-                              });
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <div className='export'>
-                        {ratingsToExport.length ? (
-                          <div
-                            onClick={() => {
-                              this.setState({
-                                popupClass: 'hidden',
-                                from: '',
-                                to: ''
-                              });
-                              location.reload();
-                            }}
-                          >
-                            <CsvDownload
-                              data={ratingsToExport}
-                              filename='traineeRatings.csv'
-                              className='button'
-                            >
-                              Download
-                            </CsvDownload>
+                      <td>
+                        <button
+                          className='button'
+                          type='button'
+                          onClick={() => {
+                            this.setState({
+                              popupClass: 'block',
+                              id: trainee.id,
+                            });
+                          }}
+                        >
+                          Export
+                        </button>
+                      </td>
+                    </tr>
+                    <div className={`${this.state.popupClass} popup-container`}>
+                      <div className='popup'>
+                        <button
+                          className='close '
+                          onClick={() => {
+                            this.setState({
+                              popupClass: 'hidden',
+                              id: null,
+                              from: '',
+                              to: '',
+                            });
+                          }}
+                        >
+                          X
+                        </button>
+                        <div className='flex pt-4'>
+                          <div>
+                            <p>Select Start Date</p>
+                            <input
+                              type='date'
+                              value={this.state.from}
+                              onChange={(e) => {
+                                this.setState({
+                                  ...this.state,
+                                  from: e.target.value,
+                                });
+                              }}
+                            />
                           </div>
-                        ) : (
-                          <button
-                            className='button'
-                            type='button'
-                            onClick={() => {
-                              this.handelExport(this.state.id);
-                            }}
-                          >
-                            Retrieve
-                          </button>
-                        )}
+                          <div>
+                            <p>Select End Date</p>
+                            <input
+                              type='date'
+                              value={this.state.to}
+                              onChange={(e) => {
+                                this.setState({
+                                  ...this.state,
+                                  to: e.target.value,
+                                });
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className='export'>
+                          {ratingsToExport.length ? (
+                            <div
+                              onClick={() => {
+                                this.setState({
+                                  popupClass: 'hidden',
+                                  from: '',
+                                  to: '',
+                                });
+                                location.reload();
+                              }}
+                            >
+                              <CsvDownload
+                                data={ratingsToExport}
+                                filename='traineeRatings.csv'
+                                className='button'
+                              >
+                                Download
+                              </CsvDownload>
+                            </div>
+                          ) : (
+                            <button
+                              className='button'
+                              type='button'
+                              onClick={() => {
+                                this.handelExport(this.state.id);
+                              }}
+                            >
+                              Retrieve
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
             </tbody>
           </table>
         </div>
@@ -171,12 +179,13 @@ class TraineesTable extends Component {
 
 const mapStateToProps = ({ engineer }) => ({
   trainees: engineer.trainees,
-  ratingsToExport: engineer.ratingsToExport
+  selectedCohort: engineer.selectedCohort,
+  ratingsToExport: engineer.ratingsToExport,
 });
 const mapDispatchToProps = (dispatch) => ({
   exportTraineeRatings: (id, timeRange) =>
     dispatch(exportTraineeRatings(id, timeRange)),
-  fetchTrainees: () => dispatch(fetchAllUsers())
+  fetchTrainees: () => dispatch(fetchAllUsers()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TraineesTable);

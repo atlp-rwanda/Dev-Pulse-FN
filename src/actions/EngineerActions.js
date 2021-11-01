@@ -276,11 +276,13 @@ export const updateProgram = (id, program) => async (dispatch) => {
         },
       }
     );
-    if (response.status === 200)
+    if (response.status === 200) {
       dispatch({
         type: UPDATE_PROGRAM,
         payload: response.data.data,
       });
+      toast.success('Program successfully updated!');
+    }
   } catch (error) {
     console.log(error);
     toast.error(`Unable to update program!`);
@@ -307,11 +309,14 @@ export const updateCohort =
           },
         }
       );
-      if (response.status === 200)
+      if (response.status === 200) {
         dispatch({
           type: UPDATE_COHORT,
+
           payload: response.data.data,
         });
+        toast.success('Cohort successfully updated!');
+      }
     } catch (error) {
       console.log(error);
       toast.error('Unable to remove program!');
@@ -332,12 +337,13 @@ export const removeProgram = (id) => async (dispatch) => {
         'Access-Control-Allow-Origin': `${process.env.API_URL}`,
       },
     });
-    if (response.status === 200)
+    if (response.status === 200) {
       dispatch({
         type: REMOVE_PROGRAM,
         payload: response.data.data,
       });
-    else toast.error(response.data.message);
+      toast.success('Program successfully deleted!');
+    } else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message || 'Unable to remove program!');
@@ -358,12 +364,13 @@ export const removeCohort = (id) => async (dispatch) => {
         'Access-Control-Allow-Origin': `${process.env.API_URL}`,
       },
     });
-    if (response.status === 200)
+    if (response.status === 200) {
       dispatch({
         type: REMOVE_COHORT,
         payload: response.data.data,
       });
-    else toast.error(response.data.message);
+      toast.success('Cohort successfully removed!');
+    } else toast.error(response.data.message);
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.message || 'Unable to remove cohort!');
@@ -388,11 +395,13 @@ export const addCohort = (name) => async (dispatch) => {
         },
       }
     );
-    if (response.status === 201)
+    if (response.status === 201) {
       dispatch({
         type: ADD_COHORT,
         payload: response.data.data,
       });
+      toast.success('Cohort added successfully!');
+    }
   } catch (error) {
     console.log(error);
     toast.error('Unable to add cohort!');
@@ -423,11 +432,13 @@ export const addProgram =
           },
         }
       );
-      if (response.status === 201)
+      if (response.status === 201) {
         dispatch({
           type: ADD_PROGRAM,
           payload: response.data.data,
         });
+        toast.success('Program added successfully!');
+      }
     } catch (error) {
       console.log(error);
       toast.error('Unable to add program!');
@@ -575,10 +586,12 @@ export const exportTraineeRatings = (id, timeRange) => async (dispatch) => {
 
     if (data && data.data.ratings.length) {
       // flatten the ratings for 2d view in cvs
-      const flattenedRatings = data.data.ratings.map(rating => deleteFeedback(rating));
+      const flattenedRatings = data.data.ratings.map((rating) =>
+        deleteFeedback(rating)
+      );
       dispatch({
         type: EXPORT_TRAINEE_RATINGS_SUCCESS,
-        payload: flattenedRatings
+        payload: flattenedRatings,
       });
       toast.success(`Ratings retrieved successfully, click download`);
     } else {

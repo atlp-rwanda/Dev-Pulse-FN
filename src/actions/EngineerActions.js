@@ -25,6 +25,7 @@ import {
   FETCH_SPRINTS_SUCCESS,
 } from './actionType';
 import deleteFeedback from '../helpers/flattenRatings';
+import dbCall from '../config/dbCall';
 
 const baseUrl = process.env.API_URL;
 
@@ -603,5 +604,21 @@ export const exportTraineeRatings = (id, timeRange) => async (dispatch) => {
       type: EXPORT_TRAINEE_RATINGS_FAILED,
       payload: [],
     });
+  }
+};
+
+
+export const fetchPendingRatings=() => async(dispatch)=> {
+
+  try {
+    const {data} = await dbCall.get('/ratings/pending/all');
+   dispatch({
+     type:'FETCHED_PENDING_RATINGS',
+     payload:data.data
+   });
+
+  } catch (error) {
+    
+    throw error;
   }
 };

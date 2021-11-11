@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import Header from './shared/Header';
 import { People } from '@material-ui/icons';
-import { ListAlt, BarChart } from '@material-ui/icons';
+import { ListAlt, BarChart,CachedTwoTone } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 220;
@@ -58,6 +58,12 @@ const sideMenus = [
     text: 'Analytics',
     icon: <BarChart />,
     link: '/admin/analytics'
+  },
+  {
+
+    text: 'Updated Ratings',
+    icon: <CachedTwoTone />,
+    link: '/admin/ratings'
   }
 ];
 

@@ -20,13 +20,17 @@ import AuthPage from './AuthPage';
 import AdminDashboard from './AdminDashboard';
 import AuthorizeEmails from './AuthorizeEmails';
 import ManageCohorts from './ManageCohorts';
-import { fetchCohorts, fetchPrograms } from '../actions/EngineerActions';
+import { fetchCohorts, fetchPrograms,fetchPendingRatings } from '../actions/EngineerActions';
 import Attendance from './attendance/Attendance';
 import AttendanceForm from './attendance/AttendanceForm';
 import TraineeView from './attendance/TraineeView';
 import Sessions from './Sessions';
 import RateAll from './rate/RateAll';
 import Analytics from './analytics';
+import ModifyRating from './rate/ModifyRating';
+import UpdatedRatings from './rate/UpdatedRatings';
+
+
 
 class App extends Component {
   static propTypes = {
@@ -41,9 +45,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { cohorts, programs, fetchCohorts, fetchPrograms} = this.props;
+    const { cohorts, programs, fetchCohorts, fetchPrograms,fetchPendingRatings,pendingRatings,profile} = this.props;
     if (!cohorts.length) fetchCohorts();
     if (!programs.length) fetchPrograms();
+    if (!pendingRatings.data && localStorage.getItem('pulseToken')) fetchPendingRatings();
+
   }
 
   render() {
@@ -91,6 +97,12 @@ class App extends Component {
             component={ManageRatingsPage}
           />
           <PrivateRoute exact path='/admin/analytics' component={Analytics} />
+          <PrivateRoute exact path='/admin/ratings' component={UpdatedRatings} />
+          
+          <PrivateRoute
+            path='/rating/:engId/:ratingId'
+            component={ModifyRating}
+          />
           <Route component={NotFoundPage} />
         </Switch>
       </>
@@ -100,12 +112,15 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   cohorts: state.engineer.cohorts,
-  programs: state.engineer.programs
+  programs: state.engineer.programs,
+  pendingRatings:state.pendingRatings,
+  profile:state.profile
 });
 
 const mapDispatchToprops = (dispatch) => ({
   fetchCohorts: () => dispatch(fetchCohorts()),
   fetchPrograms: () => dispatch(fetchPrograms()),
+  fetchPendingRatings:()=>dispatch(fetchPendingRatings())
 
 });
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { rateEngineer } from '../../actions/engineerAction';
+import { rateEngineer,updateRating } from '../../actions/engineerAction';
 import { newRating } from '../../__mocks__/mockData';
 import RatingForm from './RateForm';
 import { getEngineers } from '../../actions/getEngineers';
@@ -9,6 +9,7 @@ import { myEngineers } from '../../actions/engineerList';
 import { toast } from 'react-toastify';
 import RateAll from './RateAll';
 import { fetchEngineer, fetchSprints } from '../../actions/EngineerActions';
+import {withRouter} from 'react-router-dom';
 //import { getMyEngineers } from '../../api/rateApi';
 
 class ManageRatingsPage extends React.Component {
@@ -24,6 +25,7 @@ class ManageRatingsPage extends React.Component {
       localUsers: [],
       name: null,
       loading: false,
+      draft:{}
     };
   }
   // set come local states e.g. rating before we save it
@@ -36,12 +38,17 @@ class ManageRatingsPage extends React.Component {
     if(this.props?.rating?.trainee){
       this.props.fetchEngineer(this.props.rating.trainee);
     }
+    console.log("sprints", this.props);
     this.props.getEngineers();
     !this.props.sprints.length && this.props.fetchSprints();
+
+    console.log("sprints component did mount", this.props);
+
+
   }
 
   componentDidUpdate() {
-    console.log('Ratings', this.state.rating);
+    console.log('\n\n\n\n\n heyyyyyyyy \n\n\n\n\n', this.props);
 
     // const allEngineers = this.props.allEngineers;
     const myEngineerslist = this.props.myEngineerslist;
@@ -76,19 +83,20 @@ class ManageRatingsPage extends React.Component {
 
   handleChange = (event) => {
     var rating = { ...this.state.rating };
-    console.log(this.state, '$444444444');
 
     if (event.target.id === 'rate') {
       rating[event.target.name] = {
         rate: parseInt(event.target.value),
         feedback: rating[event.target.name].feedback,
       };
+
     } else if (event.target.id === 'feedback') {
       rating[event.target.name] = {
         feedback: event.target.value,
         rate: rating[event.target.name].rate,
       };
     }
+    console.log(this.state, 'this is rating $444444444');
     this.setState({ rating });
 
     // this.setState({rating});
@@ -128,7 +136,11 @@ class ManageRatingsPage extends React.Component {
     // console.log('rating to save', engineersReducer);
     console.log('sprint to send', sprint);
     await new Promise(async () => {
+      if(this.props.edit){
+      await this.props.updateRating(this.state.rating, this.props.ratingId);
+      }else{
       await rateEngineer(this.state.rating, sprint);
+      }
       this.setState({ loading: false });
       setTimeout(() => {
         history.push(`/users/${this.state.rating.trainee}`);
@@ -152,6 +164,8 @@ class ManageRatingsPage extends React.Component {
             onChange={this.handleChange}
             rating={this.rating}
             more={{engDetails:engineer , sprints: [...sprints]}}
+            traineeRatings={this.props.traineeRatings}
+            edit={this.props.edit}
           />
         )}
       </>}
@@ -181,7 +195,8 @@ const mapStateToProps = (
   { getRatings, engineersReducer, ratings, engineer },
   ownProps,
 ) => {
-  const engId = ownProps.match.params.engId;
+  console.log('ratings', ownProps);
+  const engId = ownProps?.match?.params.engId;
 
   return {
     rating: { ...newRating, trainee: parseInt(engId, 10) },
@@ -190,6 +205,7 @@ const mapStateToProps = (
     ratingMode:engId,
     engineer: engineer.user,
     sprints: engineer.sprints,
+    traineeRatings: engineer.ratings,
   };
 };
 const mapDispatchToProps = {
@@ -198,6 +214,7 @@ const mapDispatchToProps = {
   getMyEngineers: () => myEngineers(),
   fetchEngineer,
   fetchSprints,
+  updateRating
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageRatingsPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ManageRatingsPage));

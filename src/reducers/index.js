@@ -11,6 +11,8 @@ import cohorts from './cohorts';
 import programs from './programs'
 import attendance from './attendance';
 import sessions from './sessions';
+import pendingRatings from './pendingRatings';
+
 
 
 
@@ -26,5 +28,6 @@ export default combineReducers({
   cohorts,
   programs,
   attendance,
-  sessions
+  sessions,
+  pendingRatings
 });

@@ -17,6 +17,26 @@ const rateAllTrainees=(data,sprint)=>async(dispatch)=>{
     }
 }
 
+export const approveRating=(id,refferencedRateId)=>async(dispatch)=>{
+    try {
+        await dbCall.post(`/ratings/approve/${id}/${refferencedRateId}`);
+        dispatch({type:'APPROVED_RATING',payload:id});
+        toast.success("Rating Approved successfully !");
+    } catch (error) {
+        const errormessage = error.response.data || error;
+        toast.error(errormessage.message);
+    }
+}
 
+export const rejectRating=(id)=>async(dispatch)=>{
+    try {
+        await dbCall.post(`/ratings/reject/${id}`);
+        dispatch({type:'REJECTED_RATING',payload:id});
+        toast.success("Rating Rejected successfully !");
+    } catch (error) {
+        const errormessage = error.response.data || error;
+        toast.error(errormessage.message);
+    }
+}
 
 export default rateAllTrainees;

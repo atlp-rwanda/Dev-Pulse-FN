@@ -27,6 +27,9 @@ class SingleEngineer extends React.Component {
     const { match, engineer } = this.props;
     const { id } = match.params;
     const { fetchEngineer, fetchRating } = this.props;
+    const token  = localStorage.getItem('pulseToken').split('.')[1];
+    const userInfo = JSON.parse(atob(token));
+    this.setState({...this.state,userInfo:userInfo})
 
     fetchEngineer(id);
 
@@ -149,7 +152,11 @@ class SingleEngineer extends React.Component {
       'Quantity',
       'Professional Communication',
       'Average',
+      'Action'
     ];
+    if(this.state.userInfo?.role=='Trainee'){
+      columns.pop();
+    }
     const userRole = localStorage.getItem('pulseRole');
     const items = this.handleRatings(
       engineer.ratings.filter((rate) => {
@@ -171,6 +178,11 @@ class SingleEngineer extends React.Component {
       engineer.programs.find(
         ({ id }) => id === this.props.selectedProgram
       );
+
+      const getRatingToUpdate = (item)=>{
+        
+          this.props.history.push(`/rating/${user.id}/${item.id}`);
+      }
 
     return (
       <>
@@ -227,6 +239,8 @@ class SingleEngineer extends React.Component {
             <table className="table">
               <tbody>
                 <TableContent
+                  isAVerage={true}
+                  role={this.state.userInfo?.role}
                   data={
                     !this.props.selectedProgram
                       ? average
@@ -247,7 +261,10 @@ class SingleEngineer extends React.Component {
                 </tr>
                 <TableContent
                   data={items}
+                  getRatingToUpdate={getRatingToUpdate}
                   openModal={this.openModal}
+                  role={this.state.userInfo?.role}
+
                 />
               </tbody>
             </table>

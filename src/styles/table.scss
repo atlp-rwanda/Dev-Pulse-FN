@@ -1,0 +1,136 @@
+// div {
+// 	background: rgb(239, 244, 248);
+// }
+
+td {
+  padding: 3px;
+  margin: 5px;
+  text-align: center;
+}
+
+.tableHeader {
+  height: 50px;
+  margin: 10px auto;
+  color: #3359de;
+  font-size: 20px;
+  padding-top: 8px;
+  padding-left: 16px;
+  background: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tableHeading {
+  height: 50px;
+  margin: 10px auto;
+  color: #3359de;
+  font-size: 20px;
+  background: white;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.table {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0px 5px;
+  // background: rgb(239, 244, 248);
+
+  margin-top: 20px;
+  tbody {
+    tr {
+      td {
+        text-align: left;
+      }
+    }
+  }
+}
+
+.table td,
+.table th {
+  border: 0px solid #ddd;
+  background: white;
+  padding: 20px;
+}
+.table-row td {
+  background: #de333361;
+}
+.table tr:hover {
+  background: rgba(173, 176, 179, 0.342);
+}
+
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #3359de;
+  color: white;
+}
+.name {
+  text-decoration: none;
+  color: #3359de;
+}
+
+.button {
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #3359de;
+  border: none;
+  padding: 0.6rem 1rem;
+}
+.popup-container {
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: white;
+  position: fixed;
+}
+.popup {
+  padding: 1rem;
+  max-width: 500px;
+  margin: 6rem auto;
+  z-index: 5;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgb(201, 199, 199);
+  input {
+    margin: 1rem 0;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.closeBtn {
+  display: flex;
+  justify-content: right;
+}
+.close {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 100px;
+  border: none;
+}
+.pt-4 {
+  padding: 2rem;
+}
+.export {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+.text-blue{
+  color: #3359de;
+}

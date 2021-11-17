@@ -1,0 +1,190 @@
+:root {
+  --spacebetween: 10px;
+}
+
+.addRemoveWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  // background-color: white;
+  .addSection,
+  .removeSection {
+    width: 40%;
+    .MuiAccordion-root.Mui-expanded {
+      // border: 2px solid red;
+      margin: 0;
+    }
+  }
+  .addSection {
+    margin-right: 10px;
+    min-width: 200px;
+  }
+  .removeSection {
+    min-width: 200px;
+  }
+  h3 {
+    background-color: white;
+    width: 100%;
+    color: #3359de;
+  }
+  .addButton {
+    background-color: #3359de;
+    text-transform: capitalize;
+    width: 150px;
+    margin: 10px 0;
+  }
+  .removeButton {
+    background-color: #de335c;
+    text-transform: capitalize;
+    width: 150px;
+    margin: 10px 0;
+    &:hover {
+      background-color: #af1d3f;
+    }
+  }
+}
+.addWrapper,
+.removeWrapper {
+  display: flex;
+  flex-direction: column;
+  .autoCompleteInput {
+    background-color: #fff;
+    .MuiOutlinedInput-root {
+      background-color: #fff;
+    }
+    .MuiAutocomplete-endAdornment {
+      background-color: #fff;
+    }
+  }
+}
+.emailsContainer {
+  margin: 10vh 0 0 20vw;
+}
+.sprintList{
+  list-style-type: none;
+  // border: 1px solid blue;
+  min-width: 250px;
+  li{
+    border: 1px solid #3359de;
+    padding: 5px;
+    background: #bcc8f5;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+}
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  .viewEmailsContainer {
+    min-height: 300px;
+    max-height: 300px;
+    overflow: auto;
+    width: 90%;
+    margin-left: 8vw;
+    padding: 1rem;
+    h3 {
+      margin: 10px 0;
+    }
+    .allEmails {
+      display: flex;
+      background-color: white;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      max-width: 60%;
+      min-width: 50%;
+      min-height: 220px;
+      border: 2px solid rgba(0, 110, 255, 0.433);
+      .eachEmail {
+        // border: 1px solid black;
+        width: auto;
+        margin: 5px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 1rem;
+        background-color: #bcc8f5;
+        color: #000;
+        .removeIcon {
+          margin-left: var(--spacebetween);
+          visibility: hidden;
+        }
+        .removeIcon:hover {
+          cursor: pointer;
+        }
+        button {
+          border: none;
+          background-color: transparent;
+        }
+      }
+      .eachEmail:hover {
+        .removeIcon {
+          visibility: visible;
+        }
+      }
+      .eachProgram {
+        flex-direction: column;
+        .cohortChange {
+          display: flex;
+        }
+        .programHeader{
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          // border: 1px solid red;
+        }
+      }
+    }
+  }
+
+
+
+
+  .cohorts{
+    width: 25rem;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 10px;
+
+    .select-cohort{
+
+      height: 67px;
+    }
+
+  }
+}
+
+.confirmDialogModal {
+  background: none;
+  .MuiDialog-container {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .deleteModalTitle {
+    background-color: #3359de;
+    color: #fff;
+  }
+}
+.successSnackbar {
+  .MuiSnackbarContent-root,
+  .MuiSnackbarContent-message,
+  .MuiSnackbarContent-action {
+    background-color: rgb(49, 172, 53);
+  }
+}
+.errorSnackbar {
+  .MuiSnackbarContent-root,
+  .MuiSnackbarContent-message,
+  .MuiSnackbarContent-action {
+    background-color: rgb(214, 73, 73);
+  }
+}
+
+.flex {
+  display: flex !important;
+  align-items: flex-end;
+}

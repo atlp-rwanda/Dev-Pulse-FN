@@ -145,7 +145,7 @@ class SingleEngineer extends React.Component {
 
   render() {
     const { engineer } = this.props;
-    const { user } = engineer;
+    const { user, cohorts} = engineer;
     const columns = [
       'Sprint',
       'Quality',
@@ -154,6 +154,8 @@ class SingleEngineer extends React.Component {
       'Average',
       'Action'
     ];
+    let cohort = cohorts.find(e=>e.id === user.cohort)
+
     if(this.state.userInfo?.role=='Trainee'){
       columns.pop();
     }
@@ -210,7 +212,8 @@ class SingleEngineer extends React.Component {
               </li>
               <li className="profile-bar-item">
                 <strong>Cohort: </strong>
-                {user.cohort}
+                {cohort ? cohort.name.split(' ')[1] : ''}
+
               </li>
               {userRole === 'Manager' && <ChangeCohort />}
               <li className="profile-bar-item">

@@ -259,35 +259,36 @@ export const fetchRating = (id) => (dispatch) => {
     .catch((error) => console.log('the response is : ', error));
 };
 
-export const updateProgram = (id, program) => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('pulseToken');
+export const updateProgram =
+  (id, program) => async (dispatch) => {
+    try {
+     
+      const token = localStorage.getItem('pulseToken');
+      const {sprints, ...rest} = program;
 
-    const response = await axios.patch(
-      `${baseUrl}/api/v1/programs/${id}`,
-      { ...program, id: undefined },
-      {
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': `${process.env.API_URL}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      dispatch({
-        type: UPDATE_PROGRAM,
-        payload: response.data.data,
-      });
-      toast.success('Program successfully updated!');
+      const response = await axios.patch(
+        `${baseUrl}/api/v1/programs/${id}`,
+        { ...rest, id: undefined },
+        {
+          mode: 'cors',
+          cache: 'no-cache',
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': `${process.env.API_URL}`,
+          },
+        }
+      );
+      if (response.status === 200)
+        dispatch({
+          type: UPDATE_PROGRAM,
+          payload: response.data.data,
+        });
+    } catch (error) {
+      console.log(error);
+      toast.error(`Unable to update program!`);
     }
-  } catch (error) {
-    console.log(error);
-    toast.error(`Unable to update program!`);
-  }
 };
 
 export const updateCohort =

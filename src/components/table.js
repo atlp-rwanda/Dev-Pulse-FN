@@ -18,16 +18,20 @@ class Table extends Component {
       'Quality',
       'Quantity',
       'Professional Communication',
+      'Sprints',
       'Rating',
     ];
 
     const { engineers } = this.props;
     const { myEngineerslist } = this.props;
+    const { allRatings } = this.props;
     /**
      * Filter all rated engineers to remain with only your Team
      */
+    console.log(allRatings);
     const ratableEngineers = engineers
       .filter((el) => {
+        console.log('ratints', el.ratings)
         return myEngineerslist.some((f) => {
           return f?.id === el?.user?.id;
         });
@@ -61,6 +65,22 @@ class Table extends Component {
         )
           return true;
         return false;
+      })
+      .map((engineer) => {
+        const sprintIds = [];
+        let sprints = 0;
+        if (allRatings && allRatings.length) {
+          allRatings.forEach((rate) => {
+            if (!sprintIds.includes(rate.sprintId) && rate.trainee === engineer.trainee) {
+              sprints += 1;
+              sprintIds.push(rate.sprintId);
+            }
+          });
+        }
+        return {
+          ...engineer,
+          ratedSprints: sprints,
+        };
       });
     const items = [];
     try {
@@ -73,6 +93,7 @@ class Table extends Component {
             (engineerRatings.quantity = engineer.quantity),
             (engineerRatings.communication =
               engineer.communication),
+            (engineerRatings.ratedSprints = engineer.ratedSprints),
           ]);
         items.push(engineerRatings);
       });
@@ -102,6 +123,7 @@ const mapStateToProps = ({
   engineer,
 }) => ({
   engineers: getRatings.engineers,
+  allRatings: getRatings.allRatings,
   myEngineerslist: engineersReducer.engineers,
   selectedCohort: engineer.selectedCohort,
   average: engineer.averageRating,

@@ -68,18 +68,16 @@ class Table extends Component {
       })
       .map((engineer) => {
         const sprintIds = [];
-        let sprints = 0;
         if (allRatings && allRatings.length) {
           allRatings.forEach((rate) => {
             if (!sprintIds.includes(rate.sprintId) && rate.trainee === engineer.trainee) {
-              sprints += 1;
               sprintIds.push(rate.sprintId);
             }
           });
         }
         return {
           ...engineer,
-          ratedSprints: sprints,
+          ratedSprints: sprintIds.length,
         };
       });
     const items = [];

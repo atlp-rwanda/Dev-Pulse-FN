@@ -48,6 +48,9 @@ const TableBody = ({ data }) => {
             {item.communication}
           </td>
           <td>
+              {item.ratedSprints}
+          </td>
+          <td>
             <Link to={`/ratings/rate/${item.id}`}>
               <button className="button" type="button">
                 {' '}

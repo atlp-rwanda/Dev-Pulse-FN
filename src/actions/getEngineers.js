@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ENGINEERS } from './actionType';
+import { FETCH_RATING, GET_ENGINEERS } from './actionType';
 
 export const getEngineers = () => (dispatch) => {
   const token = localStorage.getItem('pulseToken');
@@ -21,4 +21,13 @@ export const getEngineers = () => (dispatch) => {
     .catch((error) =>
       console.log('the response is : ', error)
     );
+
+    axios
+    .get(`${process.env.API_URL}/api/v1/ratings/rate`, config)
+    .then((response) => {
+      dispatch({
+        type: FETCH_RATING,
+        payload: response.data,
+      });
+    });
 };

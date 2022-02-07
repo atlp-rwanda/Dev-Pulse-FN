@@ -3,7 +3,6 @@ import { withRouter,Link } from 'react-router-dom'
 import { getUserInfo } from '../../helpers/token';
 import DataTable from 'react-data-table-component';
 // import { sessions } from '../../__mocks__/mockData';
-import Radio from '@material-ui/core/Radio';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -162,37 +161,37 @@ const AttendanceForm = ({ history, ...props }) => {
   },
   {
     name: '2',
-    cell: ({ id }) => <div> <Radio
-      checked={isChecked(id) === 2 ? true : null}
+    cell: ({ id }) => <div> <input
+      className='form-check-input'
+      style={{height: "24px", width: "24px", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 2)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
+      type="radio"
+      name={`radio-button-demo-${id}`}
     /></div>,
     center: true,
   },
   {
     name: '1',
-    cell: ({ id }) => <div > <Radio
-      checked={isChecked(id) === 1 ? true : null}
+    cell: ({ id }) => <div > <input
+      className='form-check-input'
+      style={{height: "24px", width: "24px", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 1)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
+      type="radio"
+      name={`radio-button-demo-${id}`}
     /></div>,
     center: true,
   },
   {
     center: true,
     name: '0',
-    cell: ({ id }) => <div> <Radio
-      checked={isChecked(id) === 0 ? true : null}
+    cell: ({ id }) => <div> <input
+      className='form-check-input'
+      style={{height: "24px", width: "24px", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 0)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
+      type="radio"
+      name={`radio-button-demo-${id}`}
     />
-      <i onClick={() => openDialog(id)} style={{ marginLeft: '10px', cursor: 'pointer', position: 'absolute', marginTop: '15px' }} className="fas fa-ellipsis-h ml-2"></i>
+      <i onClick={() => openDialog(id)} style={{ marginLeft: '13px', cursor: 'pointer', position: 'absolute', marginTop: '8px' }} className="fas fa-ellipsis-h ml-2"></i>
     </div>
   },
   ];
@@ -256,8 +255,8 @@ const AttendanceForm = ({ history, ...props }) => {
             </select>
           </div>
           <Filters setSprint={setActiveSprint} cohorts={cohorts} setCohortValue={setCohortValue} programRef={programRef} setProgramValue={setProgramValue} cohortPrograms={cohortPrograms} />
-          <button disabled={saving} className='btn' onClick={saveAttendance}>
-            <p>{saving ? 'Saving ...' : 'Save'}</p>
+          <button disabled={saving} className='btns' onClick={saveAttendance}>
+            {saving ? 'Saving ...' : 'Save'}
           </button>
         </div>
         <div className='att-table'>

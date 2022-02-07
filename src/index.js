@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from '../src/components/App';
 import store from './store';
+import 'bootstrap/dist/css/bootstrap.css';
 import './styles/authLogin.scss';
 import './styles/table.scss';
 import './styles/admin.style.scss';

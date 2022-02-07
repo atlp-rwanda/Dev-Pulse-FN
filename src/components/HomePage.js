@@ -10,7 +10,7 @@ const HomePage = () => (
 <div className='tableHeading'>
  <div className='flex space-between items-center'>
  <div> My Developers Average Score</div>
-  <Link className='btn mt-10' to='/ratings/rate/all'>Rate all</Link>
+  <Link className='btns mt-10' to='/ratings/rate/all'>Rate all</Link>
  </div>
 </div>
     <div
@@ -19,7 +19,7 @@ const HomePage = () => (
         justifyContent: 'space-between',
       }}
     >
-      <Link to="/list" className="btn">
+      <Link to="/list" className="btns">
         Edit My List
       </Link>
       <div className="filters">

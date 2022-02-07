@@ -225,8 +225,8 @@ const ManagerView = (props) => {
       {!props.state.attendance.loading && (
         <div className='data'>
           <div className='att-controls'>
-            <Link to='/attendance/new' className='add-btn btn'>
-              <i className='fas fa-plus'></i>
+            <Link to='/attendance/new' className='add-btn btns'>
+              <i className='fas fa-plus text-white'></i>
             </Link>
 
             <div className='filters'>

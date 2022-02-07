@@ -229,7 +229,7 @@ class SingleEngineer extends React.Component {
               {userRole === 'Manager' && (
                 <li className="profile-bar-item">
                   <Link
-                    className="btn"
+                    className="btns"
                     to={'/ratings/rate/' + user.id}
                   >
                     Rate

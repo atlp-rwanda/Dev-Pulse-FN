@@ -68,7 +68,7 @@ const RateForm = ({ onRate, rating, onChange, engineer, loading_, more,traineeRa
 				</div>
 			</div>
 			<div>
-				<button type="submit" className="btn rate-btn" onClick={handleRate} disabled={loading_}>
+				<button type="submit" className="btns rate-btn" onClick={handleRate} disabled={loading_}>
 					{/* {loading && <i className="fa fa-refresh fa-spin"></i>} */}
 				{loading_ && <ImSpinner/>}{" "}
 					{edit ? 'Update' :'Rate'}

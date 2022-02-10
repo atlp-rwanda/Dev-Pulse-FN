@@ -25,13 +25,17 @@ class Table extends Component {
     const { engineers } = this.props;
     const { myEngineerslist } = this.props;
     const { allRatings } = this.props;
+    const profile = this.props.profile || {};
     /**
      * Filter all rated engineers to remain with only your Team
      */
-    console.log(allRatings);
     const ratableEngineers = engineers
       .filter((el) => {
-        console.log('ratints', el.ratings)
+        const profileSuccess = profile.success || {};
+        const profileData = profileSuccess.data || {};
+        if (profileData.isLead) {
+          return true;
+        }
         return myEngineerslist.some((f) => {
           return f?.id === el?.user?.id;
         });
@@ -119,6 +123,7 @@ const mapStateToProps = ({
   getRatings,
   engineersReducer,
   engineer,
+  profile,
 }) => ({
   engineers: getRatings.engineers,
   allRatings: getRatings.allRatings,
@@ -126,6 +131,7 @@ const mapStateToProps = ({
   selectedCohort: engineer.selectedCohort,
   average: engineer.averageRating,
   selectedProgram: engineer.selectedProgram,
+  profile,
 });
 
 export { Table as EngineerTable };

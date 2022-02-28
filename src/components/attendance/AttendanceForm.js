@@ -19,7 +19,7 @@ import { getAllCohorts } from '../../actions/cohorts'
 import { getAllPrograms } from '../../actions/programs'
 import { toast } from 'react-toastify';
 import Filters from './Filters';
-
+import './../../styles/attendanceForm.scss'
 
 const customStyles = {
 
@@ -162,37 +162,37 @@ const AttendanceForm = ({ history, ...props }) => {
   },
   {
     name: '2',
-    cell: ({ id }) => <div> <Radio
-      checked={isChecked(id) === 2 ? true : null}
+    cell: ({ id }) => <div className='radio'> <input
+      style={{height: "24px", width: "24px",zIndex:"1", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 2)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
-    /></div>,
+      type="radio"
+      className="radio-label"
+      name={`radio-button-demo-${id}`}
+    /><label for="radio-1" className="radio-label"></label>
+    </div>,
     center: true,
   },
   {
     name: '1',
-    cell: ({ id }) => <div > <Radio
-      checked={isChecked(id) === 1 ? true : null}
+    cell: ({ id }) => <div > <input
+      style={{height: "24px", width: "24px",zIndex:"1", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 1)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
-    /></div>,
+      type="radio"
+      name={`radio-button-demo-${id}`}
+    /><label for="radio-2" className="radio-label"></label>
+    </div>,
     center: true,
   },
   {
     center: true,
     name: '0',
-    cell: ({ id }) => <div> <Radio
-      checked={isChecked(id) === 0 ? true : null}
+    cell: ({ id }) => <div> <input
+      style={{height: "24px", width: "24px",zIndex:"1", verticalAlign: "middle"}}
       onChange={() => handleChange(id, 'attendance', 0)}
-      value="a"
-      name="radio-button-demo"
-      inputProps={{ 'aria-label': 'A' }}
-    />
-      <i onClick={() => openDialog(id)} style={{ marginLeft: '10px', cursor: 'pointer', position: 'absolute', marginTop: '15px' }} className="fas fa-ellipsis-h ml-2"></i>
+      type="radio"
+      name={`radio-button-demo-${id}`}
+    /><label for="radio-1" className="radio-label"></label>
+      <i onClick={() => openDialog(id)} style={{ marginLeft: '10px', cursor: 'pointer', position: 'absolute', marginTop: '5px' }} className="fas fa-ellipsis-h ml-2"></i>
     </div>
   },
   ];

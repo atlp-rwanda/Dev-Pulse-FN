@@ -48,6 +48,9 @@ const TableBody = ({ data }) => {
             {item.communication}
           </td>
           <td>
+              {item.manager}
+          </td>
+          <td>
               {item.ratedSprints}
           </td>
           <td>

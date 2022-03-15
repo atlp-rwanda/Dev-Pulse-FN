@@ -12,6 +12,7 @@ import programs from './programs'
 import attendance from './attendance';
 import sessions from './sessions';
 import pendingRatings from './pendingRatings';
+import search from './search'
 
 
 
@@ -29,5 +30,6 @@ export default combineReducers({
   programs,
   attendance,
   sessions,
-  pendingRatings
+  pendingRatings,
+  search,
 });

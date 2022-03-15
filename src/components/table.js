@@ -24,7 +24,7 @@ class Table extends Component {
 
     const { engineers } = this.props;
     const { myEngineerslist } = this.props;
-    const { allRatings } = this.props;
+    const { allRatings, search } = this.props;
     const profile = this.props.profile || {};
     /**
      * Filter all rated engineers to remain with only your Team
@@ -84,7 +84,7 @@ class Table extends Component {
           ratedSprints: sprintIds.length,
         };
       });
-    const items = [];
+    let items = [];
     try {
       ratableEngineers.map((engineer) => {
         const engineerRatings = {};
@@ -101,6 +101,12 @@ class Table extends Component {
       });
     } catch (ex) {
       console.log(ex);
+    }
+    if (search?.byName) {
+      items = items.filter((item) => {
+        const name = item.name.toLowerCase();
+        return name.includes(search.byName);
+      });
     }
     return (
       <div>
@@ -124,6 +130,7 @@ const mapStateToProps = ({
   engineersReducer,
   engineer,
   profile,
+  search,
 }) => ({
   engineers: getRatings.engineers,
   allRatings: getRatings.allRatings,
@@ -132,6 +139,7 @@ const mapStateToProps = ({
   average: engineer.averageRating,
   selectedProgram: engineer.selectedProgram,
   profile,
+  search,
 });
 
 export { Table as EngineerTable };

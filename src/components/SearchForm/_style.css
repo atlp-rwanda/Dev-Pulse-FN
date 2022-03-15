@@ -1,0 +1,16 @@
+.form-search {
+  display: flex;
+  justify-content: end;
+  flex-grow: 1;
+  padding: 0px 2rem;
+}
+.search-input {
+  border: 2px solid gray;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #3359de;
+  width: 100%;
+}

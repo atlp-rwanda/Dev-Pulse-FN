@@ -17,7 +17,8 @@ class Table extends Component {
       'Name',
       'Quality',
       'Quantity',
-      'Professional Communication',
+      'P. Communication',
+      'Manager',
       'Sprints',
       'Rating',
     ];
@@ -95,6 +96,7 @@ class Table extends Component {
             (engineerRatings.quantity = engineer.quantity),
             (engineerRatings.communication =
               engineer.communication),
+            (engineerRatings.manager = `${engineer.manager.firstName} ${engineer.manager.lastName}`),
             (engineerRatings.ratedSprints = engineer.ratedSprints),
           ]);
         items.push(engineerRatings);
